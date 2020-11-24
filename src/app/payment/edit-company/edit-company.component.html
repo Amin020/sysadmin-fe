@@ -1,0 +1,380 @@
+<!-- Nav tabs -->
+<mdb-tabset *ngIf='companyData' [buttonClass]="'classic-tabs tabs-primary'" [contentClass]="'card'"
+    class="classic-tabs">
+    <!--Panel 1-->
+    <mdb-tab [heading]="'editCompany.main' | translate">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="my-4">{{companyData.companyName}}</h4>
+                    <h6 class="mx-3 my-3"> {{'editCompany.CompanyProfile' | translate}} </h6>
+                </div>
+                <section class="col-sm-12">
+                    <div class="border edit-company">
+                        <form [formGroup]="firstFormGroup" class="border border-light p-5">
+                            <div class="form-row">
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label for="firstName"> {{'editCompany.firstName' | translate}} </label>
+                                    <input mdbInput type="text" class="form-control" id="firstName"
+                                        placeholder="First Name" mdbInput mdbValidate formControlName="firstName">
+
+                                    <mdb-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success *ngIf="firstName.valid && (firstName.dirty || firstName.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label for="inputLastName"> {{'editCompany.lastName' | translate}} </label>
+                                    <input mdbInput type="text" class="form-control" id="inputLastName"
+                                        placeholder="text" mdbInput mdbValidate formControlName="lastName">
+
+                                    <mdb-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success *ngIf="lastName.valid && (lastName.dirty || lastName.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+                            </div>
+                            <div class="form-row">
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label> {{'editCompany.Country' | translate}} </label>
+                                    <select class="browser-default custom-select" formControlName="sysCountry"
+                                        placeholder="Choose your option">
+                                        <option *ngFor='let item of optionsSysCountry' [value]='item.value'>
+                                            {{item.label}}
+                                        </option>
+                                    </select>
+
+                                    <mdb-error *ngIf="sysCountry.invalid && (sysCountry.dirty || sysCountry.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success *ngIf="sysCountry.valid && (sysCountry.dirty || sysCountry.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label> {{'editCompany.sysLanguage' | translate}}</label>
+                                    <select class="browser-default custom-select" formControlName="sysLanguage"
+                                        placeholder="Choose your option">
+                                        <option *ngFor='let item of optionsSysLanguage' [value]='item.value'>
+                                            {{item.label}}
+                                        </option>
+                                    </select>
+
+                                    <mdb-error
+                                        *ngIf="sysLanguage.invalid && (sysLanguage.dirty || sysLanguage.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success
+                                        *ngIf="sysLanguage.valid && (sysLanguage.dirty || sysLanguage.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+                            </div>
+                            <div class="form-row">
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label for="clientWebSite"> {{'editCompany.WebSite' | translate}}</label>
+                                    <input mdbInput type="text" class="form-control" id="clientWebSite"
+                                        placeholder="Web Site" mdbInput mdbValidate formControlName="clientWebSite">
+
+                                    <mdb-error
+                                        *ngIf="clientWebSite.invalid && (clientWebSite.dirty || clientWebSite.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success
+                                        *ngIf="clientWebSite.valid && (clientWebSite.dirty || clientWebSite.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label for="accountManager">
+                                        {{'editCompany.accountManager' | translate}}</label>
+                                    <input mdbInput type="text" class="form-control" id="accountManager"
+                                        placeholder="Account Manager" mdbValidate formControlName="accountManager">
+
+                                    <mdb-error
+                                        *ngIf="accountManager.invalid && (accountManager.dirty || accountManager.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success
+                                        *ngIf="accountManager.valid && (accountManager.dirty || accountManager.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+                            </div>
+                            <div class="form-row">
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label for="Phone"> {{'editCompany.Phone' | translate}} </label>
+                                    <input type="text" class="form-control" mdbInput mdbValidate formControlName="phone"
+                                        placeholder="Phone" id="Phone">
+
+                                    <mdb-error *ngIf="phone.invalid && (phone.dirty || phone.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success *ngIf="phone.valid && (phone.dirty || phone.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label for="mobile"> {{'editCompany.Mobile' | translate}}</label>
+                                    <input type="text" class="form-control" mdbInput mdbValidate
+                                        formControlName="mobile" id='mobile' placeholder="mobile">
+
+                                    <mdb-error *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success *ngIf="mobile.valid && (mobile.dirty || mobile.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+                            </div>
+                            <div class="form-row">
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label for="mail"> {{'editCompany.Email' | translate}} <span
+                                            class="error">*</span></label>
+                                    <input type="email" class="form-control" mdbInput mdbValidate
+                                        formControlName="clientEmail" placeholder="Email" id='mail'>
+
+                                    <mdb-error
+                                        *ngIf="clientEmail.invalid && (clientEmail.dirty || clientEmail.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success
+                                        *ngIf="clientEmail.valid && (clientEmail.dirty || clientEmail.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+
+                                <!-- Grid column -->
+                                <div class="col-md-6 text-justify  my-2">
+                                    <!-- Material input -->
+                                    <label for="billingAddress"> {{'editCompany.Country' | translate}}<span
+                                            class="error">*</span></label>
+                                    <input type="text" class="form-control" mdbInput mdbValidate
+                                        formControlName="billingAddress" id="billingAddress"
+                                        placeholder="billing Address">
+
+                                    <mdb-error
+                                        *ngIf="billingAddress.invalid && (billingAddress.dirty || billingAddress.touched)">
+                                        {{'validation.error' | translate}}</mdb-error>
+                                    <mdb-success
+                                        *ngIf="billingAddress.valid && (billingAddress.dirty || billingAddress.touched)">
+                                        {{'validation.success' | translate}}</mdb-success>
+                                </div>
+                                <!-- Grid column -->
+                            </div>
+                            <div class="text-center">
+                                <button type="click" mdbBtn color="primary" class="text-white" mdbWavesEffect
+                                    (click)='submitForm()' [disabled]='firstFormGroup.invalid || !firstFormGroup.dirty'>
+                                    {{'edit.save' | translate}}</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h6 class="mx-3 my-3"> {{'editCompany.licences' | translate}}</h6>
+                </div>
+                <table mdbTable bordered="true">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">{{'editCompany.licence' | translate}}</th>
+                            <th scope="col">{{'editCompany.desc' | translate}}</th>
+                            <th scope="col">{{'editCompany.startDate' | translate}}</th>
+                            <th scope="col">{{'editCompany.endDate' | translate}}</th>
+                            <th scope="col">{{'editCompany.status' | translate}}</th>
+                            <th scope="col">{{'editCompany.action' | translate}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr mdbTableCol *ngFor="let el of companyData.requests; let i=index">
+                            <th scope="row">{{i + 1}}</th>
+                            <td>{{el.clientType}}</td>
+                            <td>{{el.offer.offerDescription}}</td>
+                            <td>{{el.licenseStartDate}}</td>
+                            <td>{{el.licenseEndDate}}</td>
+                            <td>{{el.status}}</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </mdb-tab>
+    <!--Panel 2-->
+    <mdb-tab [heading]="'editCompany.hierarchy' | translate">
+        <div class="row">
+            <div class="col-12">
+                <br>
+                <h4 class="my-4">{{companyData.companyName}}</h4>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mdb-tree (checked)="onCheck($event)" [checkboxes]="true" checkboxesField="checked"
+                            (checkedKeys)="onCheckedKeys($event)"  (nodesChanged)="onNodesChanged($event)" textField="name" childrenField="children"
+                                [nodes]="companyData.devisions"></mdb-tree>
+                        </div>
+                        <div class="col-md-2 text-justify">
+                            <label> {{'editCompany.unactivatedNode' | translate}}</label>
+                            <select class="browser-default custom-select" [(ngModel)]='unactivatedNode' name="xyzzz"
+                                (change)='editUnactivatedNode()' placeholder="Choose your option">
+                                <!-- <option value="0">{{'editCompany.outerLvl' | translate}}</option> -->
+                                <option *ngFor='let item of unactivatedList' [value]='item.id'>
+                                    {{item.shortName}}
+                                </option>
+                            </select>
+                            <!-- Material input -->
+                            <!-- <span> Sequence : {{selectedNode.seq}}</span> -->
+                        </div>
+                        <div class="col-md-2">
+                            <button type="click" *ngIf='unactivatedNode' mdbBtn color="primary" class="text-white"
+                                mdbWavesEffect (click)='saveNode()'>
+                                {{'editCompany.active' | translate}}
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="click" mdbBtn color="primary" class="text-white" mdbWavesEffect
+                                (click)='tryToAdd()'>
+                                {{'editCompany.tryToAdd' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid" *ngIf='selectedNode'>
+                    <div class="row">
+                        <div class="col-12">
+                            <form>
+                                <div class="form-row">
+                                    <div class="col-md-3 text-justify">
+                                        <!-- Material input -->
+                                        <label for="iso"> {{'editCompany.ISOCode' | translate}}</label>
+                                        <input type="text" class="form-control" name="isoCode" mdbInput mdbValidate
+                                            [(ngModel)]="selectedNode.isoCode" id="iso" placeholder="ISO Code">
+                                    </div>
+                                    <div class="col-md-3 text-justify">
+                                        <!-- Material input -->
+                                        <label for="shortName"> {{'editCompany.shortName' | translate}}</label>
+                                        <input type="text" class="form-control" name="shortName" mdbInput mdbValidate
+                                            [(ngModel)]="selectedNode.shortName" id="shortName"
+                                            placeholder="Short Name">
+                                    </div>
+                                    <div class="col-md-2 text-justify" *ngIf='selectedNode.parentNode'>
+                                        <label> {{'editCompany.parentNode' | translate}}</label>
+                                        <select class="browser-default custom-select"
+                                            [(ngModel)]='selectedNode.parentNode.id'
+                                            (change)='changeSelectedNodeParent()' name="xyzzz"
+                                            placeholder="Choose your option">
+                                            <option value="0">{{'editCompany.outerLvl' | translate}}</option>
+                                            <option *ngFor='let item of parentNodeList' [value]='item.id'>
+                                                {{item.shortName}}
+                                            </option>
+                                        </select>
+                                        <!-- Material input -->
+                                        <!-- <span> Sequence : {{selectedNode.seq}}</span> -->
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <button type="click" mdbBtn color="primary" class="text-white" mdbWavesEffect
+                                            (click)='editNode()'>
+                                            {{'edit.save' | translate}}</button>
+                                        <a mdbBtn floating="false" size="sm" color="success" mdbWavesEffect
+                                            title="cancel" (click)="addNode()">
+                                            <mdb-icon class="fa" icon="plus"></mdb-icon>
+                                        </a>
+                                        <button type="click" *ngIf='selectedNode.id' mdbBtn color="primary"
+                                            class="text-white" mdbWavesEffect (click)='changeNodeStatus()'>
+                                            <span [ngSwitch]="selectedNode.nodeStatus">
+                                                <span *ngSwitchCase='"ACTIVE"'>
+                                                    {{'editCompany.inactive' | translate}}
+                                                </span>
+                                                <span *ngSwitchCase='"INACTIVE"'>
+                                                    {{'editCompany.active' | translate}}
+                                                </span>
+                                            </span>
+                                        </button>
+                                        <a mdbBtn floating="false" size="sm" color="danger" mdbWavesEffect
+                                            title="cancel" (click)="openModal(selectedNode.id)">
+                                            <mdb-icon class="fa" icon="times"></mdb-icon>
+                                        </a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <table mdbTable bordered="true" class="my-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">{{'editCompany.Language' | translate}}</th>
+                                    <th scope="col">{{'editCompany.desc' | translate}}</th>
+                                    <th scope="col">{{'editCompany.action' | translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr mdbTableCol *ngFor="let el of selectedNode.nodeDescs; let i=index">
+                                    <td scope="row">{{i + 1}}</td>
+                                    <td>
+                                        <span *ngIf="!el['edit']">
+                                            {{el.sysLanguage?.nativeName}}
+                                        </span>
+                                        <span *ngIf="el['edit']">
+                                            {{el.sysLanguage?.nativeName}}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="!el['edit']">
+                                            {{el.nodeDesc}}
+                                        </span>
+                                        <span *ngIf="el['edit']">
+                                            <input type="text" [name]='"description" + i' [(ngModel)]='el.nodeDesc' />
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a mdbBtn floating="false" size="sm" color="primary" mdbWavesEffect title="Edit"
+                                            (click)="el['edit']=true">
+                                            <mdb-icon class="fa" icon="edit"></mdb-icon>
+                                        </a>
+                                        <button type="click" mdbBtn color="warning" *ngIf="el['edit']"
+                                            class="text-white" mdbWavesEffect (click)="el['edit']=false">
+                                            {{'edit.cancel' | translate}}</button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mdb-tab>
+    <!--Panel 3-->
+    <mdb-tab [heading]="'editCompany.Users_Roles' | translate">
+        <div class="row">
+            <div class="col-12">
+                <br>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil odit magnam minima, soluta
+                    doloribus reiciendis molestiae placeat unde eos molestias. Quisquam aperiam, pariatur. Tempora,
+                    placeat ratione porro voluptate odit minima.</p>
+            </div>
+        </div>
+    </mdb-tab>
+</mdb-tabset>

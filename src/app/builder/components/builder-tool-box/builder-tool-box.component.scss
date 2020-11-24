@@ -1,0 +1,71 @@
+.builder-tool-box {
+  padding: 0px 5px;
+  .tool-box-title {
+    font-weight: bold;
+  }
+  .item-container {
+    display: flex;
+    margin: 5px;
+    .item-text {
+      color: #131010;
+      flex: 1;
+    }
+    .item-icon {
+      min-width: 25px;
+    }
+  }
+}
+.import-container{
+  position: relative;
+  .btn-Import{
+    position: absolute;
+  }
+  #file{
+    opacity: 0;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+    cursor: pointer;
+  }
+}
+
+.item-container:hover {
+  border-radius: 20px;
+  border: 1px solid lightgray;
+  padding: 4px 0 4px 7px;
+  box-shadow:#7dc9c8 3px 3px 3px;
+  font-weight: bolder;
+  cursor: pointer;
+  .item-text {
+    color: #087cf2 !important;
+  }
+  .fa,
+  .fas {
+    padding-top: 4px;
+    color: #087cf2;
+  }
+}
+.fa,
+.fas {
+  color: #b3b3b3;
+}
+.left-section{
+  border:1px solid #e7e7e7;
+  border-radius: 10px;
+  min-height: 300px;
+}
+.category{
+  border: 1px solid #e7e7e7;
+    padding: 20px;
+    margin: 15px auto;
+    cursor: pointer;
+}
+.question-btn-group{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.btn{
+  padding: 0.84rem 1.14rem;
+}

@@ -1,0 +1,26 @@
+<div class="card card-cascade narrower p-4">
+  <h4 class="mb-4">
+    New App Version:
+  </h4>
+  <div class="d-flex justify-content-left">
+
+    <div class="md-form m-3 ml-0">
+      <input #releaseInput mdbInput type="text" [(ngModel)]="appVersion.releaseControlNo" class="form-control" />
+      <label for="form1" (click)="releaseInput.focus()">ReleaseControlNo</label>
+    </div>
+
+    <div class="md-form m-3 ml-0">
+      <input #versionInput mdbInput type="text" [(ngModel)]="appVersion.versionRemarks" class="form-control" />
+      <label for="form1" (click)="versionInput.focus()">Version Remarks</label>
+    </div>
+
+  </div>
+  <div class="d-flex justify-content-end">
+    <button (click)="cancel()" mdbBtn class="grey btn-md">Cancel</button>
+    <button (click)="savaApp()" mdbBtn color="primary" class="btn-md">
+      <span *ngIf="saveloading">loading... </span> Save
+    </button>
+  </div>
+</div>
+
+<hr class="my-5" />

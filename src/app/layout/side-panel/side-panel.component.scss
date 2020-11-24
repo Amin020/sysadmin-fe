@@ -1,0 +1,20 @@
+mdb-side-nav {
+  .app-logo {
+    display: block;
+    margin: 20px auto 0;
+    width: 60px;
+    background: #fff;
+    height: 60px;
+    padding: 5px;
+  }
+}
+
+.side-nav.side-nav-light .collapsible .card.active .card-header a h5 {
+  font-size: 0.9rem !important;
+  font-weight: 400;
+  text-shadow: 0 0 3px #000;
+}
+
+.side-nav.side-nav-light a .fa {
+  margin-inline-end: 10px;
+}

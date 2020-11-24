@@ -1,0 +1,47 @@
+<mdb-card>
+  <mdb-card-body>
+    <mdb-card-title>
+      <h4 class="mb-4">
+        <ng-container *ngIf="!isUpdateMode; else updateHeaderTemp">
+          {{ 'currency.addNewCurrency' | translate }}
+        </ng-container>
+        <ng-template #updateHeaderTemp>
+          {{ 'currency.editCurrency' | translate }}: <strong> {{ currency.currencyName }} </strong>
+        </ng-template>
+      </h4>
+      {{message}}
+    </mdb-card-title>
+    <div class="d-flex justify-content-left">
+      <div class="md-form m-3 ml-0">
+        <input #currNameInput mdbInput type="text" name="currency.currencyName" [(ngModel)]="currency.currencyName"
+          class="form-control">
+        <label for="form1" (click)="currNameInput.focus()"> {{ 'currency.currencyName' | translate }} </label>
+      </div>
+      <div class="md-form m-3">
+        <input #currAppInput mdbInput type="text" name="currency.currencyAppr" [(ngModel)]="currency.currencyAppr"
+          class="form-control">
+        <label for="form1" (click)="currAppInput.focus()"> {{ 'currency.currencyAppr' | translate }} </label>
+      </div>
+      <div class="md-form m-3">
+        <input #symbolInput mdbInput type="text" name="currency.symbol" [(ngModel)]="currency.symbol"
+          class="form-control">
+        <label for="form1" (click)="symbolInput.focus()"> {{ 'currency.symbol' | translate }} </label>
+      </div>
+      <div class="md-form m-3">
+        <div class="switch">
+          <label style="    text-align: center; margin-top: -10px;">{{'currency.defaultCurrency' | translate}}
+            <input type="checkbox" name="currency.isDefault" [(ngModel)]="currency.defualtCurr" class="form-control">
+            <span class="lever"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <button (click)="cancel()" mdbBtn class="grey btn-md"> {{'edit.cancel' | translate}}</button>
+    <button (click)="saveCurrency()" mdbBtn color="primary" class="btn-md">
+      <span *ngIf="saveloading"> {{ 'edit.loading' | translate }}... </span> {{ 'edit.save' | translate }}
+    </button>
+  </mdb-card-body>
+</mdb-card>
+
+
+<hr class="my-5">

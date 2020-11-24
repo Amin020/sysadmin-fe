@@ -1,0 +1,64 @@
+<div class="translate-page-container">
+  <div class="translate-header">
+    <mdb-checkbox [checked]="showAllPages" [(ngModel)]="showAllPages" [inline]="true" (change)="changeSelectedPage()">
+      <span class="langiage-text">Show all texts</span>
+    </mdb-checkbox>
+    <div class="right-header">
+      <div class="search-input-container">
+        <input type="text" placeholder="Search" [(ngModel)]="searchValue" (keyup.enter)="applySearch()">
+        <svg-icon src="assets/icons/search-icon.svg"></svg-icon>
+      </div>
+      <div class="dowpdown-input dropdown" mdbDropdown>
+        <select class="browser-default custom-select " [(ngModel)]="selectedPageIndex" (change)="changeSelectedPage()">
+          <option *ngFor='let page of pagesNames' [value]='page.index'>
+            {{page.name}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="translate-container">
+    <div class="trasnlate-content-header">
+      <mdb-checkbox [checked]="true" [disabled]="true">
+        <span class="langiage-text">English</span>
+      </mdb-checkbox>
+      <div class="flex-row" style="display: flex;align-items: center;">
+        <mdb-checkbox [checked]="true" [disabled]="true">
+        </mdb-checkbox>
+        <div class="dowpdown-input dropdown" mdbDropdown>
+          <select class="browser-default custom-select " [(ngModel)]="targetLanguage">
+            <option *ngFor='let language of languages' [value]='language.key'>
+              {{language.name}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="translate-page-content" *ngIf="+selectedPageIndex === -1 || showAllPages">
+      <div class="translate-row">
+        <input type="text" [(ngModel)]="survey.settings.title.default" readonly placeholder="Title">
+        <input type="text" [(ngModel)]="survey.settings.name[targetLanguage]">
+      </div>
+      <div class="translate-row">
+        <input type="text" [(ngModel)]="survey.settings.completeMessage.default" readonly
+          placeholder="Complete Message">
+        <input type="text" [(ngModel)]="survey.settings.completeMessage[targetLanguage]">
+      </div>
+    </div>
+    <div class="translate-page-content" *ngFor="let page of viewedPages">
+      <app-page-translate-view [page]="page" [targetLanguage]="targetLanguage" [searchValue]="searchValue">
+      </app-page-translate-view>
+    </div>
+
+  </div>
+  <footer>
+    <button class="clear-btn" (click)="clearAcivePage()">
+      <svg-icon src="assets/icons/empty-delet.svg"></svg-icon>
+      Clear this page
+    </button>
+    <button class="save-btn">
+      <svg-icon src="assets/icons/date.svg"></svg-icon>
+      Save
+    </button>
+  </footer>
+</div>

@@ -1,0 +1,69 @@
+<div class="question" *ngFor="let question of questions">
+  <div class="question-header">
+    <span class="question-title-index">{{(question.index + 1) + '. '}}</span>
+    <span class="question-title">{{question.name.default}}</span>
+    <div class="right-question-header">
+      <span class="question-type">{{getQuestionTypeText(question)}}</span>
+      <span class="question-index">Question {{(question.index + 1)}} of {{totalQuestion}}</span>
+      <svg-icon *ngIf="showRemark" (click)="question.addAsBookmark = !question.addAsBookmark" class="bookmark-icon"
+        src="assets/icons/book-mark.svg" [ngClass]="{'active-bookmark': question.addAsBookmark}"></svg-icon>
+    </div>
+  </div>
+  <img class="question-image" *ngIf="question.image" [src]="question.image.value" alt="">
+  <ng-container [ngSwitch]="question.type">
+    <ng-container *ngSwitchCase="questionType.checkbox">
+      <ng-container *ngTemplateOutlet="MultiQuestionAnswers;context:{ question: question}"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="questionType.radiogroup">
+      <ng-container *ngTemplateOutlet="singleQuestionAnswers;context:{ question: question}"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="questionType.boolean">
+      <ng-container *ngTemplateOutlet="trueFalseQuestionAnswers;context:{ question: question}"></ng-container>
+    </ng-container>
+    <ng-container *ngSwitchCase="questionType.text">
+      <ng-container *ngTemplateOutlet="inputQuestionAnswers;context:{ question: question}"></ng-container>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #singleQuestionAnswers let-question="question">
+  <div class="answer-container" *ngFor="let answer of question.answers; let index = index">
+    <div class="custom-control custom-radio">
+      <input type="radio" class="custom-control-input" [checked]="answer.isSelected" [(ngModel)]="question.answer"
+        (change)="updateSelectedAnswer($event, answer,question)" [value]="answer.value.default"
+        [id]="'exam-question-'+question.index+'-answer-'+index+'-'+opener" [name]="'exam-question-'+question.index"
+        mdbInput>
+      <label class="custom-control-label" [for]="'exam-question-'+question.index+'-answer-'+index+'-'+opener">
+        <div class="answer-index">{{getQuestionCode(index)}})</div>
+        <div class="answer">{{answer.value.default}}</div>
+      </label>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #MultiQuestionAnswers let-question="question">
+  <div class="answer-container" *ngFor="let answer of question.answers; let index = index">
+    <mdb-checkbox (change)="updateSelectedAnswer($event, answer)" [checked]="answer.isSelected">
+      <div class="answer-index">{{getQuestionCode(index)}})</div>
+      <div class="answer">{{answer.value.default}}</div>
+    </mdb-checkbox>
+  </div>
+</ng-template>
+
+<ng-template #trueFalseQuestionAnswers let-question="question">
+  <div class="answer-container" *ngFor="let answer of question.answers; let index = index">
+    <div class="custom-control custom-radio">
+      <input type="radio" class="custom-control-input" [(ngModel)]="question.answer" [checked]="answer.isSelected"
+        [value]="answer.value.default" [id]="'exam-question-'+question.index+'-answer-'+index+'-'+opener"
+        (change)="updateSelectedAnswer($event, answer,question)" [name]="'exam-question-'+question.index" mdbInput>
+      <label class="custom-control-label" [for]="'exam-question-'+question.index+'-answer-'+index+'-'+opener">
+        <div class="answer-index">{{getQuestionCode(index)}})</div>
+        <div class="answer">{{answer.value.default}}</div>
+      </label>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #inputQuestionAnswers let-question="question">
+  <textarea class="input-answer" placeholder="Write your answer here...." [(ngModel)]="question.answer"></textarea>
+</ng-template>

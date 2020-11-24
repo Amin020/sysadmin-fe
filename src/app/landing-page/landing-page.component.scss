@@ -1,0 +1,122 @@
+html,
+body,
+.view {
+  height: 100vh;
+}
+
+/* Full Page Carousel itself*/
+.carousel {
+  height: 100vh;
+}
+
+.carousel .carousel-inner {
+  height: 100vh;
+}
+
+.carousel .carousel-inner .carousel-item,
+.carousel .carousel-inner .active {
+  height: 100vh;
+}
+
+img {
+  &.d-block {
+    height: 100vh;
+    -webkit-filter: brightness(90%);
+            filter: brightness(90%);
+    opacity: .9;
+    background-color: black;
+  }
+}
+
+.depth-3 {
+  box-shadow: unset !important;
+  // opacity: .8;
+}
+nav{
+  background: #3f51b5 !important;
+  .container-fluid{
+    #navbarSupportedContent{
+      #nav{
+        .active{
+          a{
+            color: white !important;
+          }
+          border-radius: unset !important;
+          box-shadow: unset !important;
+        }
+        li.nav-item{
+          .nav-link{
+            color: rgba(255,255,255,0.6);
+            font-weight: normal;
+            font-size: 1.2rem;
+            padding: 0.5625rem 1.25rem;
+          }
+          .nav-link:active{
+            color: white !important;
+          }
+         
+          .nav-link:hover{
+            color: white !important;
+          }
+        }
+      }
+    }
+  }
+}
+.menu-item {
+  color:rgba(0,0,0,0.6)!important;
+  padding:20px;
+}
+.menu-item:hover{
+    color:black!important;
+    background: unset!important;
+}
+.news-title{
+  color:rgba(0,0,0,0.6)!important;
+ 
+}
+.news-title:hover{
+  color:rgba(255, 0, 0, 0.6)!important;
+}
+.pt-10{
+  margin-top: 100px;
+  height: 600px;
+  box-sizing: content-box;
+  background: aliceblue;
+}
+.mdb-carousel{
+  height: 500px;
+}
+.pb-2{
+  a:hover{
+    color:#3f51b5 !important;
+    transition: color 500ms;
+  }
+  // background: linear-gradient(40deg, #3030B7, #3030B7) !important;
+}
+#about{
+  background: linear-gradient(45deg, aliceblue, #e4e4e4);
+}
+.bg-black{
+  background: black;
+}
+
+#navbar {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  transition: 0.4s;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 99;
+}
+.navbar-brand{
+  font-weight: bold;
+  transition: 0.4s;
+}
+.dropdown-menu{
+  left:unset;
+}
+// .container-fluid{
+//   padding: 0;
+// }

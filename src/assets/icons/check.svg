@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 57.1 (83088) - https://sketch.com -->
+    <g id="Common-(Done)" stroke="none" stroke-width="1"  fill-rule="evenodd">
+        <g id="00_0002_Login-(Reset-Password)" transform="translate(-698.000000, -268.000000)">
+            <g id="Group-5">
+                <g id="Group-34" transform="translate(490.000000, 228.000000)">
+                    <g id="Icons/Indicator/Success" transform="translate(208.000000, 40.000000)">
+                        <circle id="BG" cx="22" cy="22" r="22"></circle>
+                        <g id="Icons/Check" transform="translate(11.000000, 11.000000)">
+                            <rect id="BG" fill-opacity="0" fill="#FFFFFF" x="0" y="0" width="1.25" height="1.25" rx="0.625"></rect>
+                            <path d="M4.74850392,9.15954206 C3.66221796,8.0732561 1.90100043,8.0732561 0.814714471,9.15954206 C-0.27157149,10.245828 -0.27157149,12.0070455 0.814714471,13.0933315 L6.37793286,18.6565499 C7.46421882,19.7428359 9.22543635,19.7428359 10.3117223,18.6565499 L21.4381591,7.53011312 C22.5244451,6.44382715 22.5244451,4.68260963 21.4381591,3.59632367 C20.3518731,2.51003771 18.5906556,2.51003771 17.5043696,3.59632367 L8.34482759,12.7558657 L4.74850392,9.15954206 Z" id="Stroke" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

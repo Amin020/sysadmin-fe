@@ -1,0 +1,105 @@
+<div class=" col col-sm-12 documentation">
+  <div class="row">
+    <div class="col col-md-8">
+      <h3 class=" font-weight-normal">{{ 'userPreferences.YourGroups' | translate }}</h3>
+    </div>
+    <div class="col">
+      <button class="btn btn-md btn-primary" type="button"
+        (click)="addNewGroup()">{{ 'userPreferences.AddGroup' | translate }}</button>
+    </div>
+    <div class="col-sm-12" *ngIf="!submitted">
+      <div class="alert alert-danger" role="alert">
+        {{ 'userPreferences.Pleasecompleteformfeilds' | translate }}
+      </div>
+    </div>
+  </div>
+  <div>
+    <mdb-accordion [multiple]="false" aria-multiselectable="true" *ngFor="let group of groups; let groupIndex=index">
+      <mdb-accordion-item [collapsed]="true">
+        <mdb-accordion-item-head>
+          <div class="groupBox">
+            <div class="row">
+              <div class="col-sm-4">
+                <label class="text-center" for="form1" class="">{{ 'userPreferences.GroupName' | translate }}</label>
+              </div>
+              <div class="input-group col-sm-6">
+                <input mdbInput type="text" class="form-control" [(ngModel)]="group.name" required>
+              </div>
+              <div class="col-sm-2">
+
+              </div>
+            </div>
+          </div>
+        </mdb-accordion-item-head>
+        <mdb-accordion-item-body>
+          <div class="table-responsive usersTable">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">{{ 'userPreferences.firstName' | translate }} </th>
+                  <th scope="col">{{ 'userPreferences.MidName' | translate }} </th>
+                  <th scope="col">{{ 'userPreferences.LastName' | translate }}</th>
+                  <th scope="col">{{ 'userPreferences.Email' | translate }} </th>
+                  <th scope="col">{{ 'userPreferences.Password' | translate }} </th>
+                  <th scope="col">{{ 'userPreferences.Options' | translate }} </th>
+                </tr>
+              </thead>
+              <tbody class="user_body">
+                <tr *ngFor="let user of group.invitedUsers; let userIndex=index">
+                  <th scope="row"> {{userIndex +1}}</th>
+                  <td>
+                    <div class="input-group">
+                      <input mdbInput type="text" class="form-control" [(ngModel)]="user.firstName"
+                        placeholder="First Name" required>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">
+                      <input mdbInput type="text" class="form-control" [(ngModel)]="user.midName" placeholder="Mid Name"
+                        required>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">
+                      <input mdbInput type="text" class="form-control" [(ngModel)]="user.lastName"
+                        placeholder="last Name" required>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">
+                      <input mdbInput type="text" class="form-control" [(ngModel)]="user.email" placeholder="Email"
+                        required>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="input-group mb-3">
+                      <input mdbInput type="password" class="form-control" [(ngModel)]="user.password"
+                        placeholder="password" required>
+                    </div>
+                  </td>
+                  <td>
+                    <button class="btn btn-md btn-danger   float-right " aria-label="Close" type="button"
+                      (click)="deleteUser(group,userIndex)"><span aria-hidden="true">×</span></button>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="7" class="group_btn"><button class=" btn btn-primary full-width no-margin text-center"
+                      type="button" (click)="addNewUser(group)">{{ 'userPreferences.AddUser' | translate }}</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-md btn-danger   float-right " aria-label="Close" type="button"
+              (click)="deleteGroup(groupIndex)"><span
+                aria-hidden="true">{{ 'userPreferences.DeleteGroup' | translate }}</span></button>
+          </div>
+        </mdb-accordion-item-body>
+      </mdb-accordion-item>
+    </mdb-accordion>
+  </div>
+</div>
+<div class="col col-sm-12">
+  <button id="formSubmittion" class="float-right text-center" mdbBtn type="button" color="dark-green" mdbWavesEffect
+    (click)="sendUserData()">{{ 'userPreferences.Send' | translate }}</button>
+</div>

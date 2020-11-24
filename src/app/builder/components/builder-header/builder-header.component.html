@@ -1,0 +1,8 @@
+<div class="builder-header">
+  <a class="header-item" routerLink="/" i18n>Home</a>
+  <div class="item-container" *ngFor="let headerItem of builderHeader.items">
+    <a class="header-item" [routerLink]="[headerItem.link, id]" routerLinkActive="active-router">{{headerItem.text}}</a>
+  </div>
+  <!-- <a class="header-item" routerLink="/builder/design" routerLinkActive="active-router">Survey Designer</a>
+    <a class="header-item" routerLink="/builder/view" routerLinkActive="active-router">Json Viewer</a> -->
+</div>

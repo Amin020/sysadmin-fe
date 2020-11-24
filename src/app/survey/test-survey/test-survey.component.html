@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="row flex">
+        <div class="col-sm-3 col-xs-12">
+            <select class="browser-default custom-select" [(ngModel)]='surveyCurrentLang' (change)='changeLang()'
+                name="selectLang">
+                <option value='0' disabled selected>Select Language to translate</option>
+                <option *ngFor='let item of optionsSelect' [value]='item.value'>{{item.label}}
+                </option>
+            </select>
+        </div>
+        <div class="col-sm-3 col-xs-12 col-sm-offset-1">
+            <select class="browser-default custom-select" [(ngModel)]='themeValue' (change)='onChangeTheme()'
+                name="selectLang">
+                <option *ngFor='let item of themeList' [value]='item'>{{item}}
+                </option>
+            </select>
+        </div>
+        <div class="col-sm-2">
+            <a [href]='url' target="_blank">
+                <qr-code [value]="url" [size]="75"></qr-code>
+            </a>
+        </div>
+    </div>
+    <div id='surveyElementxx'></div>
+    <table class="table table-bordered" *ngIf='modifiedData'>
+        <thead>
+            <th>Name</th>
+            <th>Correct Answer</th>
+            <th>Score</th>
+            <th>Question Value</th>
+
+        </thead>
+        <tbody>
+            <tr *ngFor='let item of modifiedData'>
+                <td>{{item.name}}</td>
+                <td>{{item.correctAnswer}}</td>
+                <td>{{item.score}}</td>
+                <td>{{item.questionValue | json}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

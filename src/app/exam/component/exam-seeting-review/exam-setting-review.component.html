@@ -1,0 +1,42 @@
+<div class="exam-settings-review-container">
+  <div class="exam-header-container">
+    <div class="header-text">Exam Settings *</div>
+    <svg-icon class="edit-icon" (click)="editExamSetting()" src="assets\icons\edit-24px.svg"></svg-icon>
+  </div>
+  <div class="grid-settings-container">
+    <ng-container *ngTemplateOutlet="dataItem; context: {item:{key : 'Exam title', value: examSetting.title.default}}">
+    </ng-container>
+    <ng-container
+      *ngTemplateOutlet="dataItem; context: {item:{key : 'Total questions', value: examSetting.totalQuestion}}">
+    </ng-container>
+    <ng-container *ngTemplateOutlet="dataItem; context: {item:{key : 'Total score', value: examSetting.totalScore}}">
+    </ng-container>
+    <ng-container *ngTemplateOutlet="dataItem; context: {item:{key : 'Pass score', value: examSetting.passScore}}">
+    </ng-container>
+    <ng-container *ngTemplateOutlet="dataItem; context: {item:{key : 'Total time', value: examSetting.totalTime}}">
+    </ng-container>
+    <ng-container *ngTemplateOutlet="dataItem; context: {item:{key : 'Add remark', value: examSetting.addRemark}}">
+    </ng-container>
+    <ng-container *ngTemplateOutlet="dataItem; context: {item:{key : 'Show result', value: examSetting.showResult}}">
+    </ng-container>
+    <ng-container
+      *ngTemplateOutlet="dataItem; context: {item:{key : 'Random sequence', value: examSetting.randomSequnce}}">
+    </ng-container>
+    <ng-container *ngTemplateOutlet="dataItem; context: {item:{key : 'Show answer', value: examSetting.showAnswer}}">
+    </ng-container>
+    <ng-container
+      *ngTemplateOutlet="dataItem; context: {item:{key : 'Languages', value: examSetting.selectedLanguage.toString()}}">
+    </ng-container>
+
+  </div>
+</div>
+
+<ng-template #dataItem let-item='item'>
+  <div class="data-info-container">
+    <div class="title-container">
+      <div class="dot"></div>
+      <div class="title">{{item.key}}</div>
+    </div>
+    <div class="data-info">{{item.value === true ? 'Yes' : (item.value === false ? 'No' : item.value) }}</div>
+  </div>
+</ng-template>

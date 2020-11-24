@@ -1,0 +1,32 @@
+<div class="card card-cascade narrower p-4">
+  <h4 class="mb-4">New App UOM</h4>
+  <div class="d-flex justify-content-left">
+
+    <div class="md-form mr-5">
+      <input mdbInput type="text" name="uom.uomID"
+        [(ngModel)]="appUom.uomID" class="form-control"
+        oninput="this.value = this.value.toUpperCase()"
+      >
+      <label for="form1" class="">UOM ID</label>
+    </div>
+
+    <div class="md-form mr-5">
+      <input mdbInput type="text" name="uom.uomDesc"
+        [(ngModel)]="appUom.uomDesc" class="form-control">
+      <label for="form1" class="">UOM Description</label>
+    </div>
+
+    <div class="md-form mr-5" >
+      <input mdbInput type="text" name="uom.isoUom"
+        [(ngModel)]="appUom.isoUom" class="form-control">
+      <label for="form1" class="">UOM ISO</label>
+    </div>
+
+  </div>
+  <div class="d-flex justify-content-end">
+  <button (click)="cancel()" mdbBtn class="grey btn-md">Cancel</button>
+  <button (click)="saveAppUom()" mdbBtn color="primary" class="btn-md"><span *ngIf="saveloading">loading...  </span> Save</button>
+  </div>
+</div>
+
+<hr class="my-5">

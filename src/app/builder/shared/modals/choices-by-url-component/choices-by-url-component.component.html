@@ -1,0 +1,17 @@
+<div class="">
+  
+  <div>URL</div>
+  <input type="text" class="form-control"  [(ngModel)]="innerValue.url">
+  <div>Path</div>
+  <input type="text" class="form-control"  [(ngModel)]="innerValue.path">
+  <div>Value name</div>
+  <input type="text" class="form-control"  [(ngModel)]="innerValue.valueName">
+  <div>Title name</div>
+  <input type="text" class="form-control"  [(ngModel)]="innerValue.titleName">
+  <div>Test the service</div>    
+  <!-- TODO: need too check this option -->
+  <select class="custom-select"  >
+      <option *ngFor="let value of question.visibleChoices" [ngValue]="value.value">{{value.text}}</option>
+  </select>
+ 
+</div>

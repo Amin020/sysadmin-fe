@@ -1,0 +1,13 @@
+html{
+    direction: rtl;
+}
+html[dir="rtl"]{
+    body, p, .dropup, .dropright, .dropdown, .dropleft{
+        text-align: right !important;
+    }
+
+    .side-nav.fixed{
+        left: auto;
+        right: 0 !important;
+    }
+}

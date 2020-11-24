@@ -1,0 +1,121 @@
+<div>
+  <mdb-spinner *ngIf="loading" spinnerColor="blue"></mdb-spinner>
+  <!-- Basic example -->
+  <div class="row">
+    <div class="col-md-12 mx-auto text-center mt-1">
+      <div class="card card-cascade narrower">
+
+        <!--Card image-->
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-3 mb-3 d-flex justify-content-left align-items-left">
+          <h6 class="white-text font-weight-bold text-uppercase mb-0 mr-auto"> {{'languages.languages' | translate}}
+          </h6>
+          <a mdbBtn size="sm" color="primary" rounded="true" mdbWavesEffect routerLink="./create-language">
+            <mdb-icon fas icon="plus"></mdb-icon> {{'languages.newLanguages' | translate}}
+          </a>
+        </div>
+        <!--/Card image blue-gradient-->
+
+        <div *ngIf="!loading">
+          <div class="px-4">
+
+            <!--Table-->
+            <table class="table table-hover table-responsive-md mb-0 languagesTable">
+
+              <!--Table head-->
+              <thead>
+                <tr>
+                  <th scope="row">#</th>
+                  <th class="th-lg">{{'languages.name' | translate}}</th>
+                  <th class="th-lg">{{'languages.nativeName' | translate}}</th>
+                  <th class="th-lg">{{'languages.aprv' | translate}}</th>
+                  <th class="th-lg">{{'languages.rtl' | translate}}</th>
+                  <th class="th-lg">{{'edit.actions' | translate}}</th>
+                </tr>
+              </thead>
+              <!--Table head-->
+
+              <!--Table body-->
+              <tbody *ngIf="!noDataFound">
+                <tr *ngFor="let language of languages; let i = index">
+                  <th px-3 *ngIf="i >= firstVisibleIndex && i <= lastVisibleIndex" scope="row">{{language.id}}</th>
+                  <td *ngIf="i >= firstVisibleIndex && i <= lastVisibleIndex">{{language.name}}</td>
+                  <td *ngIf="i >= firstVisibleIndex && i <= lastVisibleIndex">{{language.nativeName}}</td>
+                  <td *ngIf="i >= firstVisibleIndex && i <= lastVisibleIndex">{{language.aprv}}</td>
+                  <td *ngIf="i >= firstVisibleIndex && i <= lastVisibleIndex" class="goal-rtl-icon"><i class="fa"
+                      [className]="language.isRTL==1 ? 'fa green-text fa-check-circle ' : 'fa fa-close  grey-text'"></i>
+                  </td>
+                  <td *ngIf="i >= firstVisibleIndex && i <= lastVisibleIndex" class="goal-table-actionCol">
+                    <a mdbBtn floating="false" size="sm" color="primary" mdbWavesEffect (click)="edit(language)">
+                      <mdb-icon fas icon="edit"></mdb-icon>
+                    </a>
+                    <a mdbBtn floating="true" size="sm" color="danger" mdbWavesEffect (click)="openModal(language)">
+                      <mdb-icon fas icon="trash"></mdb-icon>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+              <!--Table body-->
+              <div *ngIf="noDataFound">No Data To Display.</div>
+            </table>
+
+          </div>
+
+          <hr class="my-0">
+
+          <!--Bottom Table UI-->
+          <div class="d-flex justify-content-center">
+
+            <!--Pagination -->
+            <nav class="my-4 pt-2">
+              <ul class="pagination pagination-circle pg-blue mb-0">
+
+                <!--First-->
+                <li class="page-item clearfix d-none d-md-block" (click)="firstPage()"
+                  [ngClass]="{disabled: activePage == 1}">
+                  <a class="page-link">{{'surveyList.first' | translate}}</a>
+                </li>
+
+                <!--Arrow left-->
+                <li class="page-item" (click)="previousPage()" [ngClass]="{disabled: activePage == 1}">
+                  <a class="page-link" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">{{'surveyList.previous' | translate}}</span>
+                  </a>
+                </li>
+
+                <!--Numbers-->
+                <li #pages class="page-item" [ngClass]="{active: i + firstVisiblePaginator + 1 == activePage}"
+                  *ngFor="let page of paginator | slice:firstVisiblePaginator:lastVisiblePaginator; let i = index">
+                  <a class="page-link waves-light" (click)="changePage($event)" mdbWavesEffect>
+                    {{ page }}
+                  </a>
+                </li>
+
+                <!--Arrow right-->
+                <li class="page-item" (click)="nextPage()" [ngClass]="{disabled: activePage == numberOfPages}">
+                  <a class="page-link" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">{{'surveyList.next' | translate}}</span>
+                  </a>
+                </li>
+
+                <!--First-->
+                <li class="page-item clearfix d-none d-md-block" (click)="lastPage()"
+                  [ngClass]="{disabled: activePage == numberOfPages}">
+                  <a class="page-link">{{'surveyList.last' | translate}}</a>
+                </li>
+
+              </ul>
+            </nav>
+            <!--/Pagination -->
+
+          </div>
+          <!--Bottom Table UI-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5">
+</div>

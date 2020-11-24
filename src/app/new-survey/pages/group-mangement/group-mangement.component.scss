@@ -1,0 +1,107 @@
+.md-form {
+  margin-top: 0;
+}
+.groupBox {
+  cursor: pointer;
+  background-color: #f7f7f7;
+  color: #0062cc !important;
+  font-weight: bold;
+  display: block;
+  width: 100%;
+  margin-bottom: 0px;
+  padding: 12px 9px;
+  .col-sm-4 {
+    display: flex;
+    align-items: center;
+  }
+  label {
+    color: #0062cc;
+    text-align: center !important;
+    left: 7%;
+    margin-bottom: 0;
+  }
+}
+:host {
+  ::ng-deep .accordion .card {
+    .mdb-accordion-indicator {
+      top: 30px;
+    }
+    .card-body {
+      padding-bottom: 0.5rem;
+      .table {
+        margin-bottom: 5px;
+      }
+    }
+    .card-header {
+      padding: 0.5rem !important;
+    }
+  }
+}
+
+.card-header a h5 {
+  padding: 0 !important;
+  .rotate-icon {
+    display: none !important;
+  }
+  label {
+    margin-bottom: 0;
+  }
+  .form-control {
+    margin-bottom: 0;
+  }
+}
+
+.alert {
+  margin-bottom: 5px;
+}
+
+.md-form input.ng-invalid {
+  border-bottom: 1px solid red !important;
+}
+
+.img-box {
+  margin-top: 10%;
+  .logoImg {
+    border: 1px solid #dddddd;
+    text-align: center;
+    width: 100%;
+    display: block;
+    min-height: 150px;
+    padding: 15px;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: fill;
+    }
+  }
+}
+
+.group_btn {
+  padding-top: 0.4rem;
+  padding-bottom: 0.4rem;
+  .btn {
+    margin: 2px;
+    text-align: center;
+    border-radius: 5px;
+    display: block;
+  }
+}
+
+.action_buttons {
+  .btn {
+    display: inline-block;
+  }
+}
+
+table.table {
+  th,
+  td {
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .form-control {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}

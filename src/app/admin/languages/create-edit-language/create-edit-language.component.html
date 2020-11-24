@@ -1,0 +1,41 @@
+<div class="card card-cascade narrower p-4">
+  <h4 class="mb-4">
+    <ng-container *ngIf="!isUpdateMode; else updateHeaderTemp">
+      {{ 'languages.addNewLanguage' | translate }}
+    </ng-container>
+    <ng-template #updateHeaderTemp>
+      {{ 'languages.editLanguage' | translate }}: <strong> {{ language.name }} </strong>
+    </ng-template>
+  </h4>
+  <div class="d-flex justify-content-left">
+    <div class="md-form m-3 ml-0">
+      <input #langNameInput mdbInput type="text" name="language.name" [(ngModel)]="language.name" class="form-control">
+      <label for="form1" (click)="langNameInput.focus()">{{'languages.name' | translate}}</label>
+    </div>
+    <div class="md-form m-3">
+      <input #langNativeNameInput mdbInput type="text" name="language.nativeName" [(ngModel)]="language.nativeName"
+        class="form-control">
+      <label for="form1" (click)="langNativeNameInput.focus()">{{'languages.nativeName' | translate}}</label>
+    </div>
+    <div class="md-form m-3">
+      <input #langApprInput mdbInput type="text" name="language.aprv" [(ngModel)]="language.aprv" class="form-control">
+      <label for="form1" (click)="langApprInput.focus()">{{'languages.aprv' | translate}}</label>
+    </div>
+    <div class="md-form m-3">
+      <div class="switch">
+        <label style="text-align: center; margin-top: -10px;"> {{'languages.rtl' | translate}}
+          <input type="checkbox" name="language.isRTL" [(ngModel)]="language.isRTL" class="form-control">
+          <span class="lever"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button (click)="cancel()" mdbBtn class="grey btn-md">{{'edit.cancel' | translate}}</button>
+    <button (click)="saveLanguage()" mdbBtn color="primary" class="btn-md"><span *ngIf="saveloading">
+        {{'edit.loading' | translate}}... </span> {{'edit.save' | translate}}</button>
+  </div>
+</div>
+
+
+<hr class="my-5">

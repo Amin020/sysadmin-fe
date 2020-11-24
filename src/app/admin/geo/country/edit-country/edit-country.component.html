@@ -1,0 +1,77 @@
+<mdb-card>
+  <mdb-card-body *ngIf="selectedCountry">
+    <mdb-card-title>
+      <h4 class="mb-4">Edit Country <b>{{ selectedCountry.nationalId }}</b></h4>
+    </mdb-card-title>
+    <mdb-card-text>Fill the below form to add a new country.</mdb-card-text>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="md-form ml-0 mr-0 mt-3 mb-3">
+          <input
+            mdbInput
+            type="text"
+            name="selectedCountry.nationalId"
+            placeholder="National Id..."
+            [(ngModel)]="selectedCountry.nationalId"
+            class="form-control"
+          />
+          <label for="form1" class="">National Id</label>
+        </div>
+      </div>
+
+      <div class=" col-md-4 mt-3">
+        <div class=" ml-0">
+          <mdb-select
+            [options]="regionsList"
+            (ngModelChange)="getSelectedRegion($event)"
+            [(ngModel)]="selectedCountry.region.id"
+            placeholder="Select Region"
+          ></mdb-select>
+          <label for="form1" class="">Region</label>
+        </div>
+      </div>
+      <div class=" col-md-4 mt-3">
+        <div class=" ml-0">
+          <mdb-select
+            [options]="currencyList"
+            (ngModelChange)="getSelectedCurrency($event)"
+            [(ngModel)]="selectedCountry.sysCurrency.currId"
+            placeholder="Select Currency"
+          ></mdb-select>
+          <label for="form1" class="">Currency</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="md-form ml-0 mr-0 mt-3 mb-3">
+          <input
+            mdbInput
+            type="text"
+            name="selectedCountry.phoneKey"
+            placeholder="Phone  Key..."
+            [(ngModel)]="selectedCountry.phoneKey"
+            class="form-control"
+          />
+          <label for="form1" class="">Phone Key</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <button (click)="cancel()" mdbBtn class="grey btn-md" rounded="true">
+        Cancel
+      </button>
+      <button
+        (click)="saveCountry()"
+        mdbBtn
+        gradient="blue"
+        class="btn-md"
+        rounded="true"
+      >
+        Save <span *ngIf="saveloading">... </span>
+      </button>
+    </div>
+  </mdb-card-body>
+</mdb-card>
+
+<hr class="my-5" />

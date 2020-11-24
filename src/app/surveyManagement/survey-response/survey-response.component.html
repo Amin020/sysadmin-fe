@@ -1,0 +1,121 @@
+<!-- Nav Tabs -->
+<mdb-tabset *ngIf="surveyResults && surveyResults.length" [buttonClass]="'classic-tabs bg-dark-light '">
+  <!--Panel 1-->
+  <mdb-tab heading="Charts">
+    <div class="col-sm-12">
+      <button class="btn-md  text-white" (click)="exportAsPDF('survey-response')" color="primary" mdbBtn
+        mdbWavesEffect>Export PDF
+        <mdb-icon fas icon="file-pdf"></mdb-icon>
+      </button>
+    </div>
+
+    <div id="survey-response">
+      <app-survey-analytics [hidden]='!completed' [surveyResults]='surveyResults' [survey]='survey'>
+      </app-survey-analytics>
+      <span *ngIf='surveyResults[0].xsurvey.totalGrade > 0'>
+        <hr />
+        <h4>Survey Answers Chart</h4>
+        <pie-chart [choices]="[ 'wrong','correct']" [dataObj]='pieDataObj' [labels]="[ 'wrong','correct']">
+        </pie-chart>
+      </span>
+    </div>
+  </mdb-tab>
+  <!--Panel 2-->
+  <mdb-tab heading="Table">
+    <div class="row">
+      <div class="col-12">
+        <div class="col-sm-12">
+          <span class="bold">{{ 'surveyAnswers.export' | translate }} :</span>
+          <!--Table--><button class="btn-md text-white" (click)="exportTableToCSV('Survey_Result.csv')" mdbBtn
+            color="primary" mdbWavesEffect>CSV
+            <mdb-icon fas icon="file-csv"></mdb-icon>
+          </button>
+          <button class="btn-md  text-white" (click)="exportAsPDF('survey-response-tbl')" color="primary" mdbBtn
+            mdbWavesEffect>PDF
+            <mdb-icon fas icon="file-pdf"></mdb-icon>
+          </button>
+        </div>
+
+        <table class="table table-hover table-responsive-md table-bordered" id='survey-response-tbl'>
+          <!--Table head-->
+          <thead>
+            <tr>
+              <th class="th-lg">#</th>
+              <th class="th-lg">{{ 'surveyAnswers.studentName' | translate }} </th>
+              <th class="th-lg">{{ 'surveyAnswers.name' | translate }} </th>
+              <th class="th-lg">{{ 'surveyAnswers.questionValue' | translate }}</th>
+              <th class="th-lg">{{ 'surveyAnswers.correctAnswer' | translate }}</th>
+              <th class="th-lg">{{ 'surveyAnswers.score' | translate }}</th>
+            </tr>
+          </thead>
+          <!--Table head-->
+
+          <!--Table body-->
+          <tbody>
+            <tr *ngFor="
+      let answer of surveyResults ;let i =index;
+    ">
+              <td>{{ i+1 }}</td>
+              <td>{{answer.user}}</td>
+              <td>
+                <ul>
+                  <li *ngFor="
+          let survey of answer.surveyAnswers;let answerIndex=index;
+        ">
+                    {{answerIndex+1}}. {{ survey?.name }}
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li *ngFor="
+          let survey of answer.surveyAnswers
+        ">
+                    {{ survey?.questionValue | json }}
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li *ngFor="
+            let survey of answer.surveyAnswers
+          ">
+                    {{ survey?.correctAnswer }}
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <ul>
+                  <li *ngFor="
+            let survey of answer.surveyAnswers
+          ">
+                    <span *ngIf='survey.correctAnswer == survey.questionValue'>
+                      {{ survey?.score }}
+                    </span>
+                    <span *ngIf='survey.correctAnswer != survey.questionValue'>
+                      0
+                    </span>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+            <tr *ngIf='surveyResults[0].xsurvey.totalGrade > 0'>
+              <td></td>
+              <td colspan="5">
+                Percentage : {{tblData.sum}}
+              </td>
+            </tr>
+          </tbody>
+          <!-- </div> -->
+          <!--Table body-->
+        </table>
+      </div>
+    </div>
+  </mdb-tab>
+
+</mdb-tabset>
+<!-- <div class="">
+
+  <div class="col-sm-12">
+  </div>
+</div> -->

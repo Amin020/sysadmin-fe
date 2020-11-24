@@ -1,0 +1,126 @@
+<div class="validator-component">
+    <div class="body-header">
+      <div class="options-container">
+        <div class="action-div" (click)="showOptions = !showOptions">
+          +
+        </div>
+        <select class="custom-select" [(ngModel)]="selectedOption" (change)="reSelect()">
+          <option *ngFor="let value of selectedOptions" [ngValue]="value">{{value.name}}</option>
+        </select>
+      </div>
+
+      <div class="selected-options-container" *ngIf="showOptions">
+        <div *ngFor="let option of options">
+          <div (click)="addOption(option)">{{option.name}}</div>
+        </div>
+      </div>
+      <div class="action-div" (click)="deleteOption()">
+        ×
+      </div>
+
+    </div>
+
+  
+    <div *ngIf="selectedOptions[selectedOptionId]">
+      <div [ngSwitch]="selectedOptions[selectedOptionId].type">
+        <div *ngSwitchCase="'numeric'">
+          <div class="option-content">
+            <div class="input-group mb-3">
+              <div>Text:</div>
+              <input class="form-control" type="text" [(ngModel)]="selectedOptions[selectedOptionId].text">
+            </div>
+            <div class="input-group mb-3">
+              <div>Max Value:</div>
+              <input class="form-control" type="number" [(ngModel)]="selectedOptions[selectedOptionId].maxValue">
+            </div>
+            <div class="input-group mb-3">
+              <div>Min Value:</div>
+              <input class="form-control" type="number" [(ngModel)]="selectedOptions[selectedOptionId].minValue">
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchCase="'text'">
+            <div class="option-content">
+                <div class="input-group mb-3">
+                  <div>Text:</div>
+                  <input class="form-control" type="text" [(ngModel)]="selectedOptions[selectedOptionId].text">
+                </div>
+                <div class="input-group mb-3">
+                    <div>allow digits:</div>
+                    <input class="form-control" type="checkbox" [(ngModel)]="selectedOptions[selectedOptionId].allowDigits">
+                  </div>
+                <div class="input-group mb-3">
+                  <div>Max Length:</div>
+                  <input class="form-control" type="number" [(ngModel)]="selectedOptions[selectedOptionId].maxLength">
+                </div>
+                <div class="input-group mb-3">
+                  <div>Min Length:</div>
+                  <input class="form-control" type="number" [(ngModel)]="selectedOptions[selectedOptionId].minLength">
+                </div>
+              </div>
+        </div>
+        <div *ngSwitchCase="'answerCount'">
+            <div class="option-content">
+                <div class="input-group mb-3">
+                  <div>Text:</div>
+                  <input class="form-control" type="text" [(ngModel)]="selectedOptions[selectedOptionId].text">
+                </div>
+                
+                <div class="input-group mb-3">
+                  <div>Max Count:</div>
+                  <input class="form-control" type="number" [(ngModel)]="selectedOptions[selectedOptionId].maxCount">
+                </div>
+                <div class="input-group mb-3">
+                  <div>Min Count:</div>
+                  <input class="form-control" type="number" [(ngModel)]="selectedOptions[selectedOptionId].minCount">
+                </div>
+              </div>
+        </div>
+
+        <div *ngSwitchCase="'regex'">
+            <div class="option-content">
+                <div class="input-group mb-3">
+                  <div>Text:</div>
+                  <input class="form-control" type="text" [(ngModel)]="selectedOptions[selectedOptionId].text">
+                </div>
+                
+               
+                <div class="input-group mb-3">
+                  <div>Regex:</div>
+                  <input class="form-control" type="text" [(ngModel)]="selectedOptions[selectedOptionId].regex">
+                </div>
+              </div>
+        </div>
+        <div *ngSwitchCase="'email'">
+            <div class="option-content">
+                <div class="input-group mb-3">
+                  <div>Text:</div>
+                  <input class="form-control" type="text" [(ngModel)]="selectedOptions[selectedOptionId].text">
+                </div>
+              </div>
+        </div>
+        <div *ngSwitchCase="'expression'">
+            <div class="option-content">
+                <div class="input-group mb-3">
+                    <div>Expression:</div>
+                    <input class="form-control" type="text" [(ngModel)]="selectedOptions[selectedOptionId].expression">
+                    <div class="input-group-append">
+                        <button class="input-group-text" type="button" id="button-addon2" (click)="openModal()">Edit</button>
+                    </div>
+                </div>
+                
+                <div class="input-group mb-3">
+                  <div>Text:</div>
+                  <input class="form-control" type="text" [(ngModel)]="selectedOptions[selectedOptionId].text">
+                </div>
+              </div>
+        </div>
+
+
+        <div *ngSwitchDefault></div>
+      </div>
+    </div>
+
+
+
+  </div>

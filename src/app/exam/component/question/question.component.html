@@ -1,0 +1,115 @@
+<div class="question-body-container">
+  <div class="question-header">
+    <select class="browser-default custom-select question-type" (change)="changeQuestionType()"
+      [(ngModel)]="question.type">
+      <option value="radiogroup">Single Choice</option>
+      <option value="checkbox">Multi Choice</option>
+      <option value="boolean">True or False</option>
+      <option value="text">Type the answer</option>
+    </select>
+    <div class="q-score" *ngIf="!isSurvey">
+      <div class="lable">Q-Score:</div>
+      <input type="text" [(ngModel)]="question.score" class="score-input" (keypress)="utilities.isNumberFormat($event)"
+        (paste)="utilities.isPasteNumberFormat($event)">
+    </div>
+    <div class="q-score" *ngIf="!isSurvey">
+      <div class="lable">Q-Weight:</div>
+      <input type="text" [(ngModel)]="question.weight" class="score-input" (keypress)="utilities.isNumberFormat($event)"
+        (paste)="utilities.isPasteNumberFormat($event)">
+    </div>
+  </div>
+  <section class="q-image-container">
+    <div class="image-header">
+      <span class="image-header-text">
+        Image as question
+      </span>
+      <button class="delete-image" [disabled]="!question.image"
+        (click)="fileUploader.value = ''; question.image = undefined">Delete</button>
+    </div>
+    <div class="image-container">
+      <div class="browse-image-container">
+        <input type="file" #fileUploader class="image-uploader" (change)="uploadImage(fileUploader.files)">
+        <span class="text">
+          Drop your image here, or
+          <span class="active-text">
+            browse
+          </span>
+        </span>
+        <div class="info-container">
+          <svg-icon class="info-icon" src="./assets/icons/info.svg"></svg-icon>
+          <span class="info-text">Supports JPG, PNG</span>
+        </div>
+        <span class="image-name" *ngIf="question.image">{{question.image.name}}</span>
+      </div>
+      <img *ngIf="question.image" class="image-content" [src]="question.image.value" alt="">
+    </div>
+  </section>
+  <section *ngIf="question.type !== questionTypes.text" class="question-answers-container">
+    <div class="header">Answers</div>
+    <ng-container [ngSwitch]="question.type">
+      <ng-container *ngSwitchCase="questionTypes.checkbox">
+        <ng-container *ngTemplateOutlet="choiceTemplate; context: {question: question}"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="questionTypes.radiogroup">
+        <ng-container *ngTemplateOutlet="singleChoiceTemplate; context: {question: question}"></ng-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="questionTypes.boolean">
+        <ng-container *ngTemplateOutlet="booleanTemplate; context: {question: question}"></ng-container>
+      </ng-container>
+    </ng-container>
+  </section>
+  <section class="question-refrence-container">
+    <div class="header">Answer refrence</div>
+    <textarea [(ngModel)]="question.refernce" rows="6" class="text-area"></textarea>
+  </section>
+</div>
+
+<ng-template #choiceTemplate>
+  <div class="choice-container">
+    <div class="choice-element" *ngFor="let answer of question.answers; let index = index">
+      <div class="choice-title">{{getQuestionCode(index)}})</div>
+      <div class="choice-content">
+        <div class="input-container">
+          <input type="text" class="choice-input" [(ngModel)]="answer.value.default">
+          <div class="correct-answer" *ngIf="answer.correctAnswer">correct answer</div>
+          <mdb-checkbox [disabled]="isSurvey" (change)="toggleCheckBox(index)" class="choice-correct-answer"
+            [checked]="answer.correctAnswer" [inline]="true"></mdb-checkbox>
+        </div>
+        <svg-icon class="delete-icon" src="assets/icons/delete-24px.svg" (click)="removeOption(index);"></svg-icon>
+      </div>
+    </div>
+    <button (click)="addOption(question)" class="add-option">Add option</button>
+  </div>
+</ng-template>
+
+<ng-template #singleChoiceTemplate>
+  <div class="choice-container">
+    <div class="choice-element" *ngFor="let answer of question.answers; let index = index">
+      <div class="choice-title">{{getQuestionCode(index)}})</div>
+      <div class="choice-content">
+        <div class="input-container">
+          <input type="text" class="choice-input" [(ngModel)]="answer.value.default">
+          <div class="correct-answer" *ngIf="answer.correctAnswer">correct answer</div>
+          <mdb-checkbox [disabled]="isSurvey" class="choice-correct-answer" [checked]="answer.correctAnswer"
+            (change)="toggleCheckBox(index)" [inline]="true"></mdb-checkbox>
+        </div>
+        <svg-icon class="delete-icon" src="assets/icons/delete-24px.svg" (click)="removeOption(index);"></svg-icon>
+      </div>
+    </div>
+    <button (click)="addOption(question)" class="add-option">Add option</button>
+  </div>
+</ng-template>
+
+<ng-template #booleanTemplate>
+  <div class="boolean-container">
+    <div class="boolean-element" *ngFor="let answer of question.answers;let index = index">
+      <div class="boolean-title">{{getQuestionCode(index)}})</div>
+      <div class="boolean-label">
+        <span class="title">{{answer.value.default}}</span>
+        <div class="correct-answer" *ngIf="answer.correctAnswer">correct answer</div>
+        <mdb-checkbox [disabled]="isSurvey" class="boolean-correct-answer-checkbox" [checked]="answer.correctAnswer"
+          (change)="toggleCheckBox(index)" [inline]="true"></mdb-checkbox>
+      </div>
+    </div>
+  </div>
+</ng-template>

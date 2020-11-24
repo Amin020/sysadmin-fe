@@ -1,0 +1,18 @@
+<div class="page-translate-view-container">
+  <div class="translate-row" *ngIf="canView(page.name.default)">
+    <input type="text" [(ngModel)]="page.name.default" readonly>
+    <input type="text" [(ngModel)]="page.name[targetLanguage]">
+  </div>
+  <div class="page-questions-container" *ngFor="let question of page.elements">
+    <div class="translate-row" *ngIf="canView(question.name.default)">
+      <input type="text" [(ngModel)]="question.name.default" readonly>
+      <input type="text" [(ngModel)]="question.name[targetLanguage]">
+    </div>
+    <ng-container *ngFor="let answer of question.answers">
+      <div class="translate-row" *ngIf="canView(answer.value.default)">
+        <input type="text" [(ngModel)]="answer.value.default" readonly>
+        <input type="text" [(ngModel)]="answer.value[targetLanguage]">
+      </div>
+    </ng-container>
+  </div>
+</div>

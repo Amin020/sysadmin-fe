@@ -1,0 +1,152 @@
+<router-outlet></router-outlet>
+
+<!--app-new-uom
+  *ngIf="isNewUOM"
+  [appId]="this.app?.id"
+  (toggleNewUOM)="toggleShowNewUOM($event)"
+>
+</app-new-uom-->
+
+<div>
+  <!-- Basic example -->
+  <div class="col-12">
+    <h4 class="pageTitle text-uppercase" color="grey">
+      App Details
+      <span *ngIf="app?.shortName" class="muted">
+        ( {{ app.shortName }} )
+      </span>
+    </h4>
+  </div>
+  <div class="row">
+    <div class="col-sm-2 px-4">
+      <a mdbBtn color="primary" (click)="backToPreviousPage()" mdbWavesEffect>
+        Back
+      </a>
+    </div>
+    <div
+      class="col-sm-10 px-4 text-right"
+      *ngIf="app && app.id && !app.childs.length"
+    >
+      <a
+        mdbBtn
+        color="primary"
+        [routerLink]="['/apps/new', this.app.id]"
+        mdbWavesEffect
+      >
+        New Child
+      </a>
+    </div>
+    <div
+      class="col-sm-10 px-4 text-right"
+      *ngIf="app && app.id && app.childs.length"
+    >
+      <a
+        mdbBtn
+        color="primary"
+        [routerLink]="['/apps', this.app?.id]"
+        mdbWavesEffect
+      >
+        View Childs
+      </a>
+    </div>
+  </div>
+
+  <div class="card card-cascade narrower">
+    <!--Card image-->
+    <div
+      class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-3 mb-3 d-flex justify-content-left align-items-left"
+    >
+      <h6 class="white-text font-weight-bold text-uppercase mb-0 mr-auto">
+        UOMs
+      </h6>
+      <a
+        mdbBtn
+        size="sm"
+        color="primary"
+        *ngIf="app && app.id"
+        [routerLink]="['/apps/details', this.app?.id, 'new-uom']"
+        rounded="true"
+        mdbWavesEffect
+      >
+        <mdb-icon fas icon="plus"></mdb-icon> New UOM
+      </a>
+    </div>
+    <!--/Card image-->
+    <div class="px-4 text-center">
+      <!--Table-->
+      <table class="table table-hover table-responsive-md mb-0">
+        <!--Table head-->
+        <thead>
+          <tr>
+            <th class="th-lg">#</th>
+            <th class="th-lg">UOM ID</th>
+            <th class="th-lg">UOM Description</th>
+            <th class="th-lg">UOM ISO</th>
+          </tr>
+        </thead>
+        <!--Table head-->
+
+        <!--Table body-->
+        <tbody>
+          <tr  *ngFor="let uom of app?.sysUoms">
+            <td>{{ uom.id }}</td>
+            <td>{{ uom.uomID }}</td>
+            <td>{{ uom.uomDesc }}</td>
+            <td>{{ uom.isoUom }}</td>
+          </tr>
+        </tbody>
+        <!--Table body-->
+      </table>
+    </div>
+    <!--Bottom Table UI-->
+  </div>
+  <hr class="my-5" />
+
+  <!-- App Features -->
+  <div class="card card-cascade narrower">
+    <!--Card image-->
+    <div
+      class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-3 mb-3 d-flex justify-content-left align-items-left"
+    >
+      <h6 class="white-text font-weight-bold text-uppercase mb-0 mr-auto">
+        Features
+      </h6>
+      <a
+      mdbBtn size="sm"
+      color="primary"
+      rounded="true"
+      *ngIf="app && app.id"
+      [routerLink]="['/apps/details', this.app?.id, 'new-feature']"
+       mdbWavesEffect
+      >
+        <mdb-icon fas icon="plus"></mdb-icon> New Feature
+      </a>
+    </div>
+    <!--/Card image-->
+    <div class="px-4 text-center">
+      <!--Table-->
+      <table class="table table-hover table-responsive-md mb-0">
+        <!--Table head-->
+        <thead>
+          <tr>
+            <th class="th-lg">#</th>
+            <th class="th-lg">Feature Description</th>
+          </tr>
+        </thead>
+        <!--Table head-->
+
+        <!--Table body-->
+        <tbody>
+          <tr *ngFor="let feature of app?.sysAppFeatures">
+            <td>{{ feature.id }}</td>
+            <td>{{ feature.sysFeature.desc }}</td>
+          </tr>
+        </tbody>
+        <!--Table body-->
+      </table>
+    </div>
+    <!--Bottom Table UI-->
+  </div>
+</div>
+<app-list-app-desc></app-list-app-desc>
+<app-versions-list></app-versions-list>

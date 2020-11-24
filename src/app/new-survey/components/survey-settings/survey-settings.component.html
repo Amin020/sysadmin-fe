@@ -1,0 +1,318 @@
+<div class="survey-settinfs-container">
+
+  <mdb-accordion [multiple]="true">
+    <mdb-accordion-item>
+      <mdb-accordion-item-head [indicator]="false">
+        <div class="section-header">
+          Basic information
+        </div>
+      </mdb-accordion-item-head>
+      <mdb-accordion-item-body>
+        <section class="basic-info">
+          <div class="survey-setting-content">
+            <div class="survey-row">
+              <div class="dowpdown-input-container">
+                <div class="input-title">
+                  Department name
+                </div>
+                <div class="dowpdown-input dropdown" mdbDropdown>
+                  <select class="browser-default custom-select " [(ngModel)]="settings.department">
+                    <option *ngFor='let item of departments' [value]='item.id'>{{item.shortName}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="dowpdown-input-container">
+                <div class="input-title">
+                  Status
+                </div>
+                <select class="browser-default custom-select " [(ngModel)]="settings.status" disabled>
+                  <option value="INITIATED">{{ 'surveyPage.INITIATED' | translate }}</option>
+                  <option value="PUBLISHED">{{ 'surveyPage.PUBLISHED' | translate }}</option>
+                  <option value="CLOSED">{{ 'surveyPage.CLOSED' | translate }} </option>
+                </select>
+              </div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-input-container">
+                <div class="input-title">
+                  Name
+                </div>
+                <input type="text" [(ngModel)]="settings.name">
+              </div>
+              <div class="survey-input-container">
+                <div class="input-title">
+                  Title
+                </div>
+                <input type="text" [(ngModel)]="settings.title.default">
+              </div>
+            </div>
+            <div *ngIf="!settings.public" class="survey-row">
+              <!-- <div class="dowpdown-input-container">
+                <div class="input-title">
+                  Survey theme
+                </div>
+                <div class="dowpdown-input dropdown" mdbDropdown>
+                  <select class="browser-default custom-select " [(ngModel)]="settings.theme">
+                    <option *ngFor='let item of themes' [value]='item'>{{item}}
+                    </option>
+                  </select>
+                </div>
+              </div> -->
+              <div *ngIf="!settings.public" class="dowpdown-input-container">
+                <div class="input-title">
+                  Allowed Group
+                </div>
+                <div class="dowpdown-input dropdown" mdbDropdown>
+                  <select class="browser-default custom-select " [(ngModel)]="settings.group">
+                    <option *ngFor='let item of groups' [value]='item.id'>{{item.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-checkbox-container">
+                <div class="survey-column" style="width: 45%;">
+                  <div class="input-title">
+                    Available to public
+                  </div>
+                  <div class="checkbox-group-container">
+                    <mdb-checkbox [(ngModel)]="settings.public" [checked]="settings.public">
+                      {{settings.public ? 'Yes' : 'No'}}</mdb-checkbox>
+                  </div>
+                </div>
+                <div class="survey-column" style="width: 55%;">
+                  <div class="input-title">
+                    Allow many submissions
+                  </div>
+                  <div class="checkbox-group-container">
+                    <mdb-checkbox [(ngModel)]="settings.manySubmition" [checked]="settings.manySubmition ">
+                      {{settings.manySubmition ? 'Yes' : 'No'}}
+                    </mdb-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="survey-row">
+              <div class="survey-text-area-container">
+                <div class="input-title">
+                  Completed survey template
+                </div>
+                <textarea [(ngModel)]="settings.completeMessage.default"></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+      </mdb-accordion-item-body>
+    </mdb-accordion-item>
+    <mdb-accordion-item>
+      <mdb-accordion-item-head [indicator]="false">
+        <div class="section-header">
+          Description
+        </div>
+      </mdb-accordion-item-head>
+      <mdb-accordion-item-body>
+        <section class="description-section">
+          <div class="full-width">
+            <angular-editor [(ngModel)]="settings.description" [config]="editorConfig" class=" col col-sm-9" type="text"
+              mdbInput>
+            </angular-editor>
+          </div>
+        </section>
+      </mdb-accordion-item-body>
+    </mdb-accordion-item>
+    <mdb-accordion-item>
+      <mdb-accordion-item-head [indicator]="false">
+        <div class="section-header">
+          Email invitation template
+        </div>
+      </mdb-accordion-item-head>
+      <mdb-accordion-item-body>
+        <section class="email-invitation-template full-width">
+          <angular-editor [(ngModel)]="settings.emailInvitationTemplate" [config]="editorConfig" class=" col col-sm-9"
+            type="text" mdbInput>
+          </angular-editor>
+        </section>
+      </mdb-accordion-item-body>
+    </mdb-accordion-item>
+    <mdb-accordion-item>
+      <mdb-accordion-item-head [indicator]="false">
+        <div class="section-header">
+          Email completion template
+        </div>
+      </mdb-accordion-item-head>
+      <mdb-accordion-item-body>
+        <section class="email-completion-template full-width">
+          <angular-editor [(ngModel)]="settings.emailCompletionTemplate" [config]="editorConfig" class=" col col-sm-9"
+            type="text" mdbInput>
+          </angular-editor>
+        </section>
+      </mdb-accordion-item-body>
+    </mdb-accordion-item>
+    <mdb-accordion-item>
+      <mdb-accordion-item-head [indicator]="false">
+        <div class="section-header">
+          Logo
+        </div>
+      </mdb-accordion-item-head>
+      <mdb-accordion-item-body>
+        <section class="q-image-container">
+          <div class="image-header">
+            <span class="image-header-text">
+              Upload a logo image
+            </span>
+            <button class="delete-image" [disabled]="!settings.logo"
+              (click)="logoUploader.value = ''; settings.logo = undefined">Delete</button>
+            <button class="change-image" [disabled]="!settings.logo" (click)="logoUploader.click()">Change</button>
+          </div>
+          <div class="image-container">
+            <div class="browse-image-container">
+              <input type="file" #logoUploader class="image-uploader"
+                (change)="uploadImage(logoUploader.files, 'logo', logoUploader)">
+              <span class="text">
+                Drop your image here, or
+                <span class="active-text">
+                  browse
+                </span>
+              </span>
+              <div class="info-container">
+                <svg-icon class="info-icon" src="./assets/icons/info.svg"></svg-icon>
+                <span class="info-text">Supports JPG, PNG</span>
+              </div>
+              <!-- <span class="image-name" *ngIf="question.image">{{question.image.name}}</span> -->
+            </div>
+            <ng-container *ngIf="settings.logo; else ImagePreviewTemplate">
+              <img *ngIf="settings.logo" class="image-content" [src]="settings.logo" alt="">
+            </ng-container>
+            <ng-template #ImagePreviewTemplate>
+              <div class="image-preview">
+                Image Preview
+              </div>
+            </ng-template>
+
+          </div>
+        </section>
+        <section class="logo-section"></section>
+      </mdb-accordion-item-body>
+    </mdb-accordion-item>
+    <mdb-accordion-item>
+      <mdb-accordion-item-head [indicator]="false">
+        <div class="section-header">
+          Background image
+        </div>
+      </mdb-accordion-item-head>
+      <mdb-accordion-item-body>
+        <section class="q-image-container">
+          <div class="image-header">
+            <span class="image-header-text">
+              Upload a background image
+            </span>
+            <button class="delete-image" style="margin-inline-start: 15%;" [disabled]="!settings.background"
+              (click)="backgroundUploader.value = ''; settings.background = undefined">Delete</button>
+            <button class="change-image" [disabled]="!settings.background"
+              (click)="backgroundUploader.click()">Change</button>
+          </div>
+          <div class="image-container">
+            <div class="browse-image-container">
+              <input type="file" #backgroundUploader class="image-uploader"
+                (change)="uploadImage(backgroundUploader.files, 'background', backgroundUploader)">
+              <span class="text">
+                Drop your image here, or
+                <span class="active-text">
+                  browse
+                </span>
+              </span>
+              <div class="info-container">
+                <svg-icon class="info-icon" src="./assets/icons/info.svg"></svg-icon>
+                <span class="info-text">Supports JPG, PNG</span>
+              </div>
+              <!-- <span class="image-name" *ngIf="question.image">{{question.image.name}}</span> -->
+            </div>
+            <ng-container *ngIf="settings.background; else ImagePreviewTemplate">
+              <img *ngIf="settings.background" class="image-content" [src]="settings.background" alt="">
+            </ng-container>
+            <ng-template #ImagePreviewTemplate>
+              <div class="image-preview">
+                Image Preview
+              </div>
+            </ng-template>
+
+          </div>
+        </section>
+      </mdb-accordion-item-body>
+    </mdb-accordion-item>
+    <mdb-accordion-item>
+      <mdb-accordion-item-head [indicator]="false">
+        <div class="section-header">
+          Reminder Settings
+        </div>
+      </mdb-accordion-item-head>
+      <mdb-accordion-item-body>
+        <section class="reminder-settings-section">
+          <div class="enable-reminder-container">
+            <span class="reminder-text">Auto reminder enabled</span>
+            <mdb-checkbox [(ngModel)]="settings.reminder.enable" [checked]="settings.reminder.enable">
+            </mdb-checkbox>
+          </div>
+          <div *ngIf="settings.reminder.enable" class="reminer-options">
+            <div class="reminder-option">
+              <div class="reminder-option-title">Occurs</div>
+              <div class="reminder-option-list dowpdown-input dropdown" mdbDropdown>
+                <select class="browser-default custom-select " [(ngModel)]="settings.reminder.selectedOccurs">
+                  <option *ngFor='let item of occurs' [value]='item'>{{item}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="reminder-option">
+              <ng-container *ngIf="settings.reminder.selectedOccurs === 'Weekly'; else MonthlyOuccrs">
+                <div class="reminder-option-title">Reoccurs every ( weeks )</div>
+                <div class="reminder-option-list dowpdown-input dropdown" mdbDropdown>
+                  <select class="browser-default custom-select " [(ngModel)]="settings.reminder.selectedReoccurs">
+                    <option *ngFor='let item of [0,1,2,3,4]' [value]='item'>{{item}}
+                    </option>
+                  </select>
+                </div>
+              </ng-container>
+              <ng-template #MonthlyOuccrs>
+                <div class="reminer-options">
+                  <div class="reminder-option">
+                    <div class="reminder-option-title">Day</div>
+                    <div class="reminder-option-list dowpdown-input dropdown" mdbDropdown>
+                      <select class="browser-default custom-select "
+                        [(ngModel)]="settings.reminder.selectedReoccursDay">
+                        <option
+                          *ngFor='let item of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30];'
+                          [value]='item'>{{item}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="reminder-option">
+                    <div class="reminder-option-title">Of every month(s)</div>
+                    <div class="reminder-option-list dowpdown-input dropdown" mdbDropdown>
+                      <select class="browser-default custom-select "
+                        [(ngModel)]="settings.reminder.selectedReoccursMonth">
+                        <option *ngFor='let item of [1,2,3,4,5,6,7,8,9,10,11,12]' [value]='item'>{{item}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+          <div *ngIf="settings.reminder.enable && settings.reminder.selectedOccurs === 'Weekly'"
+            class="reminder-selected-days">
+            <span class="on-text">On</span>
+            <mdb-checkbox (change)="toggleDaySelection(item)" [checked]="isDaySelected(item)" *ngFor="let item of days"
+              [inline]="true">
+              {{item.name}}
+            </mdb-checkbox>
+          </div>
+        </section>
+      </mdb-accordion-item-body>
+    </mdb-accordion-item>
+  </mdb-accordion>
+</div>

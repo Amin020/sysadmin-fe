@@ -1,0 +1,82 @@
+<div class="on-going-exam-container">
+  <div class="main-header">
+    <div class="left-header-section">
+      <svg-icon src="assets/icons/work-24px.svg"></svg-icon>
+      <span>Ongoing Exams</span>
+    </div>
+    <div class="right-header-section">
+      <div class="info-container">
+        <svg-icon class="info-icon" src="assets/icons/info.svg"></svg-icon>
+        <span>If the exam's time finishes, exam will be submitted automatically.</span>
+      </div>
+      <div *ngIf="exam?.settings?.addRemark" class="info-container">
+        <svg-icon class="bookmark-icon" src="assets/icons/book-mark.svg"></svg-icon>
+        <span>Means to bookmark questions that you want to review later before submitting the test.</span>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!isLoading" class="exam-container">
+    <div class="exam-header">
+      <div class="left-exam-header">
+        <span class="exam-header-title">{{exam.settings.title.default}}</span>
+        <span class="exam-question-numbers">Total Questions: {{exam.settings.totalQuestion}}</span>
+      </div>
+      <div class="right-exam-header">
+        <span class="exam-time-title">Exam Time:</span>
+        <span class="exam-time-text">{{counter | formatTime}}
+        </span>
+      </div>
+    </div>
+
+    <!-- start exam content -->
+    <div class="exam-contemt-container">
+
+      <div class="pages-container">
+        <div class="page" (click)="activePageIndex = pageIndex"
+          [ngClass]="{'active-page': pageIndex === activePageIndex}"
+          *ngFor="let page of exam.pages; let pageIndex = index">
+          {{page.name.default}}
+        </div>
+      </div>
+
+      <app-student-questions [questions]="exam.pages[activePageIndex].elements" [opener]="'student'"
+        [totalQuestion]="exam.settings.totalQuestion" [showRemark]="exam.settings.addRemark"></app-student-questions>
+    </div>
+    <!-- end exam content -->
+
+    <footer class="exam-footer">
+      <button class="review-bookmark-btn" *ngIf="exam.settings.addRemark"
+        (click)="getRemarkedQuestion().length ? basicModal.show() : false">
+        Review Bookmarks
+      </button>
+      <button (click)="getRemarkedQuestion().length ? basicModal.show() : submitExam()" class="submit-exam-btn">
+        Submit Exam Now
+      </button>
+    </footer>
+  </div>
+  <app-loader *ngIf="isLoading"></app-loader>
+</div>
+
+
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <span class="modal-title">Review Bookmarks</span>
+      </div>
+      <div class="modal-body">
+        <app-student-questions [questions]="getRemarkedQuestion()" [totalQuestion]="exam.settings.totalQuestion"
+          [showRemark]="false"></app-student-questions>
+      </div>
+      <div class="modal-footer">
+        <button class="cancel-btn" (click)="basicModal.hide()">Cancel</button>
+        <button class="review-bookmark-btn" (click)="basicModal.hide()">Back to exam</button>
+        <button class="submit-exam-btn" (click)="basicModal.hide();submitExam()">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+</div>

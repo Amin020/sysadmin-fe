@@ -1,0 +1,54 @@
+<div class="main-container">
+  <div class="page-header">
+    <div class="header-element">
+      <svg-icon src="assets/icons/add.svg" class="header-icon"></svg-icon>
+      <span class="header-text">Add Survey</span>
+    </div>
+    <div class="side-acrions">
+      <div class="action-element-container" *ngFor="let action of actions; let index = index; let last = last"
+        [ngClass]="{'active-element' : index + 1 === activeStep}">
+        <div class="action-name" (click)="(index + 1 ) >= activeStep ?  false :  activeStep =  index + 1"
+          [ngClass]="{'previous-name': index + 1  < activeStep, 'active-name' : index + 1 === activeStep}">
+          {{(index + 1) + '. ' +action.name + (last ? '': ' *')}}
+        </div>
+        <svg-icon class="check-icon" src="assets\icons\check.svg" [ngClass]="{'active-check': activeStep > (index +1)}">
+        </svg-icon>
+      </div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="exam-settings-header">
+      <div class="header-title">
+        <div class="title">
+          {{actions[activeStep - 1].name + (activeStep === actions.length ? '': ' *')}}
+        </div>
+        <div class="header-step">
+          Step {{activeStep}} of {{actions.length}}
+        </div>
+      </div>
+      <div *ngIf="actions[activeStep - 1].infoMessage.length" class="info-container">
+        <svg-icon class="info-icon" src="./assets/icons/info.svg"></svg-icon>
+        <span class="info-text">{{actions[activeStep - 1].infoMessage}}</span>
+      </div>
+    </div>
+    <ng-container [ngSwitch]="activeStep">
+      <ng-container *ngSwitchCase="1">
+        <app-survey-settings [settings]="survey.settings"></app-survey-settings>
+      </ng-container>
+      <ng-container *ngSwitchCase="2">
+        <app-question-container [pages]="survey.pages" [isSurvey]="true" [examSettings]="survey.settings">
+        </app-question-container>
+      </ng-container>
+      <ng-container *ngSwitchCase="3">
+        <app-survey-translate [survey]="survey"></app-survey-translate>
+      </ng-container>
+    </ng-container>
+    <footer>
+      <button class="back-btn" [ngClass]="{'active-back': activeStep > 1}"
+        [disabled]="activeStep === 1 || actions[activeStep - 1].isBackDisabled()"
+        (click)="actions[activeStep - 1].backAction()">{{actions[activeStep - 1].backActionName}}</button>
+      <button class="create-btn"
+        (click)="actions[activeStep - 1].action()">{{actions[activeStep - 1].nextActionName}}</button>
+    </footer>
+  </div>
+</div>

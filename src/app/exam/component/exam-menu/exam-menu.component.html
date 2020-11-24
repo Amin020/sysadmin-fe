@@ -1,0 +1,68 @@
+<div class="menu-container" [ngClass]="{'small-menu': isCollapsed}">
+  <svg-icon class="logo" [ngClass]="{'collapsed-logo': isCollapsed}" src="assets/icons/logo.svg"></svg-icon>
+  <div class="main-menu-options">
+    <div class="menu-item" [ngClass]="{'active': false}" (click)="navigate('')">
+      <svg-icon src="assets/icons/dashboard.svg" class="menu-icon"></svg-icon>
+      <span *ngIf="!isCollapsed" class="menu-item-text">Dashboard</span>
+    </div>
+    <mdb-accordion [multiple]="false">
+      <mdb-accordion-item [collapsed]="!activeUrlType.includes('survey')">
+        <mdb-accordion-item-head [indicator]="true">
+          <div class="header-menu-item"
+            [ngClass]="{'active': ['/survey/create-survey', '/survey'].includes(activeUrlType)}">
+            <svg-icon src="assets/icons/survey.svg" class="menu-icon"></svg-icon>
+            <span *ngIf="!isCollapsed" class="menu-item-text">Survey Management</span>
+          </div>
+        </mdb-accordion-item-head>
+        <mdb-accordion-item-body>
+          <div class="menu-item" [ngClass]="{'active': false}" (click)="navigate('')">
+            <svg-icon src="assets/icons/chart.svg" class="menu-icon"></svg-icon>
+            <span *ngIf="!isCollapsed" class="menu-item-text">All Surveys</span>
+          </div>
+          <div class="menu-item" [ngClass]="{'active': activeUrlType.includes('create-survey')}"
+            (click)="navigate('/survey/create-survey')">
+            <svg-icon src="assets/icons/add.svg" style="width: 14px;height: 14px;" class="menu-icon"></svg-icon>
+            <span *ngIf="!isCollapsed" class="menu-item-text">Add Survey</span>
+          </div>
+        </mdb-accordion-item-body>
+      </mdb-accordion-item>
+      <mdb-accordion-item [collapsed]="!activeUrlType.includes('exam')">
+        <mdb-accordion-item-head [indicator]="true">
+          <div class="header-menu-item" [ngClass]="{'active': activeUrlType.includes('exam')}">
+            <svg-icon src="assets/icons/exam-settings.svg" class="menu-icon"></svg-icon>
+            <span *ngIf="!isCollapsed" class="menu-item-text">Exam Management</span>
+          </div>
+        </mdb-accordion-item-head>
+        <mdb-accordion-item-body>
+          <div class="menu-item" [ngClass]="{'active': activeUrlType === '/exam/create-exam'}"
+            (click)="navigate('/exam/create-exam')">
+            <svg-icon src="assets/icons/add.svg" style="width: 14px;height: 14px;" class="menu-icon"></svg-icon>
+            <span *ngIf="!isCollapsed" class="menu-item-text">Add Exam</span>
+          </div>
+          <div class="menu-item"
+            [ngClass]="{'active': activeUrlType.includes('/exam/') && !activeUrlType.includes('create-exam')}"
+            (click)="navigate('/exam')">
+            <svg-icon src="assets/icons/work-20px.svg" class="menu-icon"></svg-icon>
+            <span *ngIf="!isCollapsed" class="menu-item-text">Ongoing Exams</span>
+          </div>
+        </mdb-accordion-item-body>
+      </mdb-accordion-item>
+    </mdb-accordion>
+
+    <div class="menu-item" [ngClass]="{'active': false}" (click)="navigate('')">
+      <svg-icon src="assets/icons/settings-24px.svg" class="menu-icon"></svg-icon>
+      <span *ngIf="!isCollapsed" class="menu-item-text">Account Settings</span>
+    </div>
+  </div>
+
+  <div class="logout-action">
+    <div class="menu-item" [ngClass]="{'active': false}" style="margin-bottom: 30px;" (click)="navigate('/home')">
+      <svg-icon src="assets/icons/home-24px.svg" class="menu-icon"></svg-icon>
+      <span *ngIf="!isCollapsed" class="menu-item-text">Back to home</span>
+    </div>
+    <div class="menu-item" [ngClass]="{'active': false}" (click)="logout()">
+      <svg-icon src="assets/icons/logout-24px.svg" class="menu-icon"></svg-icon>
+      <span *ngIf="!isCollapsed" class="menu-item-text">Logout</span>
+    </div>
+  </div>
+</div>

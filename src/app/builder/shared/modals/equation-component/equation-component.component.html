@@ -1,0 +1,20 @@
+<div class="equation-items">
+  <div class="input-group mb-3">
+      <select class="custom-select" [(ngModel)]="selectedQuestion" >
+        <option *ngFor="let question of questions" [ngValue]="question.name">{{question.name}}</option>
+      </select>
+  </div>
+  <div class="input-group mb-3">
+      <select class="custom-select" [(ngModel)]="selectedOption" (change)="operatorChange()" >
+          <option *ngFor="let option of options" [ngValue]="option">{{option.key}}</option>
+      </select>
+  </div>
+  <div class="input-group mb-3">
+      <input type="text" class="form-control" [disabled]="selectedOption && selectedOption.disableInput" #textInput [(ngModel)]="equationValue">
+  </div>
+  
+  <button class="input-group-text"  type="button" (click)="addEquation()">Add</button>
+</div>
+
+<textarea [(ngModel)]="value" [mentionConfig]="mentionConfig"  class="form-control" (ngModelChange)="emit()" >
+</textarea>

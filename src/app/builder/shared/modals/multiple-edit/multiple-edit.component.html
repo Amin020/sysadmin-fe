@@ -1,0 +1,44 @@
+<div class="multiple-edit-component">
+  <div>{{item[titleProp]}}</div>
+      <mdb-accordion [multiple]="true" aria-multiselectable="true">
+          <mdb-accordion-item  [collapsed]="true" *ngFor="let option of editOptions; let i = index">
+              <mdb-accordion-item-head> {{ option.displayName }} </mdb-accordion-item-head>
+              <mdb-accordion-item-body> 
+                  <div #test *ngIf="option.type">
+                      <div [ngSwitch]="option.type">
+                         <div   *ngSwitchCase="'equation'"> 
+                                  <app-equation-component [prop]="option.prop" [value]="item[option.prop]" [question]="question" [showfirst]="true"></app-equation-component>  
+                              <!-- <app-equation-component [prop]="option.prop" [value]="item[option.prop]" [question]="question" [showfirst]="true" (outputValue)="editItem($event, i)"></app-equation-component>  -->
+                        </div>
+                         <div *ngSwitchCase="'validators'">
+                            <app-validator-component [value]="item[option.prop]" [question]="question" [prop]="option.prop" ></app-validator-component>
+                         </div>
+
+                         <div  *ngSwitchCase="'general'">
+                             <app-general-component [value]="option"  [prop]="option.prop" > </app-general-component>
+                         </div>
+
+                         <div  *ngSwitchCase="'choicesCreation'">
+                             <app-choices-creation-component [value]="item[option.prop]" [prop]="option.prop" [question]="question" [extraItems]="option.extraItems"></app-choices-creation-component>                        
+                         </div>
+
+                        <div  *ngSwitchCase="'choicesByUrl'">
+                             <app-choices-by-url-component [value]="item[option.prop]" [prop]="option.prop" [question]="question" ></app-choices-by-url-component>
+                        </div>
+                        
+                        <div  *ngSwitchCase="'textArea'">
+                            <app-text-area-component [value]="item[option.prop]" [prop]="option.prop" > </app-text-area-component>
+                        </div>
+                        
+                        <div  *ngSwitchCase="'expression'">
+                            <app-expression-component [value]="item[option.prop]" [prop]="option.prop" [question]="question"> </app-expression-component>
+                        </div>
+                         
+                      </div>
+                   </div>  
+              </mdb-accordion-item-body>
+          </mdb-accordion-item>
+      </mdb-accordion>
+      
+</div> 
+

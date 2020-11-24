@@ -1,0 +1,59 @@
+<h3 class="text-center">
+    Add Question Bank
+</h3>
+<form [formGroup]="firstFormGroup" class="border border-light p-5">
+    <div class="form-row">
+        <div class="col">
+            <div class="md-form">
+                <input mdbInput type="text" name="questionName" class="form-control" formControlName="questionName">
+                <label for="questionName">Question Name<span class="error">*</span></label>
+                <mdb-error *ngIf="questionName.invalid && (questionName.dirty || questionName.touched)">
+                    Input invalid</mdb-error>
+                <mdb-success *ngIf="questionName.valid && (questionName.dirty || questionName.touched)">
+                    Input valid</mdb-success>
+            </div>
+        </div>
+        <div class="col">
+            <div class="md-form">
+                <input type="text" class="form-control" mdbInput formControlName="category">
+                <label for="">Category<span class="error">*</span></label>
+                <mdb-error *ngIf="category.invalid && (category.dirty || category.touched)">
+                    Input invalid</mdb-error>
+                <mdb-success *ngIf="category.valid && (category.dirty || category.touched)">
+                    Input valid</mdb-success>
+            </div>
+        </div>
+        <div class="col">
+            <div class="md-form">
+                <textarea type="text" id="form7" formControlName="questionBody" class="md-textarea form-control"
+                    mdbInput readonly></textarea>
+                <!-- <input type="text" class="form-control" mdbInput readonly> -->
+                <label for="form7">Question Body <span class="error">*</span></label>
+                <mdb-error *ngIf="questionBody.invalid && (questionBody.dirty || questionBody.touched)">
+                    Input invalid</mdb-error>
+                <mdb-success *ngIf="questionBody.valid && (questionBody.dirty || questionBody.touched)">
+                    Input valid</mdb-success>
+            </div>
+        </div>
+        <div class="col" style="padding-top: 20px;">
+            <button mdbBtn class="btn-md" (click)='uploadQuestion("question-sample.csv")' color="default"
+                mdbWavesEffect>
+                Export
+            </button>
+            <span class="import-container">
+                <button mdbBtn #file color="success" mdbWavesEffect class='btn-md' placement="top">Import
+                    <!-- <mdb-icon fas icon="upload" class="text-white"></mdb-icon> -->
+                </button>
+                <input #myInput id="file" name="file" accept=".xlsx, .xls, .csv" (change)="downloadSample($event)"
+                    type="file" />
+            </span>
+        </div>
+    </div>
+    <div class="text-center">
+        <button mdbBtn type="submit" class="btn text-white dark-blu" (click)='submit()'
+            [disabled]='loading || firstFormGroup.invalid' mdbWavesEffect>
+            <span class="spinner-border spinner-border-sm" role="status" [hidden]='!loading' aria-hidden="true"></span>
+            Create
+        </button>
+    </div>
+</form>

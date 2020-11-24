@@ -1,0 +1,38 @@
+@media (min-width: 992px) {
+  .fixed-sn main {
+    margin-inline-end: 0% !important;
+    margin-inline-start: 0% !important;
+  }
+}
+
+.app-page-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh;
+  background: var(--unnamed-color-f7f9fc) 0% 0% no-repeat padding-box;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.app-content {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 50px;
+  overflow: auto;
+}
+
+.direction {
+  direction: rtl;
+}
+.padding-top {
+  padding-top: 5rem;
+}
+header {
+  height: 100px !important;
+}

@@ -1,0 +1,110 @@
+.user-section{
+    background: #F7F7F7;
+    border: 1px solid #e0e0e0;
+    padding: 5px;
+    margin: 10px 0;
+}
+.md-form{
+    margin-top: 0;
+}
+.groupBox{
+    cursor: pointer;
+    background-color: #F7F7F7;
+    color: #0062cc !important;
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    margin-bottom: 0px;
+    label{
+        color: #0062cc;
+        text-align: center !important;
+        left: 7%;
+    }
+}
+.users_container{
+    display: contents;
+}
+.accordion .card {
+    .card-body{
+        padding-bottom: .5rem;
+        .table{
+            margin-bottom: 5px;
+        }
+    }
+    .card-header{
+        padding: .5rem !important;
+    }
+}
+.card-header a h5 {
+    padding: 0 !important;
+    .rotate-icon{
+        display: none !important;
+    }
+    label{
+        margin-bottom: 0;
+    }
+    .form-control
+    {
+        margin-bottom: 0;
+    }
+}
+.alert{
+    margin-bottom: 5px;
+}
+.usersTable 
+{
+    /* .user_body {
+        max-height: 160px;
+        overflow-y: scroll;
+    } */
+    
+}
+.md-form input.ng-invalid{
+    border-bottom: 1px solid red !important;
+}
+    
+.img-box
+{
+    margin-top: 10%;
+    .logoImg{
+        border: 1px solid #dddddd;
+        text-align: center;
+        vertical-align: middle;
+        width: 100%;
+        display: block;
+        min-height: 150px;
+        padding: 15px;
+        img{
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: fill;
+        }
+    }
+}
+.group_btn 
+{
+    padding-top: .4rem;
+    padding-bottom: .4rem;
+    .btn{
+        margin: 2px;
+        text-align: center;
+        border-radius: 5px;
+        display: block;
+    }
+}
+.action_buttons{
+    .btn{
+        display: inline-block
+    }
+}
+table.table {
+    th,td{
+        padding-top: .2rem;
+         padding-bottom: .2rem;
+    }
+
+    .form-control{
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,59 @@
+<!--Form-->
+<div class="row justify-content-md-center align-items-center animated bounceInRight">
+  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 card  ">
+    <div class="card-body mt-2">
+      <!--Header-->
+      <div class="text-center">
+        <h3><img src="./assets/images/fullLogo.svg" width="250"></h3>
+        <hr class="hr-light">
+      </div>
+
+
+
+      <!---- Get Account Alias  -->
+      <div *ngIf="!accountAliasValisd">
+        <!--Body-->
+        <p class="text-capitalize text-black-50 font-small"></p>
+        <div class="md-form text-center">
+          <i class="fa fa-mail prefix"></i>
+          <input type="text" id="form2" class="form-control" [(ngModel)]="accountAlias" mdbInput>
+          <label for="form2">{{'login.accountAlias' | translate}} </label>
+        </div>
+
+        <div class="text-center">
+          <button mdbBtn class="dark-blu" mdbWavesEffect (click)="checkAccountAlias()">
+            {{'login.next' | translate}} </button>
+        </div>
+      </div>
+
+      <!--- Verify User -->
+      <div *ngIf="accountAliasValisd">
+        <form name="loginForm" (keyup.enter)='login()'>
+          <!--Body-->
+          <div class="md-form">
+            <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+            <input type="text" id="form2" class="form-control" [(ngModel)]="loggedUserObj.email" name="email" mdbInput>
+            <label for="form2">{{'login.email' | translate}}</label>
+          </div>
+          <div class="md-form">
+            <mdb-icon fas icon="lock" class="prefix"></mdb-icon>
+            <input type="password" id="form4" [(ngModel)]='loggedUserObj.password' name="password" class="form-control"
+              mdbInput>
+            <label for="form4">{{'login.password' | translate}}</label>
+          </div>
+          <div class="text-center">
+            <button mdbBtn type="submit" class="btn text-white dark-blu" (click)='login()'
+              [disabled]='loading || loggedUserObj.email == "" || loggedUserObj.password == ""' mdbWavesEffect>
+              <span class="spinner-border spinner-border-sm" role="status" [hidden]='!loading'
+                aria-hidden="true"></span>
+              {{'login.sign' | translate}}
+            </button>
+          </div>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+  <!--/.Form-->
+</div>

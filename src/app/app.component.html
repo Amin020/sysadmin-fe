@@ -1,0 +1,30 @@
+<div *ngIf="!isExamPage" [ngClass]="{'container-fluid':!isHomePage}">
+    <div class="{'row':!isHomePage}" [ngClass]="{'row': !isHomePage}">
+        <div [ngClass]='{"direction":lang == "ar", "col-sm-12":!isHomePage}' [dir]="lang == 'ar'?  'rtl': 'ltr'">
+            <div *ngIf="!isHomePage">
+                <app-side-panel></app-side-panel>
+                <app-header></app-header>
+            </div>
+
+            <div class="app-container" [ngClass]='{"padding-top":!isHomePage}'>
+                <app-loader></app-loader>
+                <router-outlet></router-outlet>
+            </div>
+
+            <!-- <footer class="page-footer center-on-small-only unique-color-dark  fixed-bottom">
+                    <div class="footer-copyright text-center py-1">{{ 'footer.text' | translate }}</div>
+                </footer> -->
+        </div>
+    </div>
+</div>
+
+<div *ngIf="isExamPage" class="app-page-container" [dir]="lang == 'ar'?  'rtl': 'ltr'">
+    <app-exam-menu class="exam-menu"></app-exam-menu>
+    <div class="app-container">
+        <app-exam-header class="exam-header"></app-exam-header>
+        <div class="app-content">
+            <app-loader></app-loader>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

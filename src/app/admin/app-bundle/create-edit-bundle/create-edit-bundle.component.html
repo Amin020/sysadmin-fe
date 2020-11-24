@@ -1,0 +1,123 @@
+<div *ngIf="bundle">
+  <mdb-card>
+    <mdb-card-body>
+      <mdb-card-title>
+        <h6 class="text-uppercase mb-0 mr-auto">
+          <ng-container *ngIf="!isUpdateMode; else updateHeaderTemp">
+            {{ 'feature-bundle.addBundle' | translate }}
+          </ng-container>
+          <ng-template #updateHeaderTemp>
+            {{ 'feature-bundle.editBundle' | translate }}: <strong> {{ bundle.name }} </strong>
+          </ng-template>
+        </h6>
+      </mdb-card-title>
+
+      <div class="d-flex justify-content-left p-2">
+
+        <!-- <div class="md-form m-3 ml-0">
+          <input #codeInput mdbInput type="text" name="bundle.code" [(ngModel)]="bundle.code" class="form-control"
+            [disabled]="bundle.status!='DRAFT' && isUpdateMode">
+          <label for="form1" (click)="codeInput.focus()"> {{ 'feature-bundle.code' | translate }} </label>
+        </div> -->
+
+        <div class="md-form m-3 ml-0">
+          <input #nameInput mdbInput type="text" name="bundle.name" [(ngModel)]="bundle.name" class="form-control"
+            [disabled]="bundle.status!='DRAFT' && isUpdateMode">
+          <label for="form1" (click)="nameInput.focus()"> {{ 'feature-bundle.name' | translate }} </label>
+        </div>
+
+        <div class="md-form m-3 ml-0">
+          <mdb-select [options]="bundleTypeList" [(ngModel)]="bundle.type"
+            [disabled]="bundle.status!='DRAFT' && isUpdateMode" [placeholder]="'feature-bundle.selectType' | translate">
+          </mdb-select>
+          <label for=" form1" class="active"> {{ 'feature-bundle.type' | translate }} </label>
+        </div>
+
+        <div class="md-form m-3 ml-0">
+          <mdb-date-picker name="mydate" [disabled]="bundle.status!='DRAFT' && isUpdateMode"
+            [options]="myDatePickerOptions" [placeholder]="'feature-bundle.selectedDate' | translate" required>
+          </mdb-date-picker>
+          <label for="form1" class="active"> {{ 'feature-bundle.validDate' | translate }} </label>
+        </div>
+
+        <div class="md-form m-3 ml-0">
+          <mdb-select [options]="bundleStatusList" [(ngModel)]="bundle.status"
+            [placeholder]="'feature-bundle.selectStatus' | translate"></mdb-select>
+          <label for="form1" class="active"> {{ 'feature-bundle.status' | translate }} </label>
+        </div>
+
+      </div>
+      <div class="d-flex justify-content-right">
+        <button (click)="backToPreviousPage()" mdbBtn class="grey btn-md"> {{ 'common.cancel' | translate }} </button>
+        <button (click)="saveBundle()" mdbBtn color="primary" class="btn-md">
+          {{ 'common.save' | translate }} <span *ngIf="saveloading">... </span>
+        </button>
+      </div>
+    </mdb-card-body>
+  </mdb-card>
+  <div class="card card-cascade narrower p-4">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h4 class="mb-4">
+          {{ 'feature-bundle.bundleAppList' | translate }}
+        </h4>
+      </div>
+      <div>
+        <div class="d-flex justify-content-end">
+          <mdb-select *ngIf="allApps.length > 0" [options]="allApps"
+            [placeholder]="'feature-bundle.addNewApp' | translate" [(ngModel)]="appToAdd">
+          </mdb-select>
+          <a mdbBtn size="sm" color="primary" rounded="true" mdbWavesEffect (click)='addBundleApp()'
+            style="min-width: 100px">
+            <mdb-icon fas icon="plus"></mdb-icon> {{ 'feature-bundle.add' | translate}}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <h4 class="text-center m-5 grey-text" *ngIf="apps.length == 0">
+      {{ 'feature-bundle.noAppsFound' | translate }}
+    </h4>
+    <mdb-accordion *ngFor="let app of appList  | keyvalue">
+      <mdb-accordion-item [collapsed]="true">
+        <mdb-accordion-item-head class="bold">{{app.key}}</mdb-accordion-item-head>
+        <mdb-accordion-item-body>
+          <a mdbBtn size="sm" color="danger" rounded="true" mdbWavesEffect (click)='removeBundleApp(app.key)'
+            style="    position: absolute; top: 0px; right: 50px;">
+            <mdb-icon fas icon="trash"></mdb-icon>
+            {{ 'feature-bundle.deleteApp' | translate }}
+          </a>
+          <table mdbTable>
+            <thead>
+              <tr>
+                <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr mdbTableCol *ngFor="let feature of app.value">
+                <th scope="row" class="text-truncate" style="max-width: 300px;">
+                  {{feature.sysAppFeature.sysFeature.desc}}</th>
+                <td>{{feature.sysAppFeature.sysFeature.sysUom.uomDesc}}</td>
+                <td>
+                  <mdb-checkbox [(ngModel)]="feature.sysAppFeature.showA"></mdb-checkbox>
+                </td>
+                <td><input type="number" name="value" [(ngModel)]="feature.value" class="form-control"
+                    style="max-width: 100px;"></td>
+                <td>
+                  <mdb-checkbox [(ngModel)]="feature.costly"></mdb-checkbox>
+                </td>
+                <td><input type="number" name="initialCost" [(ngModel)]="feature.initialCost" class="form-control"
+                    style="max-width: 100px;"></td>
+                <td>
+                  <mdb-checkbox [(ngModel)]="feature.keyFeature"></mdb-checkbox>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mdb-accordion-item-body>
+      </mdb-accordion-item>
+    </mdb-accordion>
+
+  </div>
+
+</div>

@@ -1,0 +1,48 @@
+
+<!-- App Descriptions -->
+<div class="card card-cascade narrower">
+  <!--Card image-->
+  <div
+    class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-3 mb-3 d-flex justify-content-left align-items-left"
+  >
+    <h6 class="white-text font-weight-bold text-uppercase mb-0 mr-auto">
+      Descriptions
+    </h6>
+    <a
+      mdbBtn
+      size="sm"
+      color="primary"
+      [routerLink]="['/apps/details', appId, 'new-desc']"
+      rounded="true"
+      mdbWavesEffect
+    >
+      <mdb-icon fas icon="plus"></mdb-icon> New Description
+    </a>
+  </div>
+  <!--/Card image-->
+  <div class="px-4">
+    <!--Table-->
+    <table class="table table-hover table-responsive-md mb-0">
+      <!--Table head-->
+      <thead>
+        <tr>
+          <th class="th-lg">#</th>
+          <th class="th-lg">App Description</th>
+          <th class="th-lg">App Language</th>
+        </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody>
+        <tr *ngFor="let description of descriptions">
+          <td>{{ description.id }}</td>
+          <td>{{ description.appDesc }}</td>
+          <td>{{ description.sysLanguage.name }}</td>
+        </tr>
+      </tbody>
+      <!--Table body-->
+    </table>
+  </div>
+  <!--Bottom Table UI-->
+</div>

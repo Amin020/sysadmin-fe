@@ -1,0 +1,57 @@
+<div class="questions-container" [dir]="examSettings.selectedLanguage === 'ar' ? 'rtl': 'ltr'">
+  <div class="pages-container" *ngIf="!examSettings.randomSequnce">
+    <div class="all-pages">
+      <div class="page-element" *ngFor="let page of pages; let index = index" (click)="changeActivePage(index)"
+        [ngClass]="{'active-page': activePageIndex === index}">
+        {{'Page '+ (index+1)}}
+        <svg-icon class="delete-icon" src="assets/icons/delete-24px.svg"
+          (click)="removePage(index);$event.stopPropagation()"></svg-icon>
+      </div>
+    </div>
+    <button class="add-new-page" (click)="addNewPage()">
+      <svg-icon class="add-icon" src="assets/icons/plus-icon.svg"></svg-icon>
+      Page
+    </button>
+  </div>
+
+  <div class="all-question-container">
+
+    <mdb-accordion [multiple]="true">
+      <mdb-accordion-item *ngFor="let question of pages[activePageIndex].elements;let index  = index"
+        class="question-item">
+        <mdb-accordion-item-head [indicator]="true"
+          [ngClass]="{'card-header-rtl': examSettings.selectedLanguage === 'ar'}">
+          <div class="question-name-header">
+            <div class="question-number">{{index + 1}}.</div>
+            <input type="text" class="question-name-input" [(ngModel)]="question.name.default"
+              (click)="$event.stopPropagation()" (keydown)="$event.stopPropagation()">
+            <svg-icon class="delete-icon" src="assets/icons/delete-24px.svg"
+              (click)="removeQuestion(index);$event.stopPropagation()"></svg-icon>
+          </div>
+        </mdb-accordion-item-head>
+        <mdb-accordion-item-body>
+          <app-question [isSurvey]="isSurvey" [question]="question"></app-question>
+        </mdb-accordion-item-body>
+      </mdb-accordion-item>
+    </mdb-accordion>
+  </div>
+
+  <div class="add-new-question-container">
+    <button class="add-new-question" (click)="addNewQuestion(questionType.radiogroup)">
+      <svg-icon class="add-icon" src="assets/icons/plus-icon.svg"></svg-icon>
+      Single Choice
+    </button>
+    <button class="add-new-question" (click)="addNewQuestion(questionType.checkbox)">
+      <svg-icon class="add-icon" src="assets/icons/plus-icon.svg"></svg-icon>
+      Multi Choice
+    </button>
+    <button class="add-new-question" (click)="addNewQuestion(questionType.boolean)">
+      <svg-icon class="add-icon" src="assets/icons/plus-icon.svg"></svg-icon>
+      True or False
+    </button>
+    <button class="add-new-question" (click)="addNewQuestion(questionType.text)">
+      <svg-icon class="add-icon" src="assets/icons/plus-icon.svg"></svg-icon>
+      Type the answer
+    </button>
+  </div>
+</div>

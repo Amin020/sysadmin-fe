@@ -1,0 +1,154 @@
+<!-- SideNav slide-out button -->
+<!--/ SideNav slide-out button -->
+<!-- Sidebar navigation -->
+<mdb-side-nav #sidenav class="side-nav-light white" [fixed]="false" *ngIf="isLoggedIn$ | async">
+
+  <mdb-navbar-brand>
+    <!-- Logo -->
+    <li>
+      <img src="./assets/images/logo.jpg" alt="Goal Survey Logo" class="rounded-circle app-logo z-depth-2" width="60"
+        height="60">
+    </li>
+    <!--/ Logo -->
+  </mdb-navbar-brand>
+  <hr />
+  <links>
+    <!--Search Form>
+      <li>
+        <form class="search-form" role="search">
+          <div class="form-group md-form mt-0 pt-1 waves-light" mdbWavesEffect>
+            <input type="text" class="form-control" placeholder="Search" i18n>
+          </div>
+        </form>
+      </li>
+      <Search Form-->
+    <!-- Side navigation links -->
+    <li>
+      <ul class="collapsible collapsible-accordion">
+        <mdb-accordion [multiple]="false" aria-multiselectable="false">
+          <!-- Masters -->
+          <mdb-accordion-item>
+            <mdb-accordion-item-head mdbWavesEffect i18n>
+              <i class="fa fa-gear"></i>{{ 'sidePanel.Masters' | translate }} </mdb-accordion-item-head>
+            <mdb-accordion-item-body>
+              <ul>
+                <!-- Languages -->
+                <!-- <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/languages" i18n><i
+                      class="fa fa-language"></i> {{ 'sidePanel.Languages' | translate }}</a>
+                </li> -->
+                <!-- Currencies -->
+                <!-- <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/currencies" i18n><i
+                      class="fa fa-dollar"></i> {{ 'sidePanel.Currencies' | translate }}</a>
+                </li> -->
+                <!-- Features -->
+                <!-- <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/features" i18n><i class="fa fa-plus"></i>
+                    {{ 'sidePanel.Features' | translate }}
+                  </a>
+                </li> -->
+                <!-- UOM -->
+                <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/uoms" i18n><i
+                      class="fa fa-balance-scale"></i>{{ 'sidePanel.Unit_of_measures' | translate }} </a>
+                </li>
+                <!-- Roles -->
+                <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/roles" i18n><i class="fa fa-users"></i>
+                    {{ 'sidePanel.Roles' | translate }} </a>
+                </li>
+              </ul>
+            </mdb-accordion-item-body>
+          </mdb-accordion-item>
+
+          <!-- Geographical Hierarchy -->
+          <!-- <mdb-accordion-item>
+            <mdb-accordion-item-head mdbWavesEffect i18n>
+              <i class="fa fa-globe"></i>{{ 'sidePanel.Geographical_Hierarchy' | translate }}
+            </mdb-accordion-item-head>
+            <mdb-accordion-item-body>
+              <ul>
+                <li>
+                  <a href="#" class="waves-effect" routerLink="/regions" i18n mdbWavesEffect
+                    i18n>{{ 'sidePanel.Regions' | translate }}</a>
+                </li>
+                <li>
+                  <a href="#" class="waves-effect" routerLink="/countries" mdbWavesEffect
+                    i18n>{{ 'sidePanel.Countries' | translate }}</a>
+                </li>
+                <li>
+                  <a href="#" class="waves-effect" routerLink="/cities" mdbWavesEffect
+                    i18n>{{ 'sidePanel.Cities' | translate }}</a>
+                </li>
+              </ul>
+            </mdb-accordion-item-body>
+          </mdb-accordion-item> -->
+
+          <!-- App Management -->
+          <mdb-accordion-item>
+            <mdb-accordion-item-head mdbWavesEffect i18n>
+              <i class="fa fa-globe"></i>{{ 'sidePanel.App_Management' | translate }}
+            </mdb-accordion-item-head>
+            <mdb-accordion-item-body>
+              <ul>
+                <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/apps" i18n><i class="fas fa-dice-d6"></i>
+                    {{ 'sidePanel.Function_Definition' | translate }} </a>
+                </li>
+                <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/app-bundle" i18n><i
+                      class="fas fa-dice-d6"></i>{{ 'sidePanel.Features_Bundle' | translate }} </a>
+                </li>
+                <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/features" i18n><i
+                      class="fas fa-dice-d6"></i>{{ 'sidePanel.Features' | translate }} </a>
+                </li>
+                <li>
+                  <a href="#" class="waves-effect" mdbWavesEffect routerLink="/offers" i18n><i
+                      class="fas fa-dice-d6"></i>{{ 'sidePanel.Subscription_Offers' | translate }} </a>
+                </li>
+
+              </ul>
+            </mdb-accordion-item-body>
+          </mdb-accordion-item>
+          <!-- SurveyManagement -->
+          <mdb-accordion-item class="no-collase">
+            <mdb-accordion-item-head mdbWavesEffect>
+              <a href="#" class="waves-effect" mdbWavesEffect routerLink="/SurveyManagement" i18n><i
+                  class="fa fa-globe"></i>{{ 'sidePanel.survey_Management' | translate }}</a>
+            </mdb-accordion-item-head>
+            <mdb-accordion-item-body></mdb-accordion-item-body>
+          </mdb-accordion-item>
+
+          <mdb-accordion-item class="no-collase">
+            <mdb-accordion-item-head mdbWavesEffect>
+              <a href="#" class="waves-effect" mdbWavesEffect routerLink="/exam/create-exam" i18n><i
+                  class="fa fa-globe"></i>{{ 'sidePanel.exam' | translate }}</a>
+            </mdb-accordion-item-head>
+            <mdb-accordion-item-body></mdb-accordion-item-body>
+          </mdb-accordion-item>
+
+          <mdb-accordion-item class="no-collase">
+            <mdb-accordion-item-head mdbWavesEffect>
+              <a href="#" class="waves-effect" mdbWavesEffect routerLink="/survey/group-prefrences" i18n><i
+                  class="fa fa-globe"></i>{{ 'sidePanel.group-management' | translate }}</a>
+            </mdb-accordion-item-head>
+            <mdb-accordion-item-body></mdb-accordion-item-body>
+          </mdb-accordion-item>
+        </mdb-accordion>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="waves-effect" mdbWavesEffect routerLink="/question-bank" i18n><i
+          class="fa fa-globe"></i>{{ 'sidePanel.questionBank' | translate }}</a>
+    </li>
+    <li>
+      <a href="#" class="waves-effect" mdbWavesEffect [routerLink]="['edit-company',companyId]" i18n><i
+          class="fa fa-globe"></i>{{ 'sidePanel.companyProfile' | translate }}</a>
+    </li>
+    <!--/ Side navigation links -->
+  </links>
+  <div class="sidenav-bg mask-strong"></div>
+</mdb-side-nav>
+<!--/ Sidebar navigation -->

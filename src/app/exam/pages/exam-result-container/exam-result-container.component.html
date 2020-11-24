@@ -1,0 +1,152 @@
+<div class="exam-result-container">
+  <div class="header-container">
+    <div class="header-content back-to-exam">
+      <svg-icon class="back-arrow-icon" src="assets/icons/arrow.svg"></svg-icon>
+      Back to Ongoing Exams
+    </div>
+    <div class="header-content">
+      <svg-icon class="on-going-exam-icon" src="assets/icons/work-20px.svg"></svg-icon>
+      Exam Result
+    </div>
+  </div>
+  <div class="result-container">
+    <section class="left-section">
+      <div class="exam-flex-row">
+        <span class="exam-title-text">Test name: </span>
+        <span class="exam-title-value">{{exam.settings.title}}</span>
+      </div>
+      <div class="message-result exam-flex-column">
+        <span class="message-text" [ngClass]="{'failed-text': !isSuccess}">
+          {{isSuccess ? 'Congratulations': 'Better luck next time'}}</span>
+        <div class="exam-flex-row passed-message-text">
+          {{isSuccess ? "You have passed this test with percentage of:": "Unfortunately you didn't pass the test with percentage of:"}}
+          <span class="passed-message-value" [ngClass]="{'failed-text': !isSuccess}">
+            {{score}}%</span>
+        </div>
+        <svg-icon [src]="isSuccess ? 'assets/icons/success-icon.svg' : 'assets/icons/failed-icon.svg'"
+          class="result-image"></svg-icon>
+      </div>
+      <section *ngIf="exam.settings.showAnswer && wrongQuestions.length" class="answer-refernce-section">
+        <div class="refrence-header-title">Test answers details:</div>
+        <div class="exam-flex-row table-header">
+          <div class="table-header-cell table-col-1">
+            Questions answered incorrectly
+          </div>
+          <div class="table-header-cell table-col-2">
+            Answer reference
+          </div>
+        </div>
+        <div class="exam-flex-row" *ngFor="let wrongQuestion of wrongQuestions">
+          <div class="answer-table-cell table-col-1">
+            <span class="exam-flex-row">{{(wrongQuestion.index + 1) + '.'}}</span>
+            {{wrongQuestion.refernce}}
+          </div>
+          <div class="table-col-2">
+            <svg-icon class="view-icon" (click)="openRefrencedDialog([wrongQuestion])"
+              src="assets/icons/visibility-24px.svg"></svg-icon>
+          </div>
+        </div>
+        <div class="contact-us-container">
+          Saw something wrong and want to report?
+          <div class="contact-us">Contact us</div>
+        </div>
+      </section>
+    </section>
+    <section class="right-section exam-flex-column">
+      <div class="header-text">Exam summary</div>
+      <div class="result-text-container exam-flex-row">
+        <span class="exam-sub-title" style="margin-bottom: 0;">Result: </span>
+        <span class="result-text-value" [ngClass]="{'failed-text': !isSuccess}">
+          {{isSuccess ? 'Success': 'Fail'}}</span>
+      </div>
+      <div class="exam-sub-title">Exam summary details:</div>
+      <div class="exam-summary-container exam-flex-column">
+        <div class="exam-flex-row exam-feild-content">
+          <span class="brown-dot"></span>
+          <span class="exam-details-title">Total questions:</span>
+          <span class="exam-details-value">{{exam.settings.totalQuestion}}</span>
+        </div>
+        <div class="exam-flex-row exam-feild-content">
+          <span class="brown-dot"></span>
+          <span class="exam-details-title">Total answers: </span>
+          <span class="exam-details-value">{{answeredCounter}}</span>
+        </div>
+        <div class="exam-flex-row exam-feild-content">
+          <span class="brown-dot"></span>
+          <span class="exam-details-title">Unanswered questions: </span>
+          <span class="exam-details-value">{{exam.settings.totalQuestion - answeredCounter}}</span>
+        </div>
+        <div class="exam-flex-row exam-feild-content">
+          <span class="brown-dot"></span>
+          <span class="exam-details-title">Correct answers: </span>
+          <span class="exam-details-value">{{rightAnswerCounter}}</span>
+        </div>
+        <div class="exam-flex-row exam-feild-content">
+          <span class="brown-dot"></span>
+          <span class="exam-details-title">Wrong answers: </span>
+          <span class="exam-details-value">{{exam.settings.totalQuestion - rightAnswerCounter}}</span>
+        </div>
+      </div>
+      <div class="exam-sub-title">Score details:</div>
+      <div class="exam-summary-container exam-flex-column">
+        <div class="exam-flex-row exam-feild-content">
+          <span class="brown-dot"></span>
+          <span class="exam-details-title">Your exam percentage: </span>
+          <span class="exam-details-value"
+            [ngClass]="{'failed-text': !isSuccess, 'success-text': isSuccess}">{{score}}%</span>
+        </div>
+        <div class="exam-flex-row exam-feild-content">
+          <span class="brown-dot"></span>
+          <span class="exam-details-title">Success percentage: </span>
+          <span class="exam-details-value">{{exam.settings.passScore}}%</span>
+        </div>
+      </div>
+      <div class="exam-sub-title">Actions:</div>
+      <div class="action-container">
+        <button class="action-btn">
+          <svg-icon src="assets/icons/share.svg"></svg-icon>
+          Share result
+        </button>
+        <button class="action-btn">
+          <svg-icon src="assets/icons/print.svg"></svg-icon>
+          Print result
+        </button>
+      </div>
+      <button class="view-all-references"
+        (click)="!exam.settings.showAnswer || !wrongQuestions.length ? navigateToAllExams(): openRefrencedDialog(wrongQuestions)">
+        <ng-container *ngIf="!exam.settings.showAnswer || !wrongQuestions.length; else showAnswerTemplate">
+          Back to Ongoing exams
+        </ng-container>
+        <ng-template #showAnswerTemplate>
+          <svg-icon src="assets/icons/visibility-24px.svg"></svg-icon>
+          View all answer reference
+        </ng-template>
+      </button>
+    </section>
+  </div>
+</div>
+
+
+
+
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <span class="modal-title">Answer reference</span>
+      </div>
+      <div class="modal-body">
+        <app-question-review [question]="question" [questionIndex]="index + 1"
+          *ngFor="let question of refrencedQuestions; let index = index" [liteStyle]="true">
+        </app-question-review>
+      </div>
+      <div class="modal-footer">
+        <button class="ok-btn" (click)="basicModal.hide()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

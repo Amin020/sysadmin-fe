@@ -1,0 +1,23 @@
+.builder-sketch{
+    .sketch-header{
+        margin: 5px 0px;
+    }
+    .init-width{
+        width: initial;
+    }
+}
+.builder-header {
+    display: flex;
+    align-items: flex-end;
+    border-bottom: solid 1px lightgrey;
+    .header-item {
+      padding: 5px 15px;
+    }
+    .active-router {
+      font-weight: bold;
+      border: solid 1px lightgrey;
+      border-radius: 5% 5% 0 5%;
+      border-bottom: none;
+      color:#007FFF!important;
+    }
+  }

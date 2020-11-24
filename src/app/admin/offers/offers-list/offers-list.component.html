@@ -1,0 +1,167 @@
+<div>
+  <!-- Basic example -->
+  <div class="row">
+    <div class="col-md-12 mx-auto text-center mt-1">
+      <div class="card card-cascade narrower">
+        <!--Card image-->
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-3 mb-3 d-flex justify-content-left align-items-left">
+          <h6 class="white-text font-weight-bold text-uppercase mb-0 mr-auto">
+            Subscription plans
+          </h6>
+          <a mdbBtn size="sm" color="primary" (click)="newOffer()" rounded="true" mdbWavesEffect>
+            <mdb-icon fas icon="plus"></mdb-icon> New Offer
+          </a>
+        </div>
+        <!--/Card image-->
+        <div class="px-4" *ngIf="offersList && offersList.length">
+          <!--Table-->
+          <table class="table table-hover table-responsive-md mb-0">
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th class="th-lg">#</th>
+                <th class="th-lg">Offer Code</th>
+                <th class="th-lg">Offer Name</th>
+                <th class="th-lg">Offer Type </th>
+                <th class="th-lg">Bundle Name</th>
+                <th class="th-lg">Offer Status</th>
+                <th class="th-lg">Valid From </th>
+                <th class="th-lg">Valid To </th>
+                <th class="th-lg">Actions</th>
+              </tr>
+            </thead>
+            <!--Table head-->
+
+            <!--Table body-->
+            <tbody>
+              <tr *ngFor="
+                  let offer of offersList | slice: firstVisibleIndex:lastVisibleIndex let i=index
+                ">
+                <td>{{ offer.id }}</td>
+                <td>
+                  {{ offer.offerCode }}
+                </td>
+                <td>
+                  {{ offer.offerDescription }}
+                </td>
+                <td>
+                  {{ offer.offerType }}
+                </td>
+                <td>
+                  {{ offer.sysFeatureBundle.name }}
+                </td>
+                <td>
+                  {{ offer.status }}
+                </td>
+                <td>
+                  {{ offer.validFrom }}
+                </td>
+                <td>
+                  {{ offer.validTo }}
+                </td>
+
+                <td class="goal-table-actionCol flex-row"
+                  [ngStyle]="{'justify-content': offer.status !== 'APPROVED' ? 'unset' : 'center'}">
+                  <a *ngIf="offer.status !== 'APPROVED'" mdbBtn floating="false" size="sm" color="primary"
+                    mdbWavesEffect title="Edit" (click)="editOffer(offer.id)">
+                    <mdb-icon fas icon="edit"></mdb-icon>
+                  </a>
+                  <a mdbBtn floating="false" size="sm" color="warning" mdbWavesEffect title="Copy"
+                    (click)="openGeneralDialog(offer)">
+                    <mdb-icon fas icon="copy"></mdb-icon>
+                  </a>
+                  <a mdbBtn floating="true" size="sm" color="danger" mdbWavesEffect title="Delete"
+                    (click)="openModal(offer.id,i)">
+                    <mdb-icon fas icon="trash"></mdb-icon>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+            <!--Table body-->
+          </table>
+        </div>
+        <hr class="mt-4 mb-0" />
+
+        <!--Bottom Table UI-->
+        <div class="d-flex justify-content-center">
+          <!--Pagination -->
+          <nav class="my-4 pt-2" *ngIf="offersList && offersList.length > 5">
+            <ul class="pagination pagination-circle pg-blue mb-0">
+              <!--First-->
+              <li class="page-item clearfix d-none d-md-block" (click)="firstPage()"
+                [ngClass]="{ disabled: activePage == 1 }">
+                <a class="page-link">First</a>
+              </li>
+
+              <!--Arrow left-->
+              <li class="page-item" (click)="previousPage()" [ngClass]="{ disabled: activePage == 1 }">
+                <a class="page-link" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+
+              <!--Numbers-->
+              <li #pages class="page-item" [ngClass]="{ active: i + firstVisiblePaginator + 1 == activePage }"
+                *ngFor="let page of paginator | slice: firstVisiblePaginator:lastVisiblePaginator; let i = index">
+                <a class="page-link waves-light" (click)="changePage($event)" mdbWavesEffect>
+                  {{ page }}
+                </a>
+              </li>
+
+              <!--Arrow right-->
+              <li class="page-item" (click)="nextPage()" [ngClass]="{ disabled: activePage == numberOfPages }">
+                <a class="page-link" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+
+              <!--Last-->
+              <li class="page-item clearfix d-none d-md-block" (click)="lastPage()"
+                [ngClass]="{ disabled: activePage == numberOfPages }">
+                <a class="page-link">Last</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+</div>
+
+<div mdbModal #confirmCopyRef="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+  <div *ngIf="offerToCopy" class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">
+          {{ 'all-feature-bundle.copyQuestion' | translate }} {{ offerToCopy.offerDescription }}?
+        </p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <i class="fa fa-copy fa-4x animated rotateIn"></i>
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" mdbBtn color="danger" outline="true" class="waves-effect" (click)="duplicateOffer(offerToCopy)"
+          mdbWavesEffect>
+          {{ 'common.yes' | translate }}
+        </a>
+        <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect data-dismiss="modal"
+          (click)="confirmCopyRef.hide()">
+          {{ 'common.no' | translate }}
+        </a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

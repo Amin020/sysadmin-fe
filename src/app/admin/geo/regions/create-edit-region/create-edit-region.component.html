@@ -1,0 +1,24 @@
+<div class="card card-cascade narrower p-4">
+  <ng-container *ngIf="!updateMode; updateHeaderTemp">
+    <h4 class="mb-4"> {{ 'region.AddNewRegion' | translate }} </h4>
+  </ng-container>
+  <ng-template #updateHeaderTemp>
+    <h4 class="mb-4"> {{ 'region.editRegion' | translate }}: <strong> {{ region.Code }} </strong> </h4>
+  </ng-template>
+  <div class="d-flex justify-content-left">
+    <div class="md-form m-3 ml-0">
+      <input #regionCodeInput mdbInput type="text" name="region.name" [(ngModel)]="region.code" class="form-control">
+      <label for="form1" (click)="regionCodeInput.focus()"> {{ 'region.code' | translate }} </label>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button (click)="cancel()" mdbBtn class="grey btn-md">
+      {{ 'common.cancel' | translate }}
+    </button>
+    <button (click)="saveRegion()" mdbBtn color="primary" class="btn-md">
+      <span *ngIf="saveloading"> {{ 'common.loading' | translate }} ... </span> {{ 'common.save' | translate }}
+    </button>
+  </div>
+</div>
+
+<hr class="my-5">

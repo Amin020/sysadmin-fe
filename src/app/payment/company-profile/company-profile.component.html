@@ -1,0 +1,273 @@
+<mdb-stepper #stepper [linear]="true">
+  <mdb-step name="Step 1" [stepForm]="firstFormGroup" class="step1">
+
+    <form [formGroup]="firstFormGroup" class="border border-light p-5">
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="user-edit" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="firstName">
+            <label for="">First Name <span class="error">*</span></label>
+            <mdb-error *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="firstName.valid && (firstName.dirty || firstName.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="user-edit" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="lastName">
+            <label for="">Last Name <span class="error">*</span></label>
+            <mdb-error *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="lastName.valid && (lastName.dirty || lastName.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="email">
+            <label for="">Email <span class="error">*</span></label>
+            <mdb-error *ngIf="email.invalid && (email.dirty || email.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="email.valid && (email.dirty || email.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="mobile" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="mobileCC">
+            <label for="">Mobile CC <span class="error">*</span></label>
+            <mdb-error *ngIf="mobileCC.invalid && (mobileCC.dirty || mobileCC.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="mobileCC.valid && (mobileCC.dirty || mobileCC.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="mobile" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="mobile">
+            <label for="">Mobile <span class="error">*</span></label>
+            <mdb-error *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="mobile.valid && (mobile.dirty || mobile.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon far icon="building" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="companyName">
+            <label for="">Company Name <span class="error">*</span></label>
+            <mdb-error *ngIf="companyName.invalid && (companyName.dirty || companyName.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="companyName.valid && (companyName.dirty || companyName.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="hand-holding-usd" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="salesRecommendations">
+            <label for="">Sales Recommendations <span class="error">*</span></label>
+          </div>
+        </div>
+        <div class="col" *ngIf='optionsReferralType.length > 0'>
+          <div class="md-form">
+            <mdb-select [options]="optionsReferralType" formControlName="referralType" placeholder="Choose your option">
+            </mdb-select>
+            <label>Referral Type</label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="referralTxt">
+            <label for="">Referral Text</label>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-row">
+
+        <div class="col" *ngIf='optionsPrefferedLanguage.length > 0'>
+          <div class="md-form">
+            <mdb-select [options]="optionsPrefferedLanguage" formControlName="prefferedLanguage"
+              placeholder="Choose your option">
+            </mdb-select>
+            <label>Preffered Language</label>
+            <mdb-error *ngIf="prefferedLanguage.invalid && (prefferedLanguage.dirty || prefferedLanguage.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="prefferedLanguage.valid && (prefferedLanguage.dirty || prefferedLanguage.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col" *ngIf='optionsClientType.length > 0'>
+          <div class="md-form">
+            <mdb-select [options]="optionsClientType" formControlName="clientType" placeholder="Choose your option">
+            </mdb-select>
+            <label>Client Type</label>
+            <mdb-error *ngIf="clientType.invalid && (clientType.dirty || clientType.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="clientType.valid && (clientType.dirty || clientType.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form" *ngIf='optionsPrefferedCommCh.length > 0'>
+            <mdb-select [options]="optionsPrefferedCommCh" formControlName="prefferedCommCh"
+              placeholder="Choose your option">
+            </mdb-select>
+            <label>Preffered CommCh</label>
+            <mdb-error *ngIf="prefferedCommCh.invalid && (prefferedCommCh.dirty || prefferedCommCh.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="prefferedCommCh.valid && (prefferedCommCh.dirty || prefferedCommCh.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form" *ngIf='optionsCity.length > 0'>
+            <mdb-select [options]="optionsCity" formControlName="city" placeholder="Choose your option">
+            </mdb-select>
+            <label>city</label>
+            <mdb-error *ngIf="city.invalid && (city.dirty || city.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="city.valid && (city.dirty || city.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+      </div>
+    </form>
+    <button mdbBtn size="sm" color="primary" (click)="stepper.next()">CONTINUE</button>
+
+  </mdb-step>
+  <mdb-step name="Step 2" [stepForm]="secondFormGroup" class="step2">
+    <form [formGroup]="secondFormGroup">
+      <div class="form-row">
+        <div class="col" *ngIf='optionsGtwProvider.length > 0'>
+          <div class="md-form">
+            <mdb-select [options]="optionsGtwProvider" formControlName="gtwprovider" placeholder="Choose your option">
+            </mdb-select>
+            <label>gtw provider</label>
+            <mdb-error *ngIf="gtwprovider.invalid && (gtwprovider.dirty || gtwprovider.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="gtwprovider.valid && (gtwprovider.dirty || gtwprovider.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col" *ngIf='optionsCurrencyList.length > 0'>
+          <div class="md-form">
+            <mdb-select [options]="optionsCurrencyList" formControlName="currency" placeholder="Choose your option">
+            </mdb-select>
+            <label>currency</label>
+            <mdb-error *ngIf="currency.invalid && (currency.dirty || currency.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="currency.valid && (currency.dirty || currency.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="hand-holding-usd" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="billingAddress">
+            <label for="">Billing Address<span class="error">*</span></label>
+            <mdb-error *ngIf="billingAddress.invalid && (billingAddress.dirty || billingAddress.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="billingAddress.valid && (billingAddress.dirty || billingAddress.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="state">
+            <label for="">State <span class="error">*</span></label>
+            <mdb-error *ngIf="state.invalid && (state.dirty || state.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="state.valid && (state.dirty || state.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="postalCode">
+            <label for="">Postal Code <span class="error">*</span></label>
+            <mdb-error *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="postalCode.valid && (postalCode.dirty || postalCode.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="shippingAddress">
+            <label for="">Shipping Address <span class="error">*</span></label>
+            <mdb-error *ngIf="shippingAddress.invalid && (shippingAddress.dirty || shippingAddress.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="shippingAddress.valid && (shippingAddress.dirty || shippingAddress.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="shippingState">
+            <label for="">Shipping State <span class="error">*</span></label>
+            <mdb-error *ngIf="shippingState.invalid && (shippingState.dirty || shippingState.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="shippingState.valid && (shippingState.dirty || shippingState.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="hand-holding-usd" class="prefix"></mdb-icon>
+            <input type="text" class="form-control" mdbInput mdbValidate formControlName="shippingPostalCode">
+            <label for="">Shipping Postal Code<span class="error">*</span></label>
+            <mdb-error *ngIf="shippingPostalCode.invalid && (shippingPostalCode.dirty || shippingPostalCode.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="shippingPostalCode.valid && (shippingPostalCode.dirty || shippingPostalCode.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+        <div class="col">
+          <div class="md-form">
+            <mdb-icon fas icon="envelope" class="prefix"></mdb-icon>
+            <input type="text" class="form-control not-allowed" mdbInput mdbValidate formControlName="paidAmount"
+              readonly>
+            <label for="">Paid Amount <span class="error">*</span></label>
+            <mdb-error *ngIf="paidAmount.invalid && (paidAmount.dirty || paidAmount.touched)">
+              Input invalid</mdb-error>
+            <mdb-success *ngIf="paidAmount.valid && (paidAmount.dirty || paidAmount.touched)">
+              Input valid</mdb-success>
+          </div>
+        </div>
+      </div>
+    </form>
+    <button mdbBtn size="sm" color="primary" (click)="stepper.next();onSubmit();">CONTINUE</button>
+    <button mdbBtn size="sm" color="secondary" (click)="stepper.previous()">BACK</button>
+  </mdb-step>
+  <mdb-step name="Step 3" label="Step 3 label" class="step3">
+    <p class="pl-2">Finish!</p>
+    <div class="step-actions">
+      <button mdbBtn size="sm" color="primary">SUBMIT</button>
+    </div>
+  </mdb-step>
+</mdb-stepper>

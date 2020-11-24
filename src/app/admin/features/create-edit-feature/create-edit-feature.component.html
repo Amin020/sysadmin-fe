@@ -1,0 +1,36 @@
+<div *ngIf="feature" class="card card-cascade narrower p-4">
+  <h4 class="mb-4">
+    <ng-container *ngIf="!isUpdateMode; else updateHeaderTemp">
+      {{ 'feature.addNewFeature' | translate }}
+    </ng-container>
+    <ng-template #updateHeaderTemp>
+      {{ 'feature.editFeature' | translate }}: <strong> {{ feature.id }} </strong>
+    </ng-template>
+  </h4>
+
+  <div class="d-flex justify-content-left">
+    <div class=" col-md-3 my-4">
+      <div class=" mt">
+        <mdb-select [options]="uomsList" [(ngModel)]="feature.sysUom.id"
+          [placeholder]="'feature.selectFeaturePlaceholder' | translate"></mdb-select>
+        <label for="form1" class=""> {{'feature.UOM' | translate}} </label>
+      </div>
+    </div>
+
+    <div class="md-form m-3 ml-0">
+      <input #featureDescInput mdbInput type="text" name="feature.desc" [(ngModel)]="feature.desc"
+        class="form-control" />
+      <label for="form1" (click)="featureDescInput.focus()">
+        {{ 'feature.featureDescription' | translate }}
+      </label>
+    </div>
+  </div>
+  <div class="d-flex justify-content-end">
+    <button (click)="cancel()" mdbBtn class="grey btn-md">{{'edit.cancel' | translate}}</button>
+    <button (click)="saveFeature()" mdbBtn color="primary" class="btn-md">
+      <span *ngIf="saveloading">{{'edit.loading' | translate}}... </span> {{'edit.save' | translate}}
+    </button>
+  </div>
+</div>
+
+<hr class="my-5" />

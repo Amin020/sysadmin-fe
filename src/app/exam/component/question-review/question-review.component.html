@@ -1,0 +1,31 @@
+<div class="question-review-container">
+  <div class="question-review-header">
+    <div class="question-title"> {{questionIndex + '. '}} {{question.name.default}}</div>
+    <div class="question-main-info">
+      <div class="question-info question-type" [ngClass]="{'lite-question-info': liteStyle}">{{ questionTypeText}}</div>
+      <div class="question-info question-score" [ngClass]="{'lite-question-info': liteStyle}">
+        {{'Q-Score: ' + question.score+ 'deg'}}</div>
+      <div class="question-info question-weight" [ngClass]="{'lite-question-info': liteStyle}">
+        {{'Q-Weight: ' + question.weight}}</div>
+    </div>
+  </div>
+  <div class="question-answer-section">
+    <div class="answers-section-container">
+      <div class="answers-section">
+        <div class="answer-container" *ngFor="let answer of question.answers; let index = index">
+          <div class="answer-index">{{getQuestionCode(index)}})</div>
+          <div class="answer">{{answer.value.default}}</div>
+          <div *ngIf="answer.correctAnswer" class="correct-answer">correct answer</div>
+        </div>
+      </div>
+      <div *ngIf="question.refernce?.length" class="answer-refrence-section">
+        <div class="title">
+          <div class="dot"></div>
+          Answer refrence:
+        </div>
+        <div class="answer-refrence">{{question.refernce}}</div>
+      </div>
+    </div>
+    <img [src]="question.image.value" alt="" *ngIf="question.image">
+  </div>
+</div>

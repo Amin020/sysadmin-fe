@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-xs-12">
+      <select class="browser-default custom-select" [(ngModel)]='surveyCurrentLang' (change)='changeLang()'
+        name="selectLang">
+        <option value='0' disabled selected>Select Language to translate</option>
+        <option *ngFor='let item of optionsSelect' [value]='item.value'>{{item.label}}
+        </option>
+      </select>
+    </div>
+    <div class="col-sm-7">
+
+    </div>
+    <div class="col-sm-2 col-xs-12 marked-question">
+      <button type="button" mdbBtn color="primary" class="waves-light text-white btn-md" data-toggle="modal"
+        data-target="#basicExample" (click)="frame.show()" mdbWavesEffect>Marked Question</button>
+    </div>
+
+
+
+    <div class="col-sm-12">
+      <div id='surveyElementxx'></div>
+    </div>
+    <!-- <div class="col-sm-12">
+      <app-survey-analytics *ngIf='completed' [surveyResults]='surveyResults' [survey]='survey'></app-survey-analytics>
+    </div> -->
+  </div>
+</div>
+<!-- Modal Start-->
+
+<div mdbModal #frame="mdbModal" class="modal fade right modal-scrolling" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+
+  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-primary" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading">
+          <strong> {{'practice_survey.Marked_Questions' | translate}} </strong>
+        </p>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-12" *ngIf='dirtyQuestions.length > 0'>
+            <div class="md-form" *ngFor='let question of dirtyQuestions'>
+              <span *ngIf='!question["object"]'>
+                <input mdbInput type="text" id="form1" class="form-control" [(ngModel)]='question.value'
+                  (change)='changeQuestionValue(question)'>
+                <label for="form1" class="">{{question.question.title}}</label>
+              </span>
+              <span *ngIf='question["object"]'>
+                <input mdbInput type="text" id="form1" class="form-control" [(ngModel)]='question.object'
+                  (change)='changeQuestionValue(question)'>
+                <label for="form1" class="">{{question.question.title}}</label>
+              </span>
+            </div>
+          </div>
+          <h5 *ngIf='dirtyQuestions.length == 0'>
+            {{'practice_survey.NO_Marked_Questions_Exist' | translate}} 
+          </h5>
+        </div>
+      </div>
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a type="button" mdbBtn color="primary" outline="true" class="waves-effect" mdbWavesEffect data-dismiss="modal"
+          (click)="frame.hide()"> {{'practice_survey.close' | translate}} </a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+
+</div>

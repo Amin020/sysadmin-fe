@@ -1,0 +1,101 @@
+<div class="container" *ngIf='offerList.length > 0'>
+  <!--Section: Content-->
+
+  <section class="text-center dark-grey-text">
+    <!-- Section heading -->
+    <h3 class="font-weight-bold pb-2 mb-4 dark-light">Our pricing plans</h3>
+    <!-- Section description -->
+    <!-- <p class="text-muted w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam
+      eum porro a pariatur veniam.</p> -->
+
+    <!-- Grid row -->
+    <div class="row">
+      <div class="col" *ngFor='let offer of offerList'>
+
+        <!-- Pricing card -->
+        <div class="card pricing-card">
+
+          <div class="card-header white-text bg-dark-light">
+            <div class="version">
+              <h4 class="mb-0 ">{{offer.offerCode}}</h4>
+            </div>
+            <div class="d-flex justify-content-center align-items-end">
+              <h3 class="mb-0 h3 camel"> {{offer.calcPrice |currency:offer.currency.currencyAppr:'code'}}</h3>
+              <p class="mb-0 ml-2 " *ngIf='offer.period == 30'>/ month</p>
+              <p class="mb-0 ml-2 " *ngIf='offer.period == 1'>/ day</p>
+              <p class="mb-0 ml-2 " *ngIf='offer.period == 12'>/ year</p>
+            </div>
+          </div>
+          <!-- Features -->
+          <div class="card-body striped mb-1" *ngIf='offer.offerDetails.length > 0'>
+            <ul>
+              <li *ngFor='let feature of offer.offerDetails' [ngClass]='{"none":!feature.keyFeature}'>
+                <p class="mt-2 text-left" *ngIf='feature.keyFeature'>
+                  <mdb-icon fas icon="check" class="green-text"></mdb-icon>
+                  {{feature.value +'  ' + feature.bundleDetailId.sysAppFeature.sysFeature.desc}}
+                </p>
+              </li>
+            </ul>
+            <button class="btn dark-blu" (click)='navigateTo(offer.id,offer.calcPrice)'>Buy now</button>
+          </div>
+          <!-- Features -->
+        </div>
+        <!-- Pricing card -->
+      </div>
+    </div>
+    <hr class="my-5" />
+    <h3 class="font-weight-bold pb-2 mb-4 dark-light">Comparison</h3>
+    <div class="col-sm-12">
+
+      <!-- Grid column -->
+      <div class="col">
+        <!-- Features -->
+        <div class="card-body striped mb-1 table-responsive" *ngIf='offerDetails.length > 0'>
+          <table class="table" mdbTable bordered="true" hover='true'>
+            <thead>
+              <th></th>
+              <th class="card-header white-text bg-dark-light" *ngFor='let offer of offerList'>
+                <div class="version">
+                  <h5 class="mb-0">{{offer.offerCode}}</h5>
+                </div>
+                <div class="d-flex justify-content-center align-items-end">
+                  <h3 class="mb-0 h3 camel">{{offer.calcPrice  |currency:offer.currency.currencyAppr:'code'}}</h3>
+                  <p class="mb-0 ml-2" *ngIf='offer.period == 30'>/ month</p>
+                  <p class="mb-0 ml-2" *ngIf='offer.period == 1'>/ day</p>
+                  <p class="mb-0 ml-2" *ngIf='offer.period == 12'>/ year</p>
+                </div>
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor='let feature of offerDetails; index as i;'>
+                <td>
+                  <p class="mt-2">
+                    {{feature.desc}}
+                  </p>
+                </td>
+                <td *ngFor='let offer of offerList'>
+                  <i class="fas pr-2"
+                    [ngClass]='{"fa-check green-text":offer.offerDetails[i].keyFeature, "fa-times red-text":!offer.offerDetails[i].keyFeature}'></i>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td></td>
+                <td *ngFor='let offer of offerList'>
+                  <button class="btn dark-blu" (click)='navigateTo(offer.id,offer.calcPrice)'>Buy now</button>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- Features -->
+      </div>
+      <!-- Pricing card -->
+    </div>
+  </section>
+
+  <!-- Grid row -->
+  <!--Section: Content-->
+</div>

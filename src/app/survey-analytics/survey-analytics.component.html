@@ -1,0 +1,104 @@
+<div class="row" *ngIf='surveyAnsDisplay'>
+
+  <div class="col-sm-2"></div>
+  <div class=" col-sm-8">
+    <div *ngFor='let survAnsw of surveyAnsDisplay; let i=index; '>
+      <!--Card content-->
+      <div class="card-body">
+        <!--Title-->
+        <h4 class="card-title pt-10">{{'  ( Q'}}{{ i + 1 }}{{' ).  '}} <span class="text-red">{{survAnsw.title}}</span>
+        </h4>
+        <!--Text-->
+        <hr />
+        <div *ngIf="survAnsw.type != 'matrixdropdown' && survAnsw.type != 'matrixdynamic'">
+          <div class="flex-row">
+            <div class="col-sm-3 col-xs-12 text-justify">
+              <select class="browser-default custom-select" [(ngModel)]="survAnsw.currentShape" name="department">
+                <option *ngFor='let shape of survAnsw.shapes' [value]='shape'>{{shape}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div [ngSwitch]="survAnsw.currentShape">
+            <div *ngSwitchCase="'bar'">
+              <bar-chart [choices]='survAnsw.choices' [dataObj]='survAnsw.dataObj' [labels]='survAnsw.labels'>
+              </bar-chart>
+            </div>
+            <div *ngSwitchCase="'pie'">
+              <pie-chart [choices]='survAnsw.choices' [dataObj]='survAnsw.dataObj' [labels]='survAnsw.labels'>
+              </pie-chart>
+            </div>
+            <div *ngSwitchCase="'gauge'">
+              <app-gauge [gaugeValue]='survAnsw.gaugeValue'></app-gauge>
+            </div>
+            <div *ngSwitchCase="'world Cloud'">
+              <app-world-cloud [data]='survAnsw.data'></app-world-cloud>
+            </div>
+            <div *ngSwitchCase="'scatter'">
+              <scatter-chart [choices]='survAnsw.choices' [labels]='survAnsw.labels' [answers]='survAnsw.answersCount'
+                [title]='survAnsw.title'>
+              </scatter-chart>
+            </div>
+            <div *ngSwitchCase="'text in table'">
+              <app-text-in-table [data]='survAnsw.data' [title]='survAnsw.title'></app-text-in-table>
+            </div>
+            <div *ngSwitchDefault>
+              <doughnut-chart [choices]='survAnsw.choices' [dataObj]='survAnsw.dataObj' [labels]='survAnsw.labels'>
+              </doughnut-chart>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="survAnsw.type == 'matrixdropdown' || survAnsw.type == 'matrixdynamic'">
+          <div *ngFor='let column of survAnsw.questions'>
+            <div class="flex-row">
+              <div class="col-sm-3 col-xs-12 text-justify">
+                <select class="browser-default custom-select" [(ngModel)]="column.currentShape" name="department">
+                  <option *ngFor='let shape of column.shapes' [value]='shape'>{{shape}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div [ngSwitch]="column.currentShape">
+              <h6>{{column.title}}</h6>
+              <div *ngSwitchCase="'bar'">
+                <bar-chart [choices]='column.choices' [dataObj]='column.dataObj' [labels]='column.labels'>
+                </bar-chart>
+              </div>
+              <div *ngSwitchCase="'pie'">
+                <pie-chart [choices]='column.choices' [dataObj]='column.dataObj' [labels]='column.labels'>
+                </pie-chart>
+              </div>
+              <div *ngSwitchCase="'gauge'">
+                <div *ngFor='let gaugeData of column.gaugeData' class="col-sm-6">
+                  <app-gauge [gaugeValue]='gaugeData'></app-gauge>
+                </div>
+              </div>
+              <div *ngSwitchCase="'world Cloud'">
+                <div *ngFor='let data of column.data' class="col-sm-6">
+                  <app-world-cloud [data]='data'></app-world-cloud>
+                </div>
+              </div>
+              <div *ngSwitchCase="'scatter'">
+                <div *ngFor='let answ of column.answersCount' class="col-sm-6">
+                  <scatter-chart [choices]='column.choices' [labels]='column.labels' [answers]='answ'
+                    [title]='column.title'>
+                  </scatter-chart>
+                </div>
+              </div>
+              <div *ngSwitchCase="'text in table'">
+                <div *ngFor='let dataC of column.data' class="col-sm-6">
+                  <app-text-in-table [data]='dataC' [title]='column.title'></app-text-in-table>
+                </div>
+              </div>
+              <div *ngSwitchDefault>
+                <doughnut-chart [choices]='column.choices' [dataObj]='column.dataObj' [labels]='column.labels'>
+                </doughnut-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2"></div>
+</div>

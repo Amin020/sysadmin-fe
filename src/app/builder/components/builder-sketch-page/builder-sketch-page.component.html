@@ -1,0 +1,28 @@
+<div class="builder-sketch">
+    <div>
+        <div class="sketch-header">
+            <div>
+                <select class="custom-select init-width" [(ngModel)]="activePage" (ngModelChange)="checkboxChange()">
+                    <option *ngFor="let page of surveyModel.pages" [ngValue]="page">
+                        {{page.name['default'] ?  page.name['default']: page.name}}</option>
+                    <option [ngValue]="-1" (click)="addNewPage()">add new page</option>
+                </select>
+            </div>
+            <!-- <button class="input-group-text" (click)="addNewPage()">add new page</button> -->
+        </div>
+    </div>
+    <!-- <span *ngIf='logo'>
+        <img [src]='logo' />
+    </span> -->
+    <div class="builder-header">
+        <a *ngFor='let page of surveyModel.pages' (click)='activePage=page;surveyModel.currentPage=page'
+            [ngClass]='{"active-router":activePage?.name===page?.name}' class="header-item lighten-4">
+            {{page.name['default'] ?  page.name['default']: page.name}}
+            <span (click)='removePage(page)' *ngIf='surveyModel.pages.length != 1'>
+                <i class="fa fa-times pull-right" aria-hidden="true"></i>
+            </span>
+        </a>
+
+    </div>
+    <div id='surveyElement'></div>
+</div>

@@ -1,0 +1,152 @@
+<div class="exam-setting-container">
+  <div class="exam-setting-content">
+    <div class="exam-row">
+      <div class="exam-input-container">
+        <div class="input-title">
+          Exam title
+        </div>
+        <input type="text" [(ngModel)]="settings.title.default">
+      </div>
+      <div class="exam-input-container">
+        <div class="input-title">
+          <span class="input-title"> Pass score </span>
+          <div class="info-container">
+            <svg-icon class="info-icon" src="./assets/icons/info.svg"></svg-icon>
+            <span class="info-text">Pass score is percentage</span>
+          </div>
+        </div>
+        <input type="text" [(ngModel)]="settings.passScore" (keypress)="utilities.checkNumberInRange($event,100, 1)"
+          (paste)="utilities.checkPasteNumberInRange($event,100, 1)">
+      </div>
+      <!-- <div class="exam-input-container">
+        <div class="input-title">
+          Total questions
+        </div>
+        <input type="text" [(ngModel)]="settings.totalQuestion" (keypress)="utilities.isNumberFormat($event)"
+          (paste)="utilities.isPasteNumberFormat($event)">
+      </div> -->
+    </div>
+    <!-- <div class="exam-row">
+      <div class="exam-input-container">
+        <div class="input-title">
+          Total score
+        </div>
+        <input type="text" [(ngModel)]="settings.totalScore" (keypress)="utilities.isNumberFormat($event)"
+          (paste)="utilities.isPasteNumberFormat($event)">
+      </div>
+      <div class="exam-input-container">
+        <div class="input-title">
+          Pass score
+        </div>
+        <input type="text" [(ngModel)]="settings.passScore" (keypress)="utilities.checkNumberInRange($event,100, 1)"
+          (paste)="utilities.checkPasteNumberInRange($event,100, 1)">
+      </div>
+    </div> -->
+    <div class="exam-row">
+      <div class="exam-radio-container">
+        <div class="input-title">
+          <span class="input-title"> Add remark </span>
+          <div class="info-container">
+            <svg-icon class="info-icon" src="./assets/icons/info.svg"></svg-icon>
+            <span class="info-text">To mark the question for review before exam submit</span>
+          </div>
+        </div>
+        <div class="radio-group-container">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="remarkGroup1" [value]="true"
+              [(ngModel)]="settings.addRemark" [checked]="settings.addRemark" name="remarkGroup" mdbInput>
+            <label class="custom-control-label" for="remarkGroup1">Yes</label>
+          </div>
+
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="remarkGroup2" [value]="false"
+              [(ngModel)]="settings.addRemark" [checked]="!settings.addRemark" name="remarkGroup" mdbInput>
+            <label class="custom-control-label" for="remarkGroup2">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="exam-input-container">
+        <div class="input-title">
+          <span class="input-title">
+            Total time
+          </span>
+          <div class="info-container">
+            <svg-icon class="info-icon" src="./assets/icons/info.svg"></svg-icon>
+            <span class="info-text">Total time is calculated by minutes</span>
+          </div>
+        </div>
+        <input type="text" [(ngModel)]="settings.totalTime" (keypress)="utilities.isNumberFormat($event)"
+          (paste)="utilities.isPasteNumberFormat($event)">
+      </div>
+    </div>
+    <div class="exam-row">
+      <div class="exam-radio-container">
+        <div class="input-title">
+          Show result
+        </div>
+        <div class="radio-group-container">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="resultGroup1" [value]="true"
+              [(ngModel)]="settings.showResult" [checked]="settings.showResult" name="resultGroup" mdbInput>
+            <label class="custom-control-label" for="resultGroup1">Yes</label>
+          </div>
+
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="resultGroup2" [value]="false"
+              [(ngModel)]="settings.showResult" [checked]="!settings.showResult" name="resultGroup" mdbInput>
+            <label class="custom-control-label" for="resultGroup2">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="exam-input-container">
+        <div class="input-title">
+          Random sequence
+        </div>
+        <div class="radio-group-container">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="randomGroup1" [value]="true"
+              [(ngModel)]="settings.randomSequnce" [checked]="settings.randomSequnce" name="randomGroup" mdbInput>
+            <label class="custom-control-label" for="randomGroup1">Yes</label>
+          </div>
+
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="randomGroup2" [value]="false"
+              [(ngModel)]="settings.randomSequnce" [checked]="!settings.randomSequnce" name="randomGroup" mdbInput>
+            <label class="custom-control-label" for="randomGroup2">No</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="exam-row">
+      <div class="exam-radio-container">
+        <div class="input-title">
+          Show answer
+        </div>
+        <div class="radio-group-container">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="answerGroup1" [value]="true"
+              [(ngModel)]="settings.showAnswer" [checked]="settings.showAnswer" name="answerGroup" mdbInput>
+            <label class="custom-control-label" for="answerGroup1">Yes</label>
+          </div>
+
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" class="custom-control-input" id="answerGroup2" [value]="false"
+              [(ngModel)]="settings.showAnswer" [checked]="!settings.showAnswer" name="answerGroup" mdbInput>
+            <label class="custom-control-label" for="answerGroup2">No</label>
+          </div>
+        </div>
+      </div>
+      <div class="exam-checkbox-container">
+        <div class="input-title">
+          Language
+        </div>
+        <div class="checkbox-group-container">
+          <mdb-checkbox (change)="updateSelectedLanguage($event, 'en')" [checked]="settings.selectedLanguage === 'en'"
+            [inline]="true">English</mdb-checkbox>
+          <mdb-checkbox (change)="updateSelectedLanguage($event, 'ar')" [inline]="true"
+            [checked]="settings.selectedLanguage === 'ar'">Arabic</mdb-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

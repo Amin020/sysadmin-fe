@@ -1,0 +1,175 @@
+<div class='container-fluid'>
+  <div class="row">
+    <div class="col-sm-3 col-xs-12">
+      <select class="browser-default custom-select" [(ngModel)]='newSelectedLang'
+        (change)='addLanguage(newSelectedLang)' name="selectLang">
+        <option value='0' disabled selected>Select Language to translate</option>
+        <option *ngFor='let item of optionsSelect' [ngValue]='item'>{{item.nativeName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-sm-2 col-xs-12 offset-sm-1">
+      <input class="default-checkbox" [(ngModel)]='showAllText' (change)='changeTextCheckbox()' type="checkbox"> Show
+      all texts
+    </div>
+    <div class="col-sm-2 col-xs-12 offset-sm-1">
+      <select class="browser-default custom-select" [(ngModel)]='selectedElement.name ||selectedElement.title'
+        (ngModelChange)='onActiveChange($event)' name="page">
+        <option *ngFor="let dropItem of dropDownData" [ngValue]="dropItem.name">
+          <span *ngFor="let dots of createArr(dropItem.iterator)">
+            .
+          </span>
+          {{dropItem.name['default'] ?  dropItem.name['default']: dropItem.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row">
+        <div class="col" *ngFor='let lang of addedLanguagesList'>
+          <input class="default-checkbox" (change)='onLanguageChangeVal(lang)' [(ngModel)]='lang.aprv' type="checkbox">
+          {{lang.nativeName}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="row"
+        *ngIf='selectedElement.name == surveyModelCopy.name ||selectedElement.title == surveyModelCopy.title'>
+        <div class="col" *ngFor='let lang of translatedLanguagesList' [ngClass]="{'none':lang.hide}">
+          <h6 class="text-center">{{lang.nativeName}}</h6>
+          <div *ngIf='selectedElementBaseData?.settingsItems'>
+            <ng-container class="col-sm-12" *ngFor="let item of selectedElementBaseData.settingsItems; let i=index;">
+              <span *ngIf='item?.translateTab == true && surveyModelCopy[item.prop]?.default == null'>
+                <span *ngIf='surveyModelCopy[item.prop] || showAllText'> {{item.displayName}}</span>
+                <input type="text" [id]="item.prop" *ngIf='surveyModelCopy[item.prop] || showAllText'
+                  class="form-control" [(ngModel)]="surveyModelCopy[item.prop]" #textInput
+                  [disabled]='item.prop=="name"' [name]='item.prop+lang.aprv'
+                  (keyup.enter)="updateSurvey(textInput.value, item.prop,lang)"
+                  (blur)="updateSurvey(textInput.value, item.prop,lang)">
+              </span>
+              <span
+                *ngIf='item?.translateTab == true && (surveyModelCopy[item.prop]?.default == "" || surveyModelCopy[item.prop]?.default)'>
+                <span *ngIf='surveyModelCopy[item.prop] || showAllText'> {{item.displayName}}</span>
+                <input type="text" [id]="item.prop" class="form-control"
+                  [(ngModel)]="surveyModelCopy[item.prop][lang.aprv]" *ngIf='surveyModelCopy[item.prop] || showAllText'
+                  #textInput [disabled]='item.prop=="name"' [name]='item.prop+lang.aprv'
+                  (keyup.enter)="updateSurvey(textInput.value, item.prop,lang)"
+                  (blur)="updateSurvey(textInput.value, item.prop,lang)">
+              </span>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <mdb-accordion [multiple]="false" aria-multiselectable="true">
+          <mdb-accordion-item [collapsed]="true" *ngFor="let page of backupSurveyBody?.pages; let pageIndex=index;">
+            <div *ngIf='showPage(page)'>
+              <mdb-accordion-item-head *ngIf='page?.name?.default == null'> {{ page.name }} </mdb-accordion-item-head>
+              <mdb-accordion-item-head *ngIf='page?.name?.default'> {{ page.name.default }} </mdb-accordion-item-head>
+              <mdb-accordion-item-body>
+                <div *ngFor='let lang of translatedLanguagesList' [ngClass]="{'none':lang.hide}">
+                  <h6 class="text-center">{{lang.nativeName}}</h6>
+                  <div *ngIf='selectedElementBaseData?.settingsItems'>
+                    <ng-container *ngFor="let item of getPage(page)">
+                      <span *ngIf='item?.translateTab == true  && page[item.prop]?.default == null'>
+                        <span *ngIf='page[item.prop] || showAllText'> {{item.displayName}}</span>
+                        <input type="text" [id]="item.prop" *ngIf='page[item.prop] || showAllText'
+                          [(ngModel)]='page[item.prop]' class="form-control" #textInput_4 [disabled]='item.prop=="name"'
+                          [name]='page[item.prop]+lang.aprv'
+                          (keyup.enter)="updateElement(textInput_4.value, item.prop,lang,currentModel.pages[pageIndex],pageIndex)"
+                          (blur)="updateElement(textInput_4.value, item.prop,lang,currentModel.pages[pageIndex],pageIndex)">
+                      </span>
+                      <span
+                        *ngIf='item?.translateTab == true  && (page[item.prop]?.default == "" || page[item.prop]?.default)'>
+                        <span *ngIf='page[item.prop] || showAllText'> {{item.displayName}}</span>
+                        <input type="text" [id]="item.prop" *ngIf='page[item.prop] || showAllText'
+                          [(ngModel)]='page[item.prop][lang.aprv]' [name]='page[item.prop]+lang.aprv'
+                          class="form-control" #textInput_5 [disabled]='item.prop=="name"'
+                          (keyup.enter)="updateElement(textInput_5.value, item.prop,lang,pageIndex)"
+                          (blur)="updateElement(textInput_5.value, item.prop,lang,page,pageIndex)">
+                      </span>
+                    </ng-container>
+                  </div>
+                </div>
+                <mdb-accordion [multiple]="false" aria-multiselectable="true">
+                  <mdb-accordion-item class="col" [collapsed]="true" *ngFor="let element of page.elements; let elementIndex=index">
+                    <div
+                      *ngIf='(selectedElement.name == page.name || selectedElement.title == page.title) ||  (selectedElement.name == surveyModelCopy.name || selectedElement.title == surveyModelCopy.title) || (selectedElement.name == element.name || selectedElement.title == element.name)'>
+                      <mdb-accordion-item-head> {{element.title?.default ?  element.title?.default: element.title}} </mdb-accordion-item-head>
+                      <mdb-accordion-item-body>
+                        <div *ngFor='let lang of translatedLanguagesList' [ngClass]="{'none':lang.hide}">
+                          <h6 class="text-center">{{lang.nativeName}}</h6>
+                          <div *ngIf='selectedElementBaseData?.settingsItems'>
+                            <ng-container *ngFor="let item of getEachQuestion(element)">
+                              <span
+                                *ngIf='item?.translateTab == true && !(checkIfArray(element) && typeOfArray(element[item.prop]))  && element[item.prop]?.default == null'>
+                                <span *ngIf='element[item.prop] || showAllText'> {{item.displayName}}</span>
+                                <input type="text" [id]="item.prop" *ngIf='element[item.prop] || showAllText'
+                                  [(ngModel)]='element[item.prop]' class="form-control" #textInput_2
+                                  [disabled]='item.prop=="name"' [name]='element[item.prop]+lang.aprv'
+                                  (keyup.enter)="updateElement(textInput_2.value, item.prop,lang,currentModel.pages[pageIndex].elements[elementIndex],pageIndex)"
+                                  (blur)="updateElement(textInput_2.value, item.prop,lang,currentModel.pages[pageIndex].elements[elementIndex],pageIndex)">
+                              </span>
+                              <span
+                                *ngIf='item?.translateTab == true && !(checkIfArray(element) && typeOfArray(element[item.prop])) && (element[item.prop]?.default == "" || element[item.prop]?.default)'>
+                                <span *ngIf='element[item.prop] || showAllText'> {{item.displayName}}</span>
+                                <input type="text" [id]="item.prop" *ngIf='element[item.prop] || showAllText'
+                                  [(ngModel)]='element[item.prop][lang.aprv]' [name]='element[item.prop]+lang.aprv'
+                                  class="form-control" #textInput_3 [disabled]='item.prop=="name"'
+                                  (keyup.enter)="updateElement(textInput_3.value, item.prop,lang,element,pageIndex)"
+                                  (blur)="updateElement(textInput_3.value, item.prop,lang,element,pageIndex)">
+                              </span>
+                              <div
+                                *ngIf='item?.translateTab == true && (checkIfArray(element) && typeOfArray(element[item.prop]))'>
+                                <mdb-accordion [multiple]="false">
+                                  <mdb-accordion-item class="col" [collapsed]="true">
+                                    <mdb-accordion-item-head>{{item.prop}}</mdb-accordion-item-head>
+                                    <!-- {{element[item.prop] | json}} -->
+                                    <mdb-accordion-item-body *ngIf='element[item.prop]?.length > 0'>
+                                      <div *ngFor='let singleChoice of element[item.prop]; let indexChoice= index'>
+                                        <div
+                                          *ngFor='let getObj of objectKeys(getSingleChoiceObjects(element,item.prop))'>
+                                          <span *ngIf='element[item.prop][indexChoice][getObj]?.default == null && getObj !=="choicesByUrl"'>
+                                            {{element[item.prop][indexChoice][getObj] }}
+                                            <input type="text" [id]="item.prop"
+                                              [(ngModel)]='element[item.prop][indexChoice][getObj]' class="form-control"
+                                              #textInput_6 [disabled]='item.prop=="name"'
+                                              [name]='element[item.prop][indexChoice][getObj]+lang.aprv'
+                                              (keyup.enter)="updateElementArray(textInput_6.value, item.prop,lang,currentModel.pages[pageIndex].elements[elementIndex],indexChoice,getObj,pageIndex)"
+                                              (blur)="updateElementArray(textInput_6.value, item.prop,lang,currentModel.pages[pageIndex].elements[elementIndex],indexChoice,getObj,pageIndex)">
+                                          </span>
+                                          <span
+                                            *ngIf=' ( element[item.prop][indexChoice][getObj]?.default == "" ||  element[item.prop][indexChoice][getObj]?.default)'>
+                                            {{element[item.prop][indexChoice][getObj].default }}
+
+                                            <input type="text" [id]="item.prop"
+                                              [(ngModel)]='element[item.prop][indexChoice][getObj][lang.aprv]'
+                                              [name]='element[item.prop][indexChoice][getObj]+lang.aprv'
+                                              class="form-control" #textInput_7 [disabled]='item.prop=="name"'
+                                              (keyup.enter)="updateElementArray(textInput_7.value, item.prop,lang,element,indexChoice,getObj,pageIndex)"
+                                              (blur)="updateElementArray(textInput_7.value, item.prop,lang,element,indexChoice,getObj,pageIndex)">
+                                          </span>
+                                        </div>
+                                      </div>
+                                    </mdb-accordion-item-body>
+                                  </mdb-accordion-item>
+                                </mdb-accordion>
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </mdb-accordion-item-body>
+                    </div>
+                  </mdb-accordion-item>
+                </mdb-accordion>
+              </mdb-accordion-item-body>
+            </div>
+          </mdb-accordion-item>
+        </mdb-accordion>
+      </div>
+    </div>
+  </div>
+</div>

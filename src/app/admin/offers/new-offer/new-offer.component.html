@@ -1,0 +1,175 @@
+<div>
+  <mdb-card>
+    <mdb-card-body>
+      <mdb-card-title>
+        <div class="row">
+          <div class="col-sm-3">
+            <h6 class="text-uppercase mb-0 mr-auto">New Offer</h6>
+          </div>
+          <div *ngIf="errorMessg.length > 0" class="col-sm-9">
+            <p class="small text-danger">{{errorMessg}}</p>
+          </div>
+
+        </div>
+      </mdb-card-title>
+
+      <form (ngSubmit)="addOffer(f)" #f="ngForm">
+        <div class="d-flex flex-lg-wrap flex-md-wrap flex-sm-wrap justify-content-left">
+
+          <!-- <div class="md-form m-4 ">
+            <input #offerCode mdbInput type="text" name="offerCode" [(ngModel)]="f['offerCode']" class="form-control">
+            <label for="form1" class="active" (click)="offerCode.focus()"> Code </label>
+          </div> -->
+
+          <div class="md-form m-4 ">
+            <input #offerName mdbInput type="text" name="offerDescription" [(ngModel)]="f['offerDescription']"
+              class="form-control">
+            <label for="form1" class="active" (click)="offerName.focus()"> Name </label>
+          </div>
+
+          <div class="md-form m-4 ">
+            <mdb-select [options]="offerTypeList" name="offerType" [(ngModel)]="f['offerType']"
+              placeholder="Select Type">
+            </mdb-select>
+            <label for="form1" class="active"> Type </label>
+          </div>
+
+          <div class="md-form ml-4">
+            <mdb-date-picker name="validFrom" [options]="myDatePickerOptions" [placeholder]="'Selected date'"
+              [(ngModel)]="f['validFrom']" required></mdb-date-picker>
+
+            <label for="validFrom" [class.text-danger]="!validDateFrom" class="active">Effective Date</label>
+          </div>
+
+          <div class="md-form  ml-4 mr-1">
+            <mdb-date-picker name="validTo" [options]="myDatePickerOptions" [placeholder]="'Selected date'"
+              [(ngModel)]="f['validTo']" required></mdb-date-picker>
+            <label for="validTo" [class.text-danger]="!validForm" class="active">Expire Date</label>
+          </div>
+
+          <div class="md-form  ml-5  publishedBox">
+            <div class="row">
+              <div class="col col-sm-8 text-justify">
+                <label for="published" class="">published:</label>
+              </div>
+              <div class="col col-sm-4 text-justify">
+                <mdb-checkbox class="" name="published" [(ngModel)]="f['published']">
+                </mdb-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="md-form m-4 ">
+            <input #offerPeriod type="number" name="period" [class.invalid]="period" [(ngModel)]="f['period']"
+              (change)="acceptPositiveNum($event)" class="form-control">
+            <label for="period" class="active" (click)="offerPeriod.focus()"> subscribtion Period </label>
+            <p class="small text-danger" *ngIf="period">Please Enter A Valid Value </p>
+          </div>
+
+          <div class="md-form m-4 " *ngIf="currencyList.length > 0">
+            <mdb-select [options]="currencyList" name="currency" placeholder="Select Currency"
+              [(ngModel)]="selectedCurrencyId">
+            </mdb-select>
+            <label for="currency" class="active"> Currency </label>
+          </div>
+
+          <div class="md-form m-4 ">
+            <input #offerPrice type="number" name="price" [class.invalid]="price" [(ngModel)]="f['price']"
+              class="form-control" (change)="acceptPositiveNum($event)">
+            <label for="price" class="active" (click)="offerPrice.focus()"> Price </label>
+            <p class="small text-danger" *ngIf="price">Please Enter A Valid Value </p>
+          </div>
+
+          <div class="md-form m-4 ">
+            <input #offerExtraPeriod type="number" name="additionPeriodFree" [(ngModel)]="f['additionPeriodFree']"
+              class="form-control" (change)="acceptPositiveNum($event)" [class.invalid]="extraPeriod">
+            <label for="additionPeriodFree" class="active w-75" (focus)="offerExtraPeriod.focus()"> Extra Period
+              (free/promotional) </label>
+            <p class="small text-danger" *ngIf="extraPeriod">Please Enter A Valid Value </p>
+          </div>
+
+          <div class="md-form  ml-5  publishedBox">
+            <div class="row">
+              <div class="col col-sm-8 text-justify">
+                <label for="alertNotify" class="">Alert/Notify :</label>
+              </div>
+              <div class="col col-sm-4 text-justify">
+                <mdb-checkbox name="alertNotify" [(ngModel)]="f['alertNotify']" #alertNotify="ngModel">
+                </mdb-checkbox>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="row pl-5 pr-5 notifyBox" *ngIf="alertNotify.value === true">
+          <div class=" md-form col-sm-4 ">
+            <mdb-select [options]="alertType" name="alertType" [(ngModel)]="f['alertType']" placeholder="Select"
+              required>
+            </mdb-select>
+            <label for="alertType" class="active" [class.text-danger]="alertTypeValid">Alert Type </label>
+          </div>
+          <div class="md-form col-sm-4 ">
+            <mdb-select [options]="alertFrequency" name="alertFrequency" [(ngModel)]="f['alertFrequency']"
+              placeholder="Select" required #alertFrequencySelect>
+            </mdb-select>
+            <label for="alertFrequency" class="active" [class.text-danger]="alertFrequencyValid"> Alert Frequency
+            </label>
+          </div>
+
+          <div class="md-form col-sm-4 ">
+            <input #fireBefore mdbInput type="number" name="alterFireBefore" [(ngModel)]="f['alterFireBefore']"
+              class="form-control">
+            <label for="alterFireBefore" class="active" (click)="fireBefore.focus()"> Fire Before </label>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-right">
+          <button (click)="backToPreviousPage()" mdbBtn class="grey btn-md"> Cancel</button>
+          <button type="submit" mdbBtn color="primary" class="btn-md">Save <span *ngIf="saveLoading">...</span></button>
+        </div>
+      </form>
+    </mdb-card-body>
+  </mdb-card>
+
+  <div class="card card-cascade narrower p-4">
+    <div class="d-flex justify-content-between">
+      <div>
+        <h4 class="mb-4">Offer Details</h4>
+      </div>
+    </div>
+
+    <!-- <h4 class="text-center m-5 grey-text" *ngIf="offerDetailsList.length == 0">No bundle Selected </h4> -->
+    <mdb-accordion *ngFor="let app of appList  | keyvalue">
+      <mdb-accordion-item [collapsed]="true">
+        <mdb-accordion-item-head class="bold">{{app.key}}</mdb-accordion-item-head>
+        <mdb-accordion-item-body>
+          <table mdbTable>
+            <thead>
+              <tr>
+                <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr mdbTableCol *ngFor="let feature of app.value">
+                <th scope="row" class="text-truncate" style="max-width: 300px;">
+                  {{feature.sysAppFeature.sysFeature.desc}}</th>
+                <td>{{feature.sysAppFeature.sysFeature.sysUom.uomDesc}}</td>
+                <td><i class="fa"
+                    [className]="feature.sysAppFeature.showA ? 'fa green-text fa-check-circle ' : 'fa fa-close  grey-text'"></i>
+                </td>
+                <td>{{feature.value}}</td>
+                <td><i class="fa"
+                    [className]="feature.costly ? 'fa green-text fa-check-circle ' : 'fa fa-close  grey-text'"></i></td>
+                <td>{{feature.initialCost}}</td>
+                <td><i class="fa"
+                    [className]="feature.keyFeature ? 'fa green-text fa-check-circle ' : 'fa fa-close  grey-text'"></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </mdb-accordion-item-body>
+      </mdb-accordion-item>
+    </mdb-accordion>
+  </div>
+
+</div>

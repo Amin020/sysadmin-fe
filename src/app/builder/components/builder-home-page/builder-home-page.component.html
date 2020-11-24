@@ -1,0 +1,9 @@
+<div class="builder-home-page-container">
+  <!-- <button routerLink="design" (click)="createSurvey()">Create Survey</button> -->
+  <button mdbBtn type="button" color="primary" mdbWavesEffect class="input-group-text" (click)="createSurvey()" i18n>Create Survey</button>
+  <div class="survey-array-holder">
+      <div class="survey-box" *ngFor="let survey of surveyArray" [routerLink]="['design', survey.id]" >
+          {{survey.title}}
+      </div>
+  </div>
+</div>

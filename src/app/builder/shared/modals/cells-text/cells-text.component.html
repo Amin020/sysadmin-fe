@@ -1,0 +1,139 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel"> Edit Property {{item.displayName}}</h4>
+    </div>
+    <div class="modal-body">
+
+
+        <!-- <div class="panel card">
+            <div data-bind="visible: koCanEdit" style="overflow: auto;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            !-- ko foreach: koColumns --
+                            <th>
+                                <span data-bind="text:$data">Column 1</span>
+                            </th>
+
+                            <th>
+                                <span data-bind="text:$data">Column 2</span>
+                            </th>
+
+                            <th>
+                                <span data-bind="text:$data">Column 3</span>
+                            </th>
+                            !-- /ko --
+                        </tr>
+                    </thead>
+                    <tbody>
+                        !-- ko foreach: koRows  --
+                        <tr>
+                            <td>
+                                <span data-bind="text:rowText">Default cells texts</span>
+                            </td>
+                            !-- ko foreach: koCells --
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+                            !-- /ko --
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <span data-bind="text:rowText">Row 1</span>
+                            </td>
+                            !-- ko foreach: koCells --
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+                            !-- /ko --
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <span data-bind="text:rowText">Row 2</span>
+                            </td>
+                            !-- ko foreach: koCells --
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+
+                            <td style="min-width:120px" class="form-group">
+                                <textarea rows="2" cols="25" class="form-control" data-bind="textInput:text"></textarea>
+                            </td>
+                             /ko --
+                        </tr>
+                        !-- /ko --
+                    </tbody>
+                </table>
+            </div>
+        </div> -->
+
+        <div class="panel card">
+            <div style="overflow: auto;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <!-- ko foreach: koColumns -->
+                            <th *ngFor="let col of value.columns">
+                                <span>{{col.text}}</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let cell of (privateValue.values | keyvalue)" style="min-width:120px"
+                        class="form-group">
+                        <td>
+                            <span>{{cell.key}}</span>
+                        </td>
+                        
+                        <td *ngFor="let col of value.columns" style="min-width:120px" class="form-group"> 
+                             <textarea rows="2" cols="25" class="form-control" #value [ngModel]="cell.value[col.value].text" (ngModelChange)="setObjValues(cell.key, col.value, value.value, privateValue)"></textarea> 
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+            (click)="applyAction()">Apply</button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+            (click)="okAction()">Ok</button>
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="cancelAction()"
+            mdbWavesEffect>Cancel</button>
+
+    </div>
+</div>

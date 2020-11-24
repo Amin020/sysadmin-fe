@@ -1,0 +1,61 @@
+<div class="builder-settings-content">
+    <div class="builder-settings-item" *ngFor="let item of value.value">
+        <div> {{item.displayName}} : </div>
+        <div [ngSwitch]="item.type">
+            <div *ngSwitchCase="'text'">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" [(ngModel)]="item.value" [readonly]='item.prop=="name"'>
+                </div>
+            </div>
+            <div *ngSwitchCase="'text_area'">
+                <div class="input-group mb-3">
+                    <textarea [(ngModel)]="item.value" class="form-control">
+                  </textarea>
+                </div>
+            </div>
+            <div *ngSwitchCase="'number'">
+                <div class="input-group mb-3">
+                    <input type="number" class="form-control" [(ngModel)]="item.value">
+
+                </div>
+            </div>
+            <div *ngSwitchCase="'checkbox'">
+                <input class="default-checkbox" type="checkbox" [value]="true" [(ngModel)]="item.value">
+            </div>
+
+            <div *ngSwitchCase="'text_edit'">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" [(ngModel)]="item.value">
+                    <div class="input-group-append">
+                        <button class="input-group-text" type="button" id="button-addon2">Edit</button>
+                    </div>
+                </div>
+
+            </div>
+            <div *ngSwitchCase="'dropdown'">
+                <div class="input-group mb-3" *ngIf='pages?.length > 0'>
+                    <div class="full-width" *ngIf="item.prop=='page'">
+                        <select class="custom-select" [(ngModel)]="item.value">
+                            <option *ngFor="let value of pages" [ngValue]="value">{{value.name}}</option>
+                        </select>
+                    </div>
+                    <div class="full-width" *ngIf="item.prop =='currency'">
+                        <select class="custom-select" [(ngModel)]="item.value">
+                            <option *ngFor="let value of currencyData" [ngValue]="value">{{value}}</option>
+                        </select>
+                    </div>
+
+                    <div class="full-width" *ngIf="item.prop !='page'&& item.prop !='currency'">
+                        <select class="custom-select" [(ngModel)]="item.value">
+                            <option *ngFor="let value of item.values" [ngValue]="value.value">{{value.displayName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div *ngSwitchDefault>...</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,151 @@
+<div class="mx-auto text-center mt-1">
+  <!-- <div class="col-sm-2 text-left ">
+        <a mdbBtn color="primary" (click)="backToPreviousPage()" mdbWavesEffect>
+            Back
+        </a>
+      </div> -->
+  <div class="col-sm-12">
+    <div class="pull-right">
+      <a mdbBtn size="sm" color="primary" (click)="newSurvey()" rounded="true" mdbWavesEffect>
+        <mdb-icon class="fa" icon="plus"></mdb-icon> {{ 'surveyList.newSurvey' | translate }}
+      </a>
+    </div>
+  </div>
+  <!--Card image-->
+  <!--/Card image-->
+  <div class="px-4 table-responsive" *ngIf="surveyList && surveyList.length">
+    <!--Table-->
+    <table mdbTable id="dtBasicExample" bordered="true" small='true' hover="true">
+      <!--Table head-->
+      <thead class="blue-gradient">
+        <tr>
+          <!-- <th class="th-lg camel">#</th> -->
+          <th class="th-lg text-white " aria-controls="tableSortExample" *ngFor='let header of tblHeader' scope="col"
+            [sortBy]="header.label">
+            {{ header.identifier | translate }}
+            <span class="position-relative">
+              <mdb-icon class="up" fas icon="angle-up" (click)='syncTblSort(header,"up","down")'
+                [ngClass]='{"warning":header.up}'>
+              </mdb-icon>
+              <mdb-icon class="down" fas icon="angle-down" (click)='syncTblSort(header,"down","up")'
+                [ngClass]='{"warning":header.down}'>
+              </mdb-icon>
+            </span>
+          </th>
+          <th class="th-lg text-white ">
+            {{'surveyList.response' | translate }}
+          </th>
+          <th class="th-lg text-white">{{ 'surveyList.actions' | translate }}</th>
+        </tr>
+      </thead>
+      <!--Table head-->
+
+      <!--Table body-->
+      <tbody>
+        <tr mdbTableCol *ngFor="
+                  let survey of surveyList | slice: firstVisibleIndex:lastVisibleIndex let i=index;
+                " class=" wow fadeIn">
+          <!-- <td>{{ i+1 }}</td> -->
+          <td>
+            {{ survey.name }}
+          </td>
+          <td>
+            {{ survey.status }}
+          </td>
+          <td>
+            {{ survey.surveyType }}
+          </td>
+          <td>
+            <mdb-checkbox [checked]="survey.public" class="avoid-click"></mdb-checkbox>
+          </td>
+          <!-- <td>
+            {{survey.allowMultipleSubmissions}}
+          </td> -->
+          <td>
+            <a id='underline' [routerLink]="['/SurveyManagement/response',survey.id]" target="_blank">
+              {{survey.xsurveyResponses?.length}}
+            </a>
+          </td>
+          <td class="goal-table-actionCol">
+            <a *ngIf="survey.status == 'INITIATED'" mdbBtn floating="false" size="sm" color="primary" mdbWavesEffect
+              title="Edit" (click)="editSurvey(survey.id)">
+              <mdb-icon class="fa" icon="edit"></mdb-icon>
+            </a>
+            <a *ngIf="survey.status !== 'INITIATED'" mdbBtn floating="false" size="sm" color="primary" mdbWavesEffect
+              title="view" (click)="viewSurvey(survey.id)">
+              <mdb-icon class="fa" icon="eye"></mdb-icon>
+            </a>
+            <a mdbBtn floating="false" size="sm" color="primary" mdbWavesEffect title="copy"
+              (click)="copySurvey(survey.id)">
+              <mdb-icon class="fa" icon="copy"></mdb-icon>
+            </a>
+            <a mdbBtn floating="false" size="sm" color="primary" mdbWavesEffect title="import">
+              <div size="md">
+                <mdb-icon class="fa" icon="cloud-upload"></mdb-icon>
+                <input class="fileUpload" type="file" (change)="onFileChanged($event)">
+              </div>
+            </a>
+            <a mdbBtn floating="false" size="sm" color="primary" mdbWavesEffect title="export"
+              (click)="generateDownloadJsonUri(survey)" download="{{survey.name}}.json" [href]="downloadJsonHref">
+              <mdb-icon class="fa fa-download mt-2 pt-1" icon="download"></mdb-icon>
+            </a>
+            <a mdbBtn floating="true" size="sm" color="danger" mdbWavesEffect title="Delete"
+              (click)="openModal(survey.id,i)">
+              <mdb-icon class="fa" icon="trash"></mdb-icon>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+      <!--Table body-->
+    </table>
+  </div>
+  <hr class="mt-4 mb-0" />
+
+  <!--Bottom Table UI-->
+  <div class="d-flex justify-content-center">
+    <!--Pagination -->
+    <nav class="my-4 pt-2" *ngIf="surveyList && totalPages > 5">
+      <ul class="pagination pagination-circle pg-purple mb-0">
+        <!--First-->
+        <li class="page-item clearfix d-none d-md-block" (click)="firstPage()"
+          [ngClass]="{ disabled: activePage == 1 }">
+          <a class="page-link"> {{ 'surveyList.first' | translate }}</a>
+        </li>
+
+        <!--Arrow left-->
+        <li class="page-item" (click)="previousPage()" [ngClass]="{ disabled: activePage == 1 }">
+          <a class="page-link" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only"> {{ 'surveyList.previous' | translate }}</span>
+          </a>
+        </li>
+
+        <!--Numbers-->
+        <li #pages *ngFor="
+                  let page of paginators
+                    | slice: firstVisiblePaginator:lastVisiblePaginator;
+                  let i = index
+                " class="page-item" [ngClass]="{
+                  active: i + firstVisiblePaginator + 1 == activePage
+                }">
+          <a class="page-link morpheus-den-gradient" (click)="changePage($event)" mdbWavesEffect>{{ page }}</a>
+        </li>
+
+        <!--Arrow right-->
+        <li class="page-item" (click)="nextPage()" [ngClass]="{ disabled: activePage == numberOfPaginators }">
+          <a class="page-link" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only"> {{ 'surveyList.next' | translate }}</span>
+          </a>
+        </li>
+
+        <!--Last-->
+        <li class="page-item clearfix d-none d-md-block" (click)="lastPage()"
+          [ngClass]="{ disabled: activePage == numberOfPaginators }">
+          <a class="page-link"> {{ 'surveyList.last' | translate }}</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</div>

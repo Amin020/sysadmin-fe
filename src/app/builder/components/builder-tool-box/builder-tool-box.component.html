@@ -1,0 +1,119 @@
+<mdb-accordion [multiple]="false">
+  <mdb-accordion-item [collapsed]="false">
+    <mdb-accordion-item-head>{{toolBoxData.name}}</mdb-accordion-item-head>
+    <mdb-accordion-item-body>
+      <div class="builder-tool-box">
+        <!-- (dblclick)="createNew(item)" -->
+        <div class="item-container" *ngFor="let item of toolBoxData?.toolBoxItems" (click)="createNew(item)"
+          (dragstart)="dragStart($event,item)" draggable="true">
+          <i class="item-icon {{item?.icon}}" aria-hidden="true"></i>
+          <div class="item-text">{{item.text}}</div>
+        </div>
+      </div>
+    </mdb-accordion-item-body>
+  </mdb-accordion-item>
+  <mdb-accordion-item>
+    <mdb-accordion-item-head>{{customWidgets.name}}</mdb-accordion-item-head>
+    <mdb-accordion-item-body>
+      <div class="builder-tool-box">
+        <div class="item-container" *ngFor="let item of customWidgets?.toolBoxItems" (click)="createWidget(item)"
+          (dragstart)="dragStart($event,item)" draggable="true">
+          <i class="item-icon {{item?.icon}}" aria-hidden="true"></i>
+          <div class="item-text"><span *ngIf='item.text'>{{ item.text}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </mdb-accordion-item-body>
+  </mdb-accordion-item>
+  <mdb-accordion-item>
+    <mdb-accordion-item-head>Import Excel File</mdb-accordion-item-head>
+    <mdb-accordion-item-body>
+      <div class="d-flex justify-content-center">
+        <div>
+          <button mdbBtn type="button" color="primary" (click)='exportToCSV("Questions_sample.csv")' mdbWavesEffect
+            class='btn' mdbTooltip="click here to download our sample Example" placement="top">Export <mdb-icon
+              class="text-white" fas icon="download">
+            </mdb-icon></button>
+        </div>
+        <div>
+          <div class="import-container">
+            <button mdbBtn #file class="btn btn-Import" color="primary" mdbWavesEffect class='btn'
+              mdbTooltip="Make sure everything is filled in it's place before uploading" placement="top">Import
+              <mdb-icon fas icon="upload" class="text-white"></mdb-icon>
+            </button>
+            <input #myInput id="file" name="file" accept=".xlsx, .xls, .csv" (change)="onFileChange($event)"
+              type="file" />
+          </div>
+        </div>
+        <!-- <div>
+          <button type="button" color="primary" (click)='onFileChange($event)'
+            mdbTooltip="Make sure everything is filled in it's place before uploading" placement="top">Import<mdb-icon
+              fas icon="upload" class="text-white"></mdb-icon></button>
+        </div> -->
+      </div>
+    </mdb-accordion-item-body>
+  </mdb-accordion-item>
+  <mdb-accordion-item>
+    <mdb-accordion-item-head (click)="frame_2.show();getCategoryList();">Questions bank</mdb-accordion-item-head>
+  </mdb-accordion-item>
+</mdb-accordion>
+<!-- Central Modal Small -->
+<div mdbModal #frame_2="mdbModal" class="modal fade" id="centralModalSm" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <!-- Change class .modal-sm to change the size of the modal -->
+  <div class="modal-dialog modal-fluid" role="document">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100" id="myModalLabel">Questions Bank</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="frame_2.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group md-form form-sm form-2 pl-0">
+          <input class="form-control my-0 py-1 cyan-border" name='searchKeyword' [(ngModel)]='searchKeyword'
+            (change)='getCategoryBySearch()' type="text" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <span class="input-group-text cyan lighten-3" id="basic-text1"><i class="fas fa-search text-grey"
+                aria-hidden="true"></i></span>
+          </div>
+        </div>
+        <hr />
+        <div class='col-sm-12 row'>
+          <div class="col-sm-4 left-section">
+            <div class="col-sm-12 category" *ngFor='let categ of categoryList'
+              [ngClass]='{"active":selectedCategory ? selectedCategory == categ.id : false}'
+              (click)='selectedCategory=categ.id;category=categ;'>
+              <h5>{{categ.category}}</h5>
+              <!-- <h6>Status : {{categ.status}}</h6> -->
+            </div>
+          </div>
+          <div class="col-sm-8 left-section">
+            <div class="col-sm-12 category" *ngFor='let question of category?.xsurveyQuestions;let i=index;'>
+              <h6>{{question.questionName}} <div class='question-btn-group'><button type="button"
+                    data-target='#surveyElementModal' (click)='render(question)'
+                    class="btn btn-blue-grey pull-right">Test</button>
+                  <button type="button" (click)='createWidget(question?.questionBody)'
+                    class="btn btn-primary pull-right">Add to Survey</button>
+                </div>
+              </h6>
+              <!-- <h6>Status : {{categ.status}}</h6> -->
+            </div>
+          </div>
+          <div class="col-sm-12 text-center">
+            <div id='surveyElementModal'></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" (click)="frame_2.hide()"
+          data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Central Modal Small -->

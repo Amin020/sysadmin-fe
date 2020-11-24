@@ -1,0 +1,43 @@
+<div class="card card-cascade narrower p-4">
+  <h4 class="mb-4">
+    <ng-container *ngIf="!isUpdateMode; else updateHeaderTemp">
+      {{ 'uom.addUOM' | translate }}
+    </ng-container>
+    <ng-template #updateHeaderTemp>
+      {{ 'uom.editUOM' | translate }}: <strong> {{ uom.id }} </strong>
+    </ng-template>
+  </h4>
+  <div class="d-flex justify-content-left">
+
+    <div class=" col-md-3 my-4">
+      <mdb-select [options]="appsList" [(ngModel)]="uom.sysAppNode.id" [placeholder]="'selectApp' | translate"
+        [disabled]="isUpdateMode">
+      </mdb-select>
+      <label for="form1" class="">{{'uom.app' | translate }}</label>
+    </div>
+
+    <div class="md-form my-4 mr-5">
+      <input #UOMIdInput mdbInput type="text" [(ngModel)]="uom.uomID" class="form-control" [disabled]='isUpdateMode'>
+      <label for="form1" (click)="UOMIdInput.focus()">{{'uom.id' | translate }}</label>
+    </div>
+
+    <div class="md-form my-4 mr-5">
+      <input #UOMDescInput mdbInput type="text" name="uom.uomDesc" [(ngModel)]="uom.uomDesc" class="form-control">
+      <label for="form1" (click)="UOMDescInput.focus()">{{'uom.desc' | translate }}</label>
+    </div>
+
+    <!-- <div class="md-form my-4 mr-5">
+      <input #UOMISO mdbInput type="text" name="uom.isoUom" [(ngModel)]="uom.isoUom" class="form-control">
+      <label for="form1" (click)="UOMISO.focus()">{{'uom.iso' | translate }}</label>
+    </div> -->
+
+  </div>
+  <div class="d-flex justify-content-end">
+    <button (click)="cancel()" mdbBtn class="grey btn-md">{{'edit.cancel' | translate}}</button>
+    <button (click)="saveUOM()" mdbBtn color="primary" class="btn-md"><span
+        *ngIf="saveloading">{{'edit.loading' | translate}}... </span> {{'edit.save' | translate}}</button>
+  </div>
+</div>
+
+
+<hr class="my-5">

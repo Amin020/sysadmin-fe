@@ -1,0 +1,20 @@
+<div class="questions-review-container">
+  <div class="questions-review-header-container">
+    <div class="header-text">Add Questions *</div>
+    <div class="info-container">
+      <svg-icon class="info-icon" src="assets/icons/info.svg"></svg-icon>
+      <span>If the exam's time finishes, exam will be submitted automatically.</span>
+    </div>
+    <svg-icon class="edit-icon" (click)="editQuestion()" src="assets\icons\edit-24px.svg"></svg-icon>
+  </div>
+  <div class="pages-container">
+    <div class="page" [ngClass]="{'active-page': index === activePageIndex}"
+      *ngFor="let page of pages; let index = index" (click)="activePageIndex = index">{{page.name.default}}
+    </div>
+  </div>
+  <div class="question-container">
+    <app-question-review [question]="question" [questionIndex]="index + 1"
+      *ngFor="let question of pages[activePageIndex].elements; let index = index">
+    </app-question-review>
+  </div>
+</div>

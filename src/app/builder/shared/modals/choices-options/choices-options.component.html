@@ -1,0 +1,366 @@
+<div class="modal-content validator-modal">
+    <div class="modal-header">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+      <h4 class="modal-title w-100" id="myModalLabel"> Edit Property {{item.displayName}}</h4>
+    </div>
+    <div class="modal-body">
+      <div *ngIf="type">
+        <div [ngSwitch]="type">
+          <div *ngSwitchCase="'checkbox'">
+            <div class="option-content">
+                <div *ngFor="let choice of choices">
+                    <input type="checkbox" [(ngModel)]="choice._value" (ngModelChange)="checkboxChange()"/>
+                    {{choice.value}}
+                </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="'radiogroup'">
+            <div *ngFor="let choice of choices">
+                <input  type="radio" value="{{choice.value}}" name="choiceValue" [(ngModel)]="value" > {{choice.value}}
+            </div>
+            <div>
+               <button class="input-group-text" (click)="clearSelection()"> Clear</button>
+            </div>
+          </div>
+          
+          <div *ngSwitchCase="'dropdown'">
+              <select class="custom-select" [(ngModel)]="value" >
+                  <option *ngFor="let choice of choices" [ngValue]="choice.value">{{choice.value}}</option>
+              </select>
+          </div>
+          <div *ngSwitchCase="'rating'">
+                   
+            <div class="rates-container">  
+                <div class="rate-item" *ngFor="let choice of choices" (click)="setValue(choice)">
+                    <div [ngClass]="{'active-item': (value && value.value == choice.value)}">
+                      {{choice.value}}
+                    </div>  
+                </div>
+            </div>
+          </div>
+
+          <div *ngSwitchCase="'boolean'">
+              <div *ngIf="!showUndefinedValue()">
+                 <mdb-checkbox  [(ngModel)]="value" [default]="true">{{question.title}}</mdb-checkbox>
+              </div>
+              <div *ngIf="showUndefinedValue()">
+                <mdb-checkbox  [(ngModel)]="value" [default]="true" [indeterminate]="true">{{question.title}}</mdb-checkbox>
+              </div>
+          </div>
+
+          <div *ngSwitchCase="'file'">  
+               <button class=" input-group-text myfileupload-buttonbar ">
+                  <div class="myui-button">
+                      <span >Add Files</span>
+                      <input type="file" (change)="fileChange($event)" >
+                  </div>
+                </button>
+               <div *ngIf="file">
+                 {{file.name}}
+                 <div *ngIf="imageFile(file.type)">
+                   <img id="blah" [src]="file.content" alt="your image" />
+                 </div>
+               </div>
+               <button class="input-group-text" (click)="onFileRemove()">Clean</button>                            
+          </div>
+
+          
+          <div *ngSwitchCase="'matrix'">
+
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let col of question.columns">
+                            <span>{{col.text}}</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+              
+                      <tr *ngFor="let row of question.rows" style="min-width:120px" class="form-group">
+                      <td>
+                          <span>{{row.text}}</span>
+                      </td>
+                      
+                      <td *ngFor="let col of question.columns" style="min-width:120px" class="form-group"> 
+                           <div *ngIf="checkObjectKeys(question.cellsValue.values)">
+                                
+                                  <div [ngClass]="{'active': activeItem(value , row.text , col.text )}" (click)="selectAnswer(row.text , col.text)">
+                                     {{getDisplayText(question.cellsValue.values , row.text , col.text)}}
+                                  </div>
+                                 
+                           </div>
+                           <div *ngIf="!checkObjectKeys(question.cellsValue.values)">
+                              <input type="radio" name="{{row.text}}" [value]="col.text"  [(ngModel)]="value[row.text]">
+                           </div>
+                       
+                         
+                      </td>
+                      </tr>
+                   
+                </tbody>
+
+                
+              
+            </table>
+
+          </div>
+          
+          <div *ngSwitchCase="'matrixdropdown'">
+              
+              <table class="table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let col of question.columns">
+                            <span>{{col.title}}</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+              
+                      <tr *ngFor="let row of question.rows" style="min-width:120px" class="form-group">
+                      <td>
+                          <span>{{row.text}}</span>
+                      </td>
+                      
+                      <td *ngFor="let col of question.columns" style="min-width:120px" class="form-group"> 
+                          <div [ngSwitch]="question.cellType">
+                              <div *ngSwitchCase="'dropdown'">
+                                  <select class="custom-select" [(ngModel)]="value[row.text][col.title]" >
+                                      <option *ngFor="let choice of question.choices" [ngValue]="choice.value">{{choice.value}}</option>
+                                  </select>
+                              </div>
+                              <div *ngSwitchCase="'checkbox'">
+                                <div *ngFor="let choice of question.choices">
+                                    <span>{{choice.value}}</span>
+                                    <!-- [(ngModel)]="value[row.text][col.title]"  -->
+                                    <!-- [checked]="searchValue(choice.value , value[row.text][col.title])" -->
+                                  <input type="checkbox"  [value]="choice.value" (change)="matrixCheckBoxChange($event , row.text , col.title)" [checked]="searchValue(choice.value , value[row.text][col.title])">
+                                </div>
+                                 
+                              </div>
+                              <div *ngSwitchCase="'radiogroup'">
+                                  <div *ngFor="let choice of question.choices">
+                                    <span>{{choice.value}}</span>
+                                    <input type="radio" [name]="row.text+col.title" [value]="choice.value"  [(ngModel)]="value[row.text][col.title]">  
+                                  </div>
+                                   
+                                </div>
+                              <div *ngSwitchCase="'text'">
+                                  <input type="text" [(ngModel)]="value[row.text][col.title]">
+                              </div>
+                              <div *ngSwitchCase="'comment'">
+                                  <textarea [(ngModel)]="value[row.text][col.title]">
+
+                                  </textarea>
+                               
+                              </div>
+                              <div *ngSwitchCase="'boolean'">
+                                  <div *ngIf="!showUndefinedObjValue(value[row.text][col.title])">
+                                     <mdb-checkbox  [(ngModel)]="value[row.text][col.title]" [default]="true"></mdb-checkbox>
+                                  </div>
+                                  <div *ngIf="showUndefinedObjValue(value[row.text][col.title])">
+                                    <mdb-checkbox  [(ngModel)]="value[row.text][col.title]" [default]="true" [indeterminate]="true"></mdb-checkbox>
+                                  </div>
+                              </div>
+                              <div *ngSwitchCase="'expression'">
+                                  <input type="text" disabled [ngModel]="value[row.text][col.title]">
+                              </div>
+                          </div>
+                           <!-- <div *ngIf="checkObjectKeys(question.cellsValue.values)">
+                                
+                                  <div [ngClass]="{'active': activeItem(value , row.text , col.text )}" (click)="selectAnswer(row.text , col.text)">
+                                     {{getDisplayText(question.cellsValue.values , row.text , col.text)}}
+                                  </div>
+                                 
+                           </div>
+                           <div *ngIf="!checkObjectKeys(question.cellsValue.values)">
+                              <input type="radio" name="{{row.text}}" [value]="col.text"  [(ngModel)]="value[row.text]">
+                           </div> -->
+                       
+                         
+                      </td>
+                      </tr>
+                   
+                </tbody>
+
+                
+              
+            </table>
+
+          </div>
+          
+          <div *ngSwitchCase="'matrixdynamic'">
+           
+            <div *ngIf="prop =='defaultRowValue'">
+                           
+              <div   *ngFor="let col of question.columns">
+                 <div> {{col.name}} </div>
+                  <div [ngSwitch]="question.cellType">
+                    <div *ngSwitchCase="'dropdown'">
+                        <select class="custom-select" [(ngModel)]="value[col.name]">
+                            <option *ngFor="let choice of question.choices" [ngValue]="choice.value">{{choice.value}}</option>
+                        </select>
+                    </div>
+                   <div *ngSwitchCase="'checkbox'">
+                      <div *ngFor="let choice of question.choices; let i = index">
+                          <span>{{choice.value}}</span>
+                          <input type="checkbox"  [value]="choice.value" (change)="matrixCheckBoxChange($event , i , col.name)" [checked]="value[col.name] == choice.value">
+                      </div>
+                        
+                    </div>
+                     <div *ngSwitchCase="'radiogroup'">
+                        <div *ngFor="let choice of question.choices let i = index">
+                          <span>{{choice.value}}</span>
+                          <input type="radio" [name]="i+col.name" [value]="choice.value"  [(ngModel)]="value[col.name]">  
+                        </div>
+                          
+                      </div>
+                    <div *ngSwitchCase="'text'">
+                        <input type="text" [(ngModel)]="value[col.name]">
+                    </div>
+                    <div *ngSwitchCase="'comment'">
+                        <textarea [(ngModel)]="value[col.name]">
+
+                        </textarea>
+                      
+                    </div>
+                    <div *ngSwitchCase="'boolean'">
+                        <div *ngIf="!showUndefinedObjValue(value[col.name])">
+                            <mdb-checkbox  [(ngModel)]="value[col.name]" [default]="true"></mdb-checkbox>
+                        </div>
+                        <div *ngIf="showUndefinedObjValue(value[col.name])">
+                          <mdb-checkbox  [(ngModel)]="value[col.name]" [default]="true" [indeterminate]="true"></mdb-checkbox>
+                        </div>
+                    </div> 
+                    <div *ngSwitchCase="'expression'">
+                        <input type="text" disabled [ngModel]="value[col.name]">
+                    </div> 
+                </div>
+              </div>
+
+            </div>
+            <div *ngIf="prop =='correctAnswer' || prop =='defaultValue' ">
+              <table class="table">
+                <thead>
+                    <tr>
+                        <!-- <th></th> -->
+                        <th *ngFor="let col of question.columns">
+                            <span>{{col.title}}</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+              
+                      <tr *ngFor="let row of question.koRows(); let i = index" style="min-width:120px" class="form-group">
+                      <!-- <td>
+                          <span>{{row.text}}</span>
+                      </td> -->
+                      
+                      <td *ngFor="let col of question.columns" style="min-width:120px" class="form-group"> 
+                          <div [ngSwitch]="question.cellType">
+                              <div *ngSwitchCase="'dropdown'">
+                                  <!-- <select class="custom-select" [(ngModel)]="value[row.text][col.title]">
+                                      <option *ngFor="let choice of question.choices" [ngValue]="choice.value">{{choice.value}}</option>
+                                  </select> -->
+                                  <select class="custom-select" [(ngModel)]="value[i][col.name]">
+                                      <option *ngFor="let choice of question.choices" [ngValue]="choice.value">{{choice.value}}</option>
+                                  </select>
+                              </div>
+                              <div *ngSwitchCase="'checkbox'">
+                                <div *ngFor="let choice of question.choices">
+                                    <span>{{choice.value}}</span>
+                                    <!-- [(ngModel)]="value[row.text][col.title]"  -->
+                                    <!-- [checked]="searchValue(choice.value , value[row.text][col.title])" -->
+                                  <input type="checkbox"  [value]="choice.value" (change)="matrixCheckBoxChange($event , i , col.name)" [checked]="searchValue(choice.value , value[i][col.name])">
+                                </div>
+                                 
+                              </div>
+                              <div *ngSwitchCase="'radiogroup'">
+                                  <div *ngFor="let choice of question.choices">
+                                    <span>{{choice.value}}</span>
+                                    <input type="radio" [name]="i+col.name" [value]="choice.value"  [(ngModel)]="value[i][col.name]">  
+                                  </div>
+                                   
+                                </div>
+                              <div *ngSwitchCase="'text'">
+                                  <input type="text" [(ngModel)]="value[i][col.name]">
+                              </div>
+                              <div *ngSwitchCase="'comment'">
+                                  <textarea [(ngModel)]="value[i][col.name]">
+  
+                                  </textarea>
+                               
+                              </div>
+                              <div *ngSwitchCase="'boolean'">
+                                  <div *ngIf="!showUndefinedObjValue(value[i][col.name])">
+                                     <mdb-checkbox  [(ngModel)]="value[i][col.name]" [default]="true"></mdb-checkbox>
+                                  </div>
+                                  <div *ngIf="showUndefinedObjValue(value[i][col.name])">
+                                    <mdb-checkbox  [(ngModel)]="value[i][col.name]" [default]="true" [indeterminate]="true"></mdb-checkbox>
+                                  </div>
+                              </div>
+                              <div *ngSwitchCase="'expression'">
+                                  <input type="text" disabled [ngModel]="value[i][col.name]">
+                              </div>
+                          </div>
+                           <!-- <div *ngIf="checkObjectKeys(question.cellsValue.values)">
+                                
+                                  <div [ngClass]="{'active': activeItem(value , row.text , col.text )}" (click)="selectAnswer(row.text , col.text)">
+                                     {{getDisplayText(question.cellsValue.values , row.text , col.text)}}
+                                  </div>
+                                 
+                           </div>
+                           <div *ngIf="!checkObjectKeys(question.cellsValue.values)">
+                              <input type="radio" name="{{row.text}}" [value]="col.text"  [(ngModel)]="value[row.text]">
+                           </div> -->
+                       
+                         
+                      </td>
+                      <td>
+                         <button (click)="dynamicMatrixRemoveRow(i)">{{question.removeRowText}}</button>
+                      </td>
+                      </tr>
+                   
+                </tbody>
+                <button (click)="dynamicMatrixAddRow()">{{question.addRowText}}</button>
+  
+                
+              
+              </table>
+            </div>
+         
+
+          </div>
+          <div *ngSwitchCase="'multipletext'">
+              <div *ngFor="let item of question.items">
+                  <div> 
+                      {{item.name}}
+                  </div> 
+                  <div>
+                    <input type="text" [(ngModel)]="value[item.name]">
+                  </div>
+              </div>
+          </div>
+          <div *ngSwitchDefault></div>
+        </div>
+      </div>
+  
+  
+  
+    </div>
+  
+    <div class="modal-footer">
+      <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+        (click)="applyAction()">Apply</button>
+      <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+        (click)="okAction()">Ok</button>
+      <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="cancelAction()"
+        mdbWavesEffect>Cancel</button>
+    </div>
+  </div>

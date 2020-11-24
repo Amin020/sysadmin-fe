@@ -1,0 +1,23 @@
+<div class="exam-header-container">
+  <svg-icon class="menu-icon" (click)="toggleSideMenu()" src="assets/icons/menu.svg"></svg-icon>
+  <div class="right-section">
+    <div class="select-language-dropdown dropdown" mdbDropdown>
+      <button mdbDropdownToggle mdbBtn class="select-language-btn dropdown-toggle waves-light" type="button"
+        mdbWavesEffect>
+        {{selectedLanguage.name}}
+      </button>
+      <div class="dropdown-menu dropdown-primary">
+        <button class="dropdown-item" (click)="changeManLanguage(language)" *ngFor="let language of languages">
+          {{language.name}}
+        </button>
+      </div>
+    </div>
+    <div class="loged-in-user">
+      <div class="user-info">
+        <span class="user-name">Omar Hegazi</span>
+        <span class="user-title">System Admin</span>
+      </div>
+      <img class="user-image" src="assets/icons/user-image.png" alt="">
+    </div>
+  </div>
+</div>

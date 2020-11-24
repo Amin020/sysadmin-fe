@@ -1,0 +1,122 @@
+<div>
+  <!-- Basic example -->
+  <div class="row">
+    <div class="col-md-12 mx-auto text-center mt-1">
+      <div class="col-sm-2 text-left " *ngIf="appId">
+        <a mdbBtn color="primary" (click)="backToPreviousPage()" mdbWavesEffect>
+          Back
+        </a>
+      </div>
+      <div class="card card-cascade narrower">
+        <!--Card image-->
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-3 mb-3 d-flex justify-content-left align-items-left">
+          <h6 class="white-text font-weight-bold text-uppercase mb-0 mr-auto">
+            Apps
+          </h6>
+          <a mdbBtn size="sm" color="primary" (click)="newApp()" rounded="true" mdbWavesEffect>
+            <mdb-icon fas icon="plus"></mdb-icon> New App
+          </a>
+        </div>
+        <!--/Card image-->
+        <div class="px-4" *ngIf="apps && apps.length">
+          <!--Table-->
+          <table class="table table-hover table-responsive-md mb-0">
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th class="th-lg">#</th>
+                <th class="th-lg">App Class</th>
+                <th class="th-lg">App Type</th>
+                <th class="th-lg">App Name</th>
+                <th class="th-lg">App ISO</th>
+                <th class="th-lg">Actions</th>
+              </tr>
+            </thead>
+            <!--Table head-->
+
+            <!--Table body-->
+            <tbody>
+              <tr *ngFor="
+                  let app of apps | slice: firstVisibleIndex:lastVisibleIndex
+                ">
+                <td [routerLink]="['/apps/details', app.id]">{{ app.id }}</td>
+                <td [routerLink]="['/apps/details', app.id]">
+                  {{ app.appClass }}
+                </td>
+                <td [routerLink]="['/apps/details', app.id]">
+                  {{ app.appType }}
+                </td>
+                <td [routerLink]="['/apps/details', app.id]">
+                  {{ app.shortName }}
+                </td>
+                <td [routerLink]="['/apps/details', app.id]">
+                  {{ app.isoCode }}
+                </td>
+
+                <td class="goal-table-actionCol">
+                  <a mdbBtn floating="false" size="sm" color="primary" mdbWavesEffect title="Edit" (click)="edit(app)">
+                    <mdb-icon fas icon="edit"></mdb-icon>
+                  </a>
+                  <a mdbBtn floating="true" size="sm" color="danger" mdbWavesEffect title="Delete"
+                    (click)="openModal(app)">
+                    <mdb-icon fas icon="trash"></mdb-icon>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+            <!--Table body-->
+          </table>
+        </div>
+        <hr class="mt-4 mb-0" />
+
+        <!--Bottom Table UI-->
+        <div class="d-flex justify-content-center">
+          <!--Pagination -->
+          <nav class="my-4 pt-2">
+            <ul class="pagination pagination-circle pg-blue mb-0">
+              <!--First-->
+              <li class="page-item clearfix d-none d-md-block" (click)="firstPage()"
+                [ngClass]="{ disabled: activePage == 1 }">
+                <a class="page-link">First</a>
+              </li>
+
+              <!--Arrow left-->
+              <li class="page-item" (click)="previousPage()" [ngClass]="{ disabled: activePage == 1 }">
+                <a class="page-link" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+
+              <!--Numbers-->
+              <li #pages
+                *ngFor="let page of paginator | slice: firstVisiblePaginator:lastVisiblePaginator; let i = index"
+                class="page-item" [ngClass]="{ active: i + firstVisiblePaginator + 1 == activePage }">
+                <a class="page-link waves-light" (click)="changePage($event)" mdbWavesEffect>
+                  {{ page }}
+                </a>
+              </li>
+
+              <!--Arrow right-->
+              <li class="page-item" (click)="nextPage()" [ngClass]="{ disabled: activePage == numberOfPages }">
+                <a class="page-link" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+
+              <!--Last-->
+              <li class="page-item clearfix d-none d-md-block" (click)="lastPage()"
+                [ngClass]="{ disabled: activePage == numberOfPages }">
+                <a class="page-link">Last</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-5" />
+</div>

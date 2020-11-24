@@ -1,0 +1,165 @@
+<!-- <div class="builder-settings-container" [hidden]='!showAdvancedOptions'>
+
+</div> -->
+<button type="button" [hidden]='showAdvancedOptions' mdbBtn color="blue-grey" class="waves-light" data-toggle="modal"
+  data-target="#basicExample" (click)="frame.show();showAdvancedOptions=true" mdbWavesEffect>Advanced</button>
+
+<div mdbModal #frame="mdbModal" class="modal fade right modal-scrolling" id="frameModalTop" tabindex="-1" role="dialog"
+  aria-labelledby="myModalLabel" aria-hidden="true" [config]="{backdrop: false, ignoreBackdropClick: true}">
+  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content full-height">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading">    type:
+          <span class='type'>{{type}}
+          </span>
+        </p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide();showAdvancedOptions=false;">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="builder-settings-content">
+          <div>
+            <div class="full-width">
+              <div class="input-group mb-3">
+                <input type="text" class="form-control"
+                  [(ngModel)]="searchValue" (change)="getSearchResult()" placeholder="Search options here...">
+
+              </div>
+              <div>
+                Active element:
+              </div>
+
+              <div class="input-group mb-3">
+                <select class="custom-select block" [(ngModel)]="selectedElement.name ||selectedElement.title"
+                  (ngModelChange)="onActiveChange($event)">
+                  <option *ngFor="let dropItem of dropDownData" [ngValue]="dropItem.name">
+
+                    <span *ngFor="let dots of createArr(dropItem.iterator)">
+                      .
+                    </span>
+                    {{dropItem.name}}
+
+                  </option>
+                </select>
+                <div class="input-group-append">
+                  <button class="input-group-text" type="button" id="button-addon2"
+                    (click)="openEditModal(selectedElement)">Edit</button>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div *ngIf='selectedElementBaseData?.settingsItems'>
+            <div class="builder-settings-item" *ngFor="let item of selectedElementBaseData.settingsItems">
+              <div> {{item.displayName}} : </div>
+              <div [ngSwitch]="item.type">
+                <div *ngSwitchCase="'text'">
+                  <!-- <input type="text" #textInput [ngModel]="selectedElement[item.prop]"
+                          (keyup.enter)="updateElement(textInput.value, item.prop)"
+                          (blur)="updateElement(textInput.value, item.prop)"  
+                          > -->
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" #textInput [disabled]='item.prop=="name"'
+                      [(ngModel)]="selectedElement[item.prop]" (keyup.enter)="updateElement(textInput.value, item.prop)"
+                      (blur)="updateElement(textInput.value, item.prop)">
+
+                  </div>
+                </div>
+                <div *ngSwitchCase="'number'">
+                  <!-- <input type="number" #numberInput [ngModel]="selectedElement[item.prop]"
+                          (keyup.enter)="updateElement(numberInput.value, item.prop)"
+                          (blur)="updateElement(numberInput.value, item.prop)"> -->
+                  <div class="input-group mb-3">
+                    <input type="number" class="form-control" #numberInput [(ngModel)]="selectedElement[item.prop]"
+                      (keyup.enter)="updateNumberElement(numberInput.value, item.prop)"
+                      (blur)="updateNumberElement(numberInput.value, item.prop)">
+
+                  </div>
+                </div>
+                <div *ngSwitchCase="'checkbox'">
+                  <!-- <mdb-checkbox class="mb-2" (change)="updateElement(checkBox.value, item.prop)" value="true" [default]="true"
+                    name="public" [(ngModel)]="selectedElement[item.prop]" #checkBox="ngModel"></mdb-checkbox> -->
+                  <input class="default-checkbox" type="checkbox" [(ngModel)]="selectedElement[item.prop]"
+                    (change)="updateElement(selectedElement[item.prop], item.prop)">
+                </div>
+
+                <div *ngSwitchCase="'text_edit'">
+                  <!-- <input type="text" #textEditInput [ngModel]="selectedElement[item.prop]"
+                          (keyup.enter)="updateElement(textEditInput.value, item.prop)"
+                          (blur)="updateElement(textEditInput.value, item.prop)">
+                          <button >Edit</button> -->
+                  <div class="input-group mb-3"
+                    *ngIf="item.prop==='choices' || item.prop === 'columns' || item.prop === 'rows' || item.prop === 'items'">
+                    <a href='javascript:void(0)' (click)='openModal(item)'>
+                      <input type="text" class="form-control" #arrayEditInput
+                        [ngModel]="'[ '+selectedElement[item.prop].length + ' items ]'" disabled
+                        (keyup.enter)="updateElement(arrayEditInput.value, item.prop)"
+                        (blur)="updateElement(arrayEditInput.value, item.prop)" />
+                    </a>
+                    <div class="input-group-append">
+                      <button class="input-group-text" type="button" id="button-addon2"
+                        (click)="openModal(item)">Edit</button>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3" *ngIf="item.prop === 'choicesByUrl' || item.prop === 'cells'">
+                    <input type="text" class="form-control" #urlEditInput [(ngModel)]="selectedElement[item.prop].url"
+                      disabled (keyup.enter)="updateElement(urlEditInput.value, item.prop)"
+                      (blur)="updateElement(urlEditInput.value, item.prop)" />
+                    <div class="input-group-append">
+                      <button class="input-group-text" type="button" id="button-addon2"
+                        (click)="openModal(item)">Edit</button>
+                    </div>
+                  </div>
+                  <div class="input-group mb-3"
+                    *ngIf="item.prop !== 'choices' && item.prop !== 'choicesByUrl' && item.prop !== 'columns' && item.prop !== 'rows' && item.prop !== 'cells' && item.prop !== 'items'">
+                    <input type="text" class="form-control" [(ngModel)]="selectedElement[item.prop]"
+                      (keyup.enter)="updateElement(selectedElement[item.prop], item.prop)"
+                      (blur)="updateElement(selectedElement[item.prop], item.prop)">
+                    <div class="input-group-append">
+                      <button class="input-group-text" type="button" id="button-addon2"
+                        (click)="openModal(item)">Edit</button>
+                    </div>
+                  </div>
+
+                </div>
+                <div *ngSwitchCase="'dropdown'">
+                  <!-- <select [(ngModel)]="selectedElement[item.prop]" >
+                              <option *ngFor="let value of item.values" [ngValue]="value.value">{{value.displayName}}</option>
+                            </select> -->
+                  <div class="input-group mb-3">
+                    <div class="full-width" *ngIf="item.prop=='page'">
+                      <select class="custom-select" [(ngModel)]="selectedElement[item.prop]">
+                        <option *ngFor="let value of pages" [ngValue]="value">{{value.name}}</option>
+                      </select>
+                    </div>
+                    <div class="full-width" *ngIf="item.prop =='currency'">
+                      <select class="custom-select" [(ngModel)]="selectedElement[item.prop]">
+                        <option *ngFor="let value of currencyData" [ngValue]="value">{{value}}</option>
+                      </select>
+                    </div>
+                    <select *ngIf="item.prop !='page'&& item.prop !='currency'" #dropItem
+                      (change)="updateElement(dropItem.value, item.prop)" class="browser-default custom-select mb-2"
+                      [(ngModel)]="selectedElement[item.prop]" name="surveyType">
+                      <option *ngFor="let value of item.values" [value]="value.value">{{value.displayName}}</option>
+                    </select>
+                  </div>
+                </div>
+
+
+                <div *ngSwitchDefault>...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>

@@ -1,0 +1,31 @@
+.import-container{
+    position: relative;
+    .btn-Import{
+      position: absolute;
+    }
+    #file{
+      opacity: 0;
+      height: 50px;
+      width: 100px;
+      position: absolute;
+      left: 0;
+      overflow: hidden;
+      cursor: pointer;
+    }
+  }
+  
+  .item-container:hover {
+    border-radius: 20px;
+    border: 1px solid lightgray;
+    padding: 4px 0 4px 7px;
+    box-shadow:#7dc9c8 3px 3px 3px;
+    font-weight: bolder;
+    .item-text {
+      color: #087cf2 !important;
+    }
+    .fa,
+    .fas {
+      padding-top: 4px;
+      color: #087cf2;
+    }
+  }

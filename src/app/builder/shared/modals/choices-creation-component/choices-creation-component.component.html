@@ -1,0 +1,124 @@
+<div class="choices-creation-component">
+  <div class="control-section">
+    <div *ngIf="editView">
+      <div [ngSwitch]="editView">
+        <div *ngSwitchCase="'showItems'">
+          <div class="control-section" *ngIf="showHeader">
+            <button class="input-group-text" (click)="activateFormEntry()"> Form Entry </button>
+            <button class="input-group-text" (click)="activateFastEntry()"> Fast Entry </button>
+          </div>
+        </div>
+        <div *ngSwitchCase="'editItems'">
+          <button class="input-group-text" (click)="toggleEditView()">Back</button></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="editView">
+    <div [ngSwitch]="editView">
+      <div *ngSwitchCase="'showItems'">
+        <div *ngIf="activeView">
+          <div [ngSwitch]="activeView">
+            <div *ngSwitchCase="'formEntry'">
+              <div *ngIf="type">
+                <div class="option-content" cdkDropList (cdkDropListDropped)="drop($event)">
+                  <div *ngFor="let choice of choices; let i = index" cdkDrag>
+
+                    <div class="item-container">
+                      <div class="item">
+                        <button class="input-group-text">reOrder</button>
+                      </div>
+                      <div class="item">
+                        <button class="input-group-text" (click)="toggleEditView(choice)">Edit</button>
+                      </div>
+
+                      <div class="item-container" *ngIf="showColType=='default'">
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.value">
+                        </div>
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.text">
+                        </div>
+                      </div>
+                      <div class="item-container" *ngIf="showColType=='matrix-cols'">
+                        <mdb-checkbox [inline]='true' [(ngModel)]="choice.isRequired" name="choice.isRequired">
+                          isRequired</mdb-checkbox>
+
+                        <div class="item">
+                          <select style="width: 75px" class="custom-select" [(ngModel)]="choice.cellType">
+                            <option *ngFor="let value of colTypes" [ngValue]="value.value">{{value.displayName}}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.name">
+                        </div>
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.title">
+                        </div>
+                      </div>
+                      <div class="item-container" *ngIf="showColType=='mtext-items'">
+                        <div class="item">
+                          <input type="checkbox" [(ngModel)]="choice.isRequired">
+                        </div>
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.name">
+                        </div>
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.title">
+                        </div>
+                      </div>
+                      <div class="item-container" *ngIf="showColType=='imagepicker-items'">
+
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.value">
+                        </div>
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.imageLink">
+                        </div>
+                        <div class="item">
+                          <input type="text" class="form-control" [(ngModel)]="choice.text">
+                        </div>
+                      </div>
+
+
+
+                      <div class="item">
+                        <button (click)="removeOption(i)" class="input-group-text">X</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="control-section">
+                <button class="input-group-text" (click)="addNewOption()"> Add New</button>
+                <button class="input-group-text" (click)="removeAllOptions()"> Remove All</button>
+              </div>
+
+            </div>
+            <div *ngSwitchCase="'fastEntry'">
+              <textarea [(ngModel)]="fastEntryData" class="form-control fast-entry-textarea">
+                      </textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'editItems'">
+        <!-- <app-multiple-edit #multipleEdit [question]="question" [item]="activeItem" [titleProp]="'value'" [editOptions]="editOptions" (editedItems)="setEditedItems($event)" ></app-multiple-edit> -->
+        <app-multiple-edit #multipleEdit [question]="question" [item]="activeItem" [titleProp]="'value'"
+          [editOptions]="editOptions"></app-multiple-edit>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="extraOptions" *ngIf="extraItems">
+    <!-- TODO: Start from here -->
+    <app-general-component [value]="{value:extraItems}" [prop]=""> </app-general-component>
+  </div>
+
+</div>

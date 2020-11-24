@@ -1,0 +1,7 @@
+.xyz {
+    scroll-snap-type: y mandatory;
+  }
+  
+  .child {
+    scroll-snap-align: center;
+  }

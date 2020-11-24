@@ -1,0 +1,136 @@
+.menu-container {
+  height: 99.9%;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 8px 16px #0000000d;
+  border-radius: 0px 50px 0px 0px;
+  margin-inline-end: 40px;
+  padding: 30px 0;
+
+  &.small-menu {
+    width: 100px;
+  }
+}
+
+.logo {
+  width: 156px;
+  height: 156px;
+
+  &.collapsed-logo {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+.menu-item,
+.header-menu-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 10px 20px;
+  padding-inline-end: 0;
+
+  .menu-icon {
+    fill: #8f8f8f;
+    line-height: 0;
+    &.active {
+      fill: var(--unnamed-color-2176ff);
+    }
+  }
+
+  .menu-item-text {
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: var(--unnamed-font-weight-medium);
+    font-family: var(--unnamed-font-family-nunito);
+    letter-spacing: var(--unnamed-character-spacing-0-4);
+    color: #8f8f8f;
+    margin-inline-start: 5px;
+    &.active {
+      color: var(--unnamed-color-000000);
+    }
+  }
+}
+
+.header-menu-item {
+  margin-bottom: 0;
+  &:hover,
+  &.active {
+    .menu-icon {
+      fill: var(--unnamed-color-2176ff);
+    }
+
+    .menu-item-text {
+      color: var(--unnamed-color-000000);
+    }
+  }
+}
+
+.menu-item {
+  &:hover,
+  &.active {
+    background: #d3b5681a 0% 0% no-repeat padding-box;
+    border-radius: 10px;
+    .menu-icon {
+      fill: var(--unnamed-color-2176ff);
+    }
+
+    .menu-item-text {
+      color: var(--unnamed-color-000000);
+    }
+  }
+}
+
+:host {
+  ::ng-deep .card-header {
+    padding-inline-start: 0 !important;
+    padding-inline-end: 0;
+    .menu-item {
+      margin-bottom: 0;
+    }
+
+    h5 {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      span {
+        display: flex;
+        align-items: center;
+        width: calc(100% - 34px);
+      }
+    }
+
+    .mdb-accordion-indicator {
+      top: 30px;
+      position: initial;
+    }
+  }
+
+  ::ng-deep .card {
+    border: unset !important;
+  }
+
+  ::ng-deep .card-body {
+    .menu-item {
+      margin-bottom: 30px;
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.main-menu-options,
+.logout-action {
+  display: flex;
+  flex-direction: column;
+  padding-inline-end: 18px;
+  width: 100%;
+}
